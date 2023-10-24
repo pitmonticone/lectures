@@ -1,0 +1,80 @@
+\documentclass[oneside]{amsbook}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{microtype}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{proposition}[theorem]{Propostion}
+\newtheorem{exercise}{Exercise}[section]
+
+\theoremstyle{remark}
+\newtheorem{rmk}[theorem]{Remark}
+
+\numberwithin{section}{chapter}
+\numberwithin{equation}{chapter}
+
+\newcommand{\acts}{\curvearrowright}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\normal}{\vartriangleleft}
+
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\gp}[2]{\langle \, #1 \, | \, #2 \, \rangle}
+\newcommand{\ncls}[1]{\left\langle\!\left\langle #1 \right\rangle\!\right\rangle}
+\newcommand{\set}[2]{\left\{ #1 \,\middle|\, #2 \right\}}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\tr}{tr}
+
+\makeindex
+
+\begin{document}
+
+\frontmatter
+
+\title{Group rings of infinite groups}
+\author{Giles Gardam}
+\address{University of Bonn}
+\email{lastname@math.uni-bonn.de}
+\thanks{The students of my lecture course in winter semester 2023/2024 provided much valuable feedback and I thank them for this. \\ If you see an error in this manuscript, please send me a pull request at \url{https://github.com/gilesgardam/lectures} (or, failing that, an email).}
+
+\maketitle
+\tableofcontents
+\include{preface}
+
+\mainmatter
+
+\include{kaplansky}
+
+\appendix
+
+\backmatter
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\printindex
+
+\end{document}
