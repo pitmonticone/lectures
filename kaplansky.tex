@@ -1,1 +1,721 @@
 \chapter{The Kaplansky conjectures}
+
+\section{Introduction}
+
+\begin{definition}
+    Let $R$ be a ring and $G$ be a group. The \emph{group ring} $R[G]$ consists of finite formal $R$-linear sums \[
+        R[G] = \set{ \sum_{i=1}^n r_{g_i} \cdot g_i }{ r_{g_i} \in R, g_i \in G }
+    \] with multiplication \[
+        (\sum r_g \cdot g)(\sum s_h \cdot h) = \sum r_g s_h \cdot g h = \sum_k (\sum_{gh = k} r_g s_h) \cdot k.
+    \]
+\end{definition}
+
+In this course, we'll almost always have $R = \Z$ or $R = K$ a field; in the latter case, one often calls $K[G]$ the \emph{group algebra}.
+
+\begin{center}
+    \fbox{\parbox{20em}{
+        \centering
+        From now on: \\ $G$ will always be a group, \\ $K$ will always be a field, and \\ $R$ will always be a ring.
+    }}
+\end{center}
+
+\begin{example}
+    For $G = \Z = \gen{t}$, $R[G]$ is the ring of Laurent polynomials over $R$, usually denoted $R[t,t^{-1}]$.
+\end{example}
+
+A viewpoint due to Noether: Representations of $G$ on $K$-vector spaces are $K[G]$-modules.
+
+\begin{warning}
+    $K[G]$ is non-commutative unless $G$ is abelian. It is (left) Noetherian only in special settings and it is never semisimple for infinite $G$ (cf.\ Maschke's theorem).
+\end{warning}
+
+Although group rings tend to have bad ring theoretic properties, they conjecturally have nice elementary properties.
+Note first that for $k \in K \setminus \{0\}$ and $g \in G$, the element $kg \in K[G]$ is a unit (with $(k \cdot g)^{-1} = k^{-1} \cdot g^{-1}$); such units are called \emph{trivial}.
+A group is called \emph{torsion-free} if it has no non-trivial finite order elements.
+For example, fundamental groups of aspherical manifolds are torsion-free.
+
+\begin{definition}
+    Let $\mathcal{P}$ be a property of groups.
+    A group $G$ is \emph{virtually $\mathcal{P}$} if it has a finite-index subgroup $G_0$ with $\mathcal{P}$.
+\end{definition}
+
+As another example, a finitely generated subgroup of $\GL_n(\C)$ is virtually torsion-free (Selberg).
+
+\begin{conjecture}[The Kaplansky conjectures]
+    If $G$ is torsion-free, then $K[G]$ has
+    \begin{itemize}
+        \item no non-trivial units: $\alpha \beta = \beta \alpha = 1 \implies \alpha = kg$ for some $k \in K^\times, g \in G$
+        \item no non-zero zero divisors: $\alpha \beta = 0 \implies \alpha = 0$ or $\beta = 0$, and
+        \item no non-trivial idempotents: $\alpha^2 = \alpha \implies \alpha = 0$ or $\alpha = 1$.
+    \end{itemize}
+    For \emph{any} $G$ (possibly with torsion), $K[G]$ is
+    \begin{itemize}
+        \item directly finite: $\alpha \beta = 1 \implies \beta \alpha = 1$.
+    \end{itemize}
+\end{conjecture}
+
+These are the unit conjecture, zero divisor conjecture, idempotent conjecture and direct finiteness conjectures respectively.
+(Direct finiteness is also called \emph{Dedekind finiteness} or \emph{von Neumann finiteness}.)
+
+\begin{remark}
+    The unit conjecture is false; the others are open.
+\end{remark}
+
+\begin{remark}
+    Torsion-freeness is essential. For example, if $g \in G$ has order $n \geq 2$ then $(1 - g)(1 + g + \dots + g^{n-1}) = 1 - g^n = 0$.
+\end{remark}
+
+\begin{remark}
+    These conjectures are ``local'' in the sense that they only depend on the finitely generated subgroups of $G$.
+\end{remark}
+
+\begin{proposition}
+    For a given torsion-free group $G$ and field $K$, we have \[
+        \text{unit conj.} \implies
+        \text{zero divisor conj.} \implies
+        \text{idempotent conj.} \implies
+        \text{direct finiteness}
+    \]
+\end{proposition}
+
+\begin{proof}
+    The 3 weaker conjectures are ring theoretic statements and their implications are easy ring theoretic observations: if $\alpha \beta = 1$ and $\beta \alpha \neq 1$ then $(\beta \alpha)^2 = \beta (\alpha \beta) \alpha = \beta \alpha$ is a non-trivial idempotent.
+    If $\alpha^2 = \alpha$ is a non-trivial idempotent, then $\alpha^2 - \alpha = \alpha (\alpha - 1) = 0$ with both factors non-zero.
+
+    The unit conjecture is a ``group ring theoretic'' statement and the proof of the implication requires the following (which we'll prove later using group theory):
+    \begin{theorem}[Connell]
+        $K[G]$ is prime if and only if $G$ has no non-trivial finite normal subgroup.
+    \end{theorem}
+    A non-commutative ring $R$ is called \emph{prime} if the zero ideal is not a product of two non-zero ideals.
+    This is equivalent to saying that for all $0 \neq \alpha, \beta \in R$ there exists $\gamma \in R$ with $\alpha \gamma \beta \neq 0$.
+
+    Since $G$ is torsion-free, $K[G]$ is prime.
+    Suppose that $\alpha \beta = 0$ for $\alpha, \beta \neq 0$.
+    Then there exists $\gamma \in K[G]$ with $\beta \gamma \alpha \neq 0$.
+    Now \[
+        (1 + \beta \gamma \alpha) (1 - \beta \gamma \alpha) = 1 - \beta \gamma (\alpha \beta) \gamma \alpha = 1.
+    \]
+    Thus $1 + \beta \gamma \alpha$ is a non-trivial unit, since if it were trivial then $\beta \gamma \alpha = kg - 1$ which implies $k^2 g^2 - 2kg + 1 = 0$ which is absurd unless $g = 1$, which then forces $\beta \gamma \alpha \in K$ so $\beta \gamma \alpha = 0$ since it is nilpotent.
+\end{proof}
+
+\begin{definition}
+    A group $G$ is \emph{residually finite} if for all $1 \neq g \in G$ there exists a homomorphism $\phi_g \colon G \to Q$ to a finite group such that $\phi_g (g) \neq 1$.
+\end{definition}
+
+We will see later that the direct finiteness conjecture is true for $K = \C$.
+Here we prove:
+
+\begin{proposition}
+    Let $G$ be residually finite.
+    Then $K[G]$ is directly finite.
+\end{proposition}
+
+\begin{notation}
+For $\alpha \in K[G]$ and $g \in G$, let $(\alpha)_g \in K$ denote the coefficient of $g$ in $\alpha$.
+Then $\alpha = \sum_{g \in G} (\alpha)_g \cdot g$ and $(\alpha)_g = 0$ for all but finitely many elements of $G$.
+\end{notation}
+
+\begin{definition}
+    An element $\alpha \in K[G]$ has \emph{support} \[
+        \supp(\alpha) = \set{ g \in G }{ (\alpha)_g \neq 0 }.
+    \]
+\end{definition}
+
+\begin{proof}
+    Suppose $\alpha, \beta \in K[G]$ with $\alpha \beta = 1$.
+    A group homomorphism $\phi \colon G \to Q$ induces a ring homomorphism $K[G] \to K[Q]$.
+    Thus $K[Q]$ is a $K[G]$-module.
+    Note that $Q$ is a basis for the $K$-vector space $K[Q]$, so if $Q$ is finite this is a finite dimensional representation of $G$ on $V = K[Q]$.
+
+    Let $A = \supp(\alpha)$, $B = \supp(\beta)$.
+    Let $C = BA = \set{ ba }{ a \in A, b \in B}$.
+    By residual finiteness, there is a finite quotient $\phi \colon G \epi Q$ which is injective on $C$: take the product of homomorphisms $\phi_g$ given by the definition over all $g \in C^{-1} C$ (and let $Q$ be the image of this product homomorphism).
+
+    Now the induced maps $\rho_\alpha, \rho_\beta \in \End(V)$ satisfy $\rho_\alpha \circ \rho_\beta = \id_V$ and thus -- since $V = K[Q]$ is finite dimensional -- we have $\rho_\beta \circ \rho_\alpha = \id_V$.
+
+    But we can write $\beta \alpha = \sum_{c \in C} (\beta \alpha)_c \cdot c$ and thus \[
+        \rho_{\beta \alpha}(1_Q) = \phi(\beta \alpha) = \sum_{c \in C} (\beta \alpha)_c \cdot \phi(c) = 1_Q
+    \] forces (since all $\phi(c)$ are distinct!) \[
+        (\beta \alpha)_c = \begin{cases}
+            1 & c = 1 \\
+            0 & \text{else}
+        \end{cases}
+    \] that is, $\beta \alpha = 1$.
+\end{proof}
+
+\section{Proving the unit conjecture}
+
+There is only one way known to prove the unit conjecture: the unique product property.
+
+\begin{definition}
+    A group $G$ has the \emph{unique product property} (or ``has unique products'', or ``has UP'') if for all non-empty finite subsets $A, B \subseteq G$ there exists $g \in G$ such that $g = ab$ for a unique pair $(a, b) \in A \times B$.
+\end{definition}
+
+\begin{example}
+    In $(\Z, +)$ the ``product'' $\max(A) + \max(B)$ is unique.
+\end{example}
+
+\begin{remark}
+    A group with UP is torsion-free: if $1 \neq H \leq G$ is a finite subgroup, set $A = B = H$.
+    Each product occurs exactly $|H|$ times.
+\end{remark}
+
+\begin{proposition}
+    A group $G$ with UP satisfies the zero divisor conjecture.
+\end{proposition}
+
+\begin{proof}
+    Let $\alpha, \beta \in K[G]$ with $\alpha, \beta \neq 0$ and set $A = \supp(\alpha), B = \supp(\beta)$.
+    Write
+    \begin{align*}
+        \alpha = \sum_{a \in A} \lambda_a \cdot a \\
+        \beta = \sum_{b \in B} \mu_b \cdot b.
+    \end{align*}
+    Then if $g_0 = a_0 b_0$ is a unique product for $(A, B)$ we have \[
+        (\alpha \beta)_{g_0} = \sum_{gh = g_0} \lambda_g \mu_h = \lambda_{a_0} \mu_{b_0} \neq 0
+    \] and thus $\alpha \beta \neq 0$.
+\end{proof}
+
+For the unit conjecture we need something that \emph{a priori} is stronger.
+
+\begin{definition}
+    A group $G$ has the \emph{two unique products property} if for all finite subsets $A, B \subseteq G$ with $|A| |B| \geq 2$, there exist elements $g_0 \neq g_1$ of $G$ such that $g_0 = a_0 b_0$ for a unique pair $(a_0, b_0) \in A \times B$ and $g_1 = a_1 b_1$ for a unique pair $(a_1, b_1) \in A \times B$.
+\end{definition}
+
+\begin{proposition}[Strojnowski]
+    The two unique product property is equivalent to the unique product property.
+\end{proposition}
+
+\begin{proof}
+    TUP $\implies$ UP is immediate (TUP doesn't apply if $|A| = |B| = 1$, but if $|A| = 1$ or $|B| = 1$, then all products are unique!)
+
+    Suppose now $G$ has UP but that finite sets $A, B \subseteq G$ with $|A| |B| \geq 2$ have only $1$ unique product.
+    Without loss of generality, by translating $A$ on the left and $B$ on the right, we can assume that $1 = 1 \cdot 1$ is the unique unique product.
+
+    Now let $C = B^{-1} A$, $D = B A^{-1}$.
+    We claim that $C \cdot D$ has no unique product, giving the desired contradiction.
+    Every element of $CD$ can be written as $b_1^{-1} a_1 b_2 a_2^{-1}$ for some $a_1, a_2 \in A$, $b_1, b_2 \in B$.
+
+    If $(a_1, b_2) \neq (1, 1)$, then by assumption there is another pair $(a_1', b_2')$ with $a_1' b_2' = a_1 b_2$ and thus \[
+        (b_1^{-1} a_1) \cdot (b_2 a_2^{-1}) = (b_1^{-1} a_1') \cdot (b_2' a_2^{-1})
+    \] is \emph{not} a unique product for $(C, D)$.
+
+    If $(a_1, b_2) = (1, 1)$, then unless $(a_2, b_1) = (1, 1)$ we can write \[
+        b_1^{-1} \cdot a_2^{-1} = (a_2 b_1)^{-1} = (a_2' b_1')^{-1} = (b_1')^{-1} (a_2')^{-1}
+    \]
+    with $a_2 \neq a_2'$ (and $b_1 \neq b_1'$).
+    Finally, if $(a_1, b_2) = (1, 1)$ and $(a_2, b_1) = (1, 1)$, then our element of $CD$ is $1 = 1 \cdot 1 = b^{-1} \cdot b = a \cdot a^{-1}$ for any $a \in A$ or $b \in B$.
+\end{proof}
+
+\begin{corollary}
+    A group with UP satisfies the unit conjecture.
+\end{corollary}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+Most examples of groups with UP are orderable groups.
+
+\begin{definition}
+    A group $G$ is left-orderable if it admits a total order $<$ that is left-invariant, that is, $g < h$ implies $kg < kh$ for all $g, h, k \in G$.
+\end{definition}
+
+\begin{remark}
+    Being left-orderable and right-orderable are equivalent, but admitting a bi-invariant total order is much stronger!
+\end{remark}
+
+\begin{proposition}
+    A left-orderable group has UP.
+\end{proposition}
+
+\begin{proof}
+    We show that the maximum of $AB$ is a unique product.
+    Let $b_0 = \max B$.
+    Then for all $a \in A$ and $b \in B \setminus \{b_0\}$ we have $b < b_0 \implies ab < ab_0$.
+    Thus the maximum of $AB$ can only be written as $a \cdot b_0$ and this expression must be unique (as $a_i \neq a_j \implies a_i b_0 \neq a_j b_0$).
+\end{proof}
+
+\begin{remark}
+    It is \emph{not} necessarily true that $\max(AB) = \max(A) \max(B)$!
+\end{remark}
+
+\begin{definition}
+    For a left-ordered group $(G, <)$, the set \[
+        \cP = \set{ g \in G }{ 1 < g }
+    \] is called its \emph{positive cone}.
+\end{definition}
+
+The positive cone satisfies
+\begin{enumerate}
+    \item $\cP^2 \subseteq \cP$ (that is, it is a subsemigroup)
+    \item $G = \cP \sqcup \{1\} \sqcup \cP^{-1}$.
+\end{enumerate}
+
+\begin{lemma}
+    Left-orderings are equivalent to choice of $\cP \subset G$ satisfying (1) and (2).
+\end{lemma}
+
+\begin{proof}
+    Exercise (hint: $x < y \Leftrightarrow 1 < x^{-1} y$).
+\end{proof}
+
+\begin{lemma}
+    A group $G$ is left-orderable if and only if for all $g_1, \dots, g_n \in G \setminus \{1\}$ there exists a choice of signs $\epsilon_1, \dots, \epsilon_n \in \{1, -1\}$ such that \[
+        1 \notin S(g_1^{\epsilon_1}, \dots, g_n^{\epsilon_n}),
+    \] the subsemigroup generated by $g_1^{\epsilon_1}, \dots, g_n^{\epsilon_n}$.
+\end{lemma}
+
+\begin{proof}
+    $\Rightarrow$ set $\epsilon_i = 1$ if $g_i \in \cP$ (that is, $1 < g_i$) else $-1$.
+
+    $\Leftarrow$ we use compactness (slogan: inverse limit of non-empty finite sets is non-empty).
+    Let $X = \{1, -1\}^{G \setminus \{1\}}$ be the set of functions $G \setminus \{1\} \to \{1, -1\}$ and let $A \subset X$ denote those functions that define a positive cone.
+    This is equivalent to satisfying (simultaneously!) the choice of sign condition for all possible $g_1, \dots, g_n \in G \setminus \{1\}$ (actually $n = 3$ suffices).
+    That is, if we denote such functions $A_{\{g_1, \dots, g_n\}}$ then \[
+        A = \bigcap_{\text{finite } S \subset G \setminus \{1\}} A_S.
+    \]
+    But $X$ is compact by Tychonoff and the $A_S$ are closed (only depend on the restriction to $S \to \{1, -1\}$) and have all finite intersections non-empty by assumption.
+    Thus $A \neq \emptyset$.
+\end{proof}
+
+We will apply the lemma to prove the following:
+\begin{theorem}[Burns--Hale]
+    If every finitely generated non-trivial subgroup of $G$ has a non-trivial left-orderable quotient, then $G$ is left-orderable.
+\end{theorem}
+
+\begin{definition}
+    Let $\mathcal{P}$ be a property of groups.
+    A group $G$ is \emph{locally $\mathcal{P}$} if every finitely generated subgroup of $G$ has $\mathcal{P}$.
+\end{definition}
+
+We call a group \emph{indicable} if it either maps onto $\Z$ or is trivial.
+So the Burns--Hale theorem says in particular that a \emph{locally indicable} group is left-orderable.
+
+\begin{corollary}[Higman, 1940]
+    \label{corollary:LI_kaplansky}
+    Locally indicable groups satisfy the conjectures on units and zero divisors.
+\end{corollary}
+
+\begin{proof}
+    Locally indicable $\implies$ left-orderable $\implies$ UP.
+\end{proof}
+
+\begin{example}
+    The following groups are locally indicable:
+    \begin{itemize}
+        \item free groups (subgroups of free groups are free by Nielsen--Schreier)
+        \item fundamental groups of surfaces of non-positive Euler characteristic
+        \item torsion-free nilpotent groups
+        \item torsion-free one-relator groups i.e.\ groups of the form $\gp{X}{r}$ where $r \in F(X)$ is not a proper power (Brodskii, Howie)
+    \end{itemize}
+\end{example}
+
+\begin{proof}[Proof of Burns--Hale theorem]
+    Suppose $G$ is not left-orderable and let $n$ be minimal such that there exist $g_1, \dots, g_n \in G \setminus \{1\}$ with $1 \in S(g_1^{\epsilon_1}, \dots, g_n^{\epsilon_n})$ for all choices of $\epsilon_i$.
+    Let $H = \gen{g_1, \dots, g_n} \leq G$.
+    By assumption, $H$ has a non-trivial left-orderable quotient $q \colon H \epi Q$.
+    By relabelling, assume $g_1, \dots, g_t \in \ker(q)$ and $g_{t+1}, \dots, g_n \notin \ker(q)$.
+    As $t < n$, we can assign $\epsilon_1, \dots, \epsilon_t$ such that \[
+        1 \notin S(g_1^{\epsilon_1}, \dots, g_t^{\epsilon_t}),
+    \] and since $Q$ is left-orderable we can assign $\epsilon_{t+1}, \dots, \epsilon_n$ such that \[
+        1 \notin S(q(g_{t+1})^{\epsilon_{t+1}}, \dots, q(g_n)^{\epsilon_n}).
+    \]
+    But this implies that \[
+        1 \notin S(g_1^{\epsilon_1}, \dots, g_n^{\epsilon_n})
+    \] as every non-empty product of those elements \emph{either} only uses $g_1, \dots, g_t$ so lies in $S(g_1^{\epsilon_1}, \dots, g_t^{\epsilon_t})$ \emph{or} has image under $q$ in $S(q(g_{t+1})^{\epsilon_{t+1}}, \dots, q(g_n)^{\epsilon_n})$.
+\end{proof}
+
+\subsection*{The dynamical point of view}
+
+\begin{proposition}
+    The group $\Homeo^+(\R)$ of orientation-preserving (i.e.\ increasing) homeomorphisms of the real line is left-orderable.
+\end{proposition}
+
+\begin{proof}
+    Let $\{x_0, x_1, x_2, \dots\} \subset \R$ be dense (e.g.\ enumerate $\Q$).
+    Then we define $f < g$ for $f \neq g \in \Homeo^+(\R)$ by \[
+        f < g \Leftrightarrow f(x_i) < g(x_i) \text{ for the minimal } i \in \N \text{ s.t. } f(x_i) \neq g(x_i).
+    \]
+    (Such an $i$ exists as continuous functions to Hausdorff spaces are determined by their values on dense subsets.)
+    Left-invariance is immediate as elements of $\Homeo^+(\R)$ are strictly monotone (and we take $\Homeo^+(\R)$ to act on $\R$ on the left!).
+    Let $f, g, h \in \Homeo^+(\R)$ with $f < g$ and $g < h$ and let $i \in \N$ be the minimal index such that $f(x_i) \neq g(x_i)$ or $g(x_i) \neq h(x_i)$.
+    Then $f(x_i) \leq g(x_i)$ and $g(x_i) \leq h(x_i)$ with at least one inequality being strict, so $f(x_i) < h(x_i)$.
+    Moreover, for $j < i$ we have $f(x_j) = g(x_j) = h(x_j)$, so $f < h$.
+\end{proof}
+
+In fact:
+
+\begin{proposition}
+    A countable group is left-orderable if and only if it is a subgroup of $\Homeo^+(\R)$.
+\end{proposition}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{proposition}
+    Suppose that $N \normal G$ such that $N$ and $G / N$ both have UP.
+    Then $G$ has UP.
+\end{proposition}
+
+\begin{proof}
+    Let $A, B \subset G$ be finite non-empty subsets and write $\phi \colon G \epi G / N$.
+    Suppose $\phi(a_1) \cdot \phi(b_1)$ is a unique product for $\phi(A) := \set{\phi(a)}{a \in A}$ and $\phi(B)$ in $G/N$.
+    By replacing $A$ with $a_1^{-1} A$ and $B$ with $B b_1^{-1}$, we can assume without loss of generality that $\phi(a_1) = \phi(b_1) = 1$.
+    Thus for $a \in A$ and $b \in B$ we have \[
+        a b \in N \Leftrightarrow \phi(a b) = 1 \Leftrightarrow \phi(a) = 1 \text{ and } \phi(b) = 1 \Leftrightarrow a \in N \text{ and } b \in N
+    \]
+    Hence the unique product of the non-empty finite sets $A \cap N$ and $B \cap N$ in the UP group $N$ is a unique product for $A$ and $B$.
+\end{proof}
+
+\subsection*{Diffuse groups}
+
+We now meet the weakest property known to imply UP.
+
+\begin{definition}
+    Let $A \subset G$ be a finite subset.
+    An element $a \in A$ is called \emph{extremal} if for all $1 \neq s \in G$, either $as \notin A$ or $a s^{-1} \notin A$ (or both).
+    A group is called \emph{diffuse} if every non-empty finite subset contains an extremal element.
+\end{definition}
+
+\begin{remark}
+    \label{remark:diffuse_intersection}
+    $a \in A$ is extremal if and only if $a^{-1} A \cap A^{-1} a = \{1\}$.
+\end{remark}
+
+\begin{remark}
+    This notion has been called ``weakly diffuse'' with diffuse reserved for the \emph{a priori} stronger property that any $A \subset G$ with $2 \leq |A| < \infty$ has at least $2$ extremal points, but they turn out to be equivalent.
+\end{remark}
+
+\begin{proposition}
+    For any group we have the implications \[
+        \text{left-orderable} \implies \text{diffuse} \implies \text{UP}.
+    \]
+\end{proposition}
+
+\begin{proof}
+    Suppose $(G, <)$ is left-ordered.
+    Let $A \subset G$ be an arbitrary non-empty finite subset and let $a = \max A$.
+    For any $1 \neq s \in G$ either $1 < s$ or $1 < s^{-1}$, which implies either $a < a s$ or $a < a s^{-1}$.
+    Thus $a$ is extremal.
+    Hence $G$ is diffuse.
+
+    Suppose $G$ is diffuse and let $A, B \subset G$ be non-empty finite subsets.
+    Consider $C = AB$.
+    Let $c \in C$ be an extremal point and pick some $a_1 \in A, b_1 \in B$ such that $c = a_1 b_1$.
+    We claim that this is a unique product.
+    Suppose for the sake of contradiction that $c = a_2 b_2$ with $b_1 \neq b_2$ (and $a_2 \in A$, $b_2 \in B$).
+    Then
+    \begin{align*}
+        c \cdot (b_2^{-1} b_1) &= a_2 b_2 \cdot (b_2^{-1} b_1) = a_2 b_1 \in C \\
+        c \cdot (b_2^{-1} b_1)^{-1} &= a_1 b_1 \cdot (b_1^{-1} b_2) = a_1 b_2 \in C
+    \end{align*}
+    contradicting diffuseness.
+\end{proof}
+
+\begin{remark}
+    Given finite $B \subset G$ we can easily decide if all non-empty $A \subseteq B$ have an extremal point because if $a \in A_0 \subseteq A_1$ and $a$ is extremal in $A_1$, then it is also extremal in $A_0$.
+    Thus we can run a greedy algorithm, starting with $A = B$ and throwing out all extremal points at each step (checking extremality in finitely many steps via \Cref{remark:diffuse_intersection}), seeing if we terminate with $A = \emptyset$ or with a non-empty set $A$ that falsifies diffuseness.
+\end{remark}
+
+\begin{exercise}
+    Show that the following classes of groups are closed under taking extensions:
+    \begin{itemize}
+        \item locally indicable groups
+        \item left-orderable groups
+        \item diffuse groups
+    \end{itemize}
+\end{exercise}
+
+
+\section{Hyperbolic groups}
+
+Crash course on hyperbolic groups and $\delta$-hyperbolic spaces, Delzant's theorem
+
+We note one consequence of general interest (beyond studying group rings).
+\begin{corollary}
+    A residually finite hyperbolic group is virtually torsion-free.
+\end{corollary}
+
+\begin{exercise}
+    Show that a $(\delta)$-hyperbolic space (4-point condition) is $4\delta$-hyperbolic (thin triangles).
+\end{exercise}
+
+\section{Primality of group rings}
+
+Our aim is to give a complete proof of the following, which was used to show that the unit conjecture for $K[G]$ implies the zero divisor conjecture for $K[G]$.
+
+\begin{theorem}[Connell]
+    $K[G]$ is prime if and only if $G$ has no non-trivial finite normal subgroup.
+\end{theorem}
+
+Recall that a ring $R$ is \emph{prime} if for all $\alpha, \beta \in R \setminus \{0\}$ there exists $\gamma \in R$ such that $\alpha \gamma \beta \neq 0$ (that is, the zero ideal is a prime ideal in the sense of non-commutative ring theory).
+
+To get there we need some group ring basics, a fair bit of group theory and an ingenious trick of Passman.
+
+\begin{definition}
+    Let $H \leq G$.
+    Then the projection $\pi_H \colon K[G] \to K[H]$ is defined by \[
+        \pi_H(\sum_{g \in G} a_g g) = \sum_{g \in H} a_g g.
+    \]
+\end{definition}
+
+Warning: this is never a ring homomorphism for $H \lneq G$! But we do have:
+
+\begin{lemma}
+    \label{lem:KH_bimodule_hom}
+    $\pi_H$ is a homomorphism of $(K[H], K[H])$-bimodules.
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{corollary}
+    Let $H \leq G$.
+    If $\alpha \in K[H]$ is a unit in $K[G]$, then it is a unit in $K[H]$.
+\end{corollary}
+
+\begin{proof}
+    For $\beta \in K[G]$ with $\alpha \beta = \beta \alpha = 1$ we have \[
+        \alpha \pi_H(\beta) = \pi_H(\alpha \beta) = 1 = \pi_H(\beta \alpha) = \pi_H(\beta) \alpha
+    \] so in fact $\alpha^{-1} = \beta = \pi_H(\beta) \in K[H]$.
+\end{proof}
+
+Recall that a \emph{left transversal} for $H \leq G$ is a set $X$ containing exactly one representative $x$ of each left coset of $H$, so that $G = \sqcup_{x \in X} x H$.
+
+\begin{lemma}
+    Let $X$ be a left transversal for $H$ in $G$.
+    Then every element $\alpha \in K[G]$ can be written uniquely as a finite sum \[
+        \alpha = \sum_{x \in X} x \alpha_x
+    \] with $\alpha_x \in K[H]$. In fact, $\alpha_x = \pi_H(x^{-1} \alpha)$.
+    Thus $K[G]$ is a free right $K[H]$-module with $X$ as a basis.
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+Recall that $M_n(R)$ denotes the ring of $n \times n$ matrices over a ring $R$.
+
+\begin{lemma}
+    \label{lemma:KG_in_MnKH}
+    Let $[G : H] = n < \infty$.
+    Then $K[G] \hookrightarrow M_n(K[H])$.
+\end{lemma}
+
+\begin{proof}
+    Let $X = \{x_1, \dots, x_n\}$ be a left transversal for $H$ in $G$.
+    Then $V = K[G]$ is a free right $K[H]$-module with basis $X$.
+    It is also a left $K[G]$-module and since left and right multiplication commute, $K[G]$ acts by $K[H]$-linear transformations of $V \cong K[H]^n$.
+    Since for each $\alpha \in K[G]$ and each index $j$ we have \[
+        \alpha x_j = \sum_{i=1}^n x_i \pi_H(x_i^{-1} \alpha x_j),
+    \] sending the element $\alpha$ to the matrix \[
+        \eta_X(\alpha) := \left( \pi_H(x_i^{-1} \alpha x_j) \right)_{ij}
+    \] defines the embedding (for choice of basis $X$).
+
+\end{proof}
+
+\begin{remark}
+    If $G$ is finite and $H = 1$ then this is just the regular representation.
+\end{remark}
+
+\begin{example}
+    Let $D_\infty = \gp{r, t}{r^2 = 1, t^r = t^{-1}} = \Z \rtimes \Z/2$ and take $X = \{1, r\}$ as the obvious left transversal for $\gen{t} = \Z$.
+    Then since $r \cdot 1 = r, r \cdot r = 1 \cdot 1, t \cdot 1 = 1 \cdot t, t \cdot r = r \cdot t^{-1}$, we have $K[D_\infty] \to M_2(K[t, t^{-1}])$ given by extending \[
+        r \mapsto \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix},
+        \quad
+        t \mapsto \begin{pmatrix} t & 0 \\ 0 & t^{-1} \end{pmatrix}.
+    \]
+\end{example}
+
+The first bit of group theory is:
+
+\begin{lemma}[Schur]
+    If $[G : Z(G)] < \infty$ then $|G'|$ is finite.
+\end{lemma}
+
+\begin{definition}
+    Let $H \leq G$ with $[G : H] = n < \infty$.
+    Pick a left transversal $\{x_1, \dots, x_n\}$ for $H$.
+    For each $g \in G$ and $1 \leq j \leq n$, we have $g x_j = x_i h_j$ for some unique $h_j \in H$.
+    The \emph{transfer} is defined as the map $G / G' \to H / H'$ given by \[
+        g \mapsto h_1 \dots h_n H'.
+    \]
+\end{definition}
+
+\begin{lemma}
+    The transfer is a group homomorphism and does not depend on the choice of transversal.
+\end{lemma}
+
+\begin{proof}
+    Map $K[G] \to M_n(K[H])$ via \cref{lemma:KG_in_MnKH}, $M_n(K[H]) \to M_n(K[H/H'])$ by extending $K[H] \to K[H/H']$, and $M_n(K[H/H']) \to K[H/H']$ via the determinant.
+    For given $g \in G$ and $1 \leq j \leq n$, with $g x_j = x_i h_j \Leftrightarrow h_j = x_i^{-1} g x_j$, the $j$-th column of $\eta_X(g)$ contains $h_j$ in row $i$, otherwise zeroes.
+    Letting $\operatorname{sgn}(g)$ denote the sign of the permutation $g$ induces on the set $G / H$, we have that the composition $G \to K[H/H']$ so defined maps \[
+        g \mapsto \operatorname{sgn}(g) h_1 \dots h_n \in K[H / H']
+    \]
+    where the image is moreover a trivial unit.
+    The group of trivial units is $K^\times \times H / H'$ so we can project onto the second factor to obtain our map \[
+        G \to H / H' \colon g \mapsto h_1 \dots h_n.
+    \]
+    As the image is abelian, it factors through $G/G'$ to define the transfer.
+    It is independent of the choice of transversal since change of basis of $K[G]$ produces similar matrices in $M_n(K[H])$, whose images in $M_n(K[H/H'])$ will have the same determinant.
+
+\end{proof}
+
+\begin{proof}[Proof of Schur's lemma]
+    Let $Z = Z(G)$.
+    Consider the transfer map $G / G' \to Z / Z' = Z$.
+    By centrality of $Z$, for $g \in Z$ this is simply $g \mapsto g^n$ (in fact, one can show this for all $g \in G$).
+    Thus $g \in G' \cap Z$ implies $g^n = 1$.
+    If $x_1, \dots, x_n$ is a transversal, then every commutator is of the form $[x_i z_1, x_j z_2] = [x_i, x_j]$ (for some $z_1, z_2 \in Z$) and thus $G'$ is finitely generated.
+    Now $[G' : G' \cap Z] \leq n$ so $G' \cap Z$ is finitely generated, finite exponent and abelian, thus finite.
+    Thus $G'$ is finite.
+\end{proof}
+
+\begin{definition}
+    The \emph{FC-centre} of a group $G$ is \[
+        \Delta(G) = \{ g \in G : |g^G| < \infty \},
+    \] the set of elements whose conjugacy class is finite.
+\end{definition}
+
+This is alternatively the set of elements $g$ whose centralizer $C_G(g)$ is finite index (by orbit-stabilizer theorem for $G \curvearrowright G$).
+As $C_G(gh) \geq C_G(g) \cap C_G(h)$ and $[G : C_G(g) \cap C_G(h)] \leq [G : C_G(g)] [G : C_G(h)]$ for all $g, h \in G$, we see that $\Delta(G)$ is a (characteristic) subgroup of $G$.
+
+We call $G$ an \emph{FC-group} if $G = \Delta(G)$.
+Note that $\Delta(\Delta(G)) = \Delta(G)$, i.e. the FC-centre is an FC-group.
+
+\begin{lemma}
+    \label{lemma:fc_is_locally_finite_by_free_abelian}
+    An FC-group is locally finite-by-(free abelian).
+\end{lemma}
+
+\begin{proof}
+    Let $H = \langle h_1, \dots, h_n \rangle \leq G$.
+    Then $C_G(H) = \cap_{i=1}^n C_G(h_i)$ is finite index in $G$ and thus $Z(H) = C_G(H) \cap H$ is finite index in $H$.
+    Thus Schur's lemma implies that $H'$ is finite.
+    Now $H / H'$ is a finitely generated abelian group so it has the form $T \oplus \mathbb{Z}^d$ where $T$ is finite.
+    Thus the kernel of the composition $H \to \mathbb{Z}^d$ is finite.
+\end{proof}
+
+\begin{remark}
+    The torsion elements of an abelian group form a characteristic subgroup, so any group (finitely generated or not) has a well-defined torsion-free abelianization.
+\end{remark}
+
+\begin{corollary}
+    A torsion-free virtually cyclic is cyclic.
+\end{corollary}
+
+\begin{proof}
+    Let $G$ be torsion-free and virtually cyclic with $G_0 = \gen{t}$ a finite index subgroup.
+    (If $G_0$ is finite, then $G$ is finite and thus trivial.)
+    We claim that $G$ is an FC-group.
+    For any $1 \neq g \in G$ there exists $n \geq 1$ such that $g^n \in G_0$, i.e. $g^n = t^m$ for some $m \in \Z$.
+    By torsion-freeness $m \neq 0$ and thus $C_G(g)$ contains $\gen{t^m}$ which is finite index in $G_0$ and thus in $G$.
+
+    A virtually finitely generated group is finitely generated so \cref{lemma:fc_is_locally_finite_by_free_abelian} applies.
+    Now we are done by the classification of finitely generated abelian groups.
+\end{proof}
+
+\begin{remark}
+    A torsion-free virtually abelian group need not be abelian, e.g.\ the fundamental group $\Z \rtimes \Z$ of the Klein bottle.
+\end{remark}
+
+We now have the tools to prove the following result on the torsion of $\Delta(G)$, \[
+    \Delta^+(G) := \{g \in \Delta(G) : \operatorname{ord}(g) < \infty \}.
+\]
+
+\begin{lemma}[B.H. Neumann]
+    \label{lemma:neumann_fc}
+    $\Delta^+(G)$ is a characteristic subgroup of $G$ and $\Delta(G) / \Delta^+(G)$ is torsion-free abelian.
+\end{lemma}
+
+\begin{proof}
+    If $g, h \in \Delta^+(G)$ then the generators of $H = \langle g, h \rangle$ are both in the kernel of its torsion-free abelianization, so $H$ is finite.
+    Thus $\Delta^+(G)$ is a subgroup, which is clearly characteristic.
+
+    Since $\Delta^+(G)$ contains \emph{precisely} the torsion elements of $\Delta(G)$, the quotient $\Delta(G) / \Delta^+(G)$ is torsion-free.
+    For any $H = \langle g, h \rangle \leq \Delta(G)$, we have that $H'$ is finite by \cref{lemma:fc_is_locally_finite_by_free_abelian} and thus $H' \leq \Delta^+(G)$, so $\Delta(G) / \Delta^+(G)$ is abelian.
+\end{proof}
+
+\begin{lemma}
+    \label{lemma:ncls_finite_delta}
+    If $x_1, \dots, x_n \in \Delta^+(G)$ then the normal closure $N = \ncls{x_1, \dots, x_n}_G$ is finite.
+\end{lemma}
+
+\begin{proof}
+    $N$ is generated by the finitely many conjugates in $G$ of the $x_i$, which are all in the kernel of the torsion-free abelianization of $N$, so we are done by \cref{lemma:fc_is_locally_finite_by_free_abelian}.
+\end{proof}
+
+\begin{lemma}[B.H. Neumann]
+    \label{lemma:neumann_cosets}
+    Let $G$ be a group and $H_1, \dots, H_n \leq G$.
+    Suppose there exist finitely many (left) cosets $g_{ij} H_i$ such that \[
+        G = \bigcup_{i,j} g_{ij} H_i.
+    \]
+    The some $[G : H_i] < \infty$.
+\end{lemma}
+
+\begin{proof}
+    We proceed by induction on $n$.
+    The base case $n=1$ is clear.
+    Suppose $n \geq 2$.
+    If all (right) cosets of $H_n$ occur, then $[G : H_n] < \infty$.
+    If not, then let $g H_n$ be such that $g H_n \neq g_{nj} H_n$ for all $j$, which gives $g H_n \cap g_{nj} H_n = \emptyset$ for all $j$.
+    Thus \[
+        g H_n \subseteq \bigcup_{i \leq n-1, k} g_{ik} H_i.
+    \]
+    Now replace each $g_{nj} H_n$ with $\set{g_{nj} g^{-1} g_{ik} H_i}{i \leq n-1}$ to write $G$ as a finite union of cosets of $H_1, \dots, H_{n-1}$.
+\end{proof}
+
+This result is similarly true for right cosets.
+
+The final ingredient is:
+\begin{theorem}[Passman]
+    Suppose that $\alpha, \beta \in K[G]$ such that $\alpha \gamma \beta = 0$ for all $\gamma \in K[G]$.
+    Then $\pi_{\Delta(G)}(\alpha) \pi_{\Delta(G)}(\beta) = 0$.
+\end{theorem}
+
+\begin{proof}[Proof of Connell's Theorem]
+    If $H \normal G$ is finite then let $\alpha = \sum_{h \in H} h \in K[G]$.
+    Note that $\alpha \in Z(K[G])$ and $\alpha^2 = |H| \alpha$.
+    Thus $\alpha \gamma (\alpha - |H|) = 0$ for all $\gamma \in K[G]$, so $K[G]$ is not prime.
+
+    If $G$ has no non-trivial finite normal subgroup, then by \cref{lemma:ncls_finite_delta} we have $\Delta^+(G) = 1$ and thus by Neumann's \cref{lemma:neumann_fc} $\Delta(G)$ is torsion-free abelian.
+    Suppose that $0 \neq \alpha, \beta \in K[G]$ with $\alpha \gamma \beta = 0$ for all $\gamma \in K[G]$.
+    By choosing some $g \in \supp(\alpha), h \in \supp(\beta)$ and replacing $\alpha$ with $g^{-1} \alpha$ and $\beta$ with $\beta h^{-1}$, we can assume without loss of generality that $1 \in \supp(\alpha)$ and $1 \in \supp(\beta)$.
+    Thus $\pi_{\Delta(G)}(\alpha), \pi_{\Delta(G)}(\beta) \neq 0$ but by Passman's theorem their product is zero.
+    This is impossible as $\Delta(G)$ is torsion-free abelian so $K[\Delta(G)]$ satisfies the zero divisor conjecture.
+\end{proof}
+
+\begin{proof}[Proof of Passman's Theorem]
+    Let $\Delta = \Delta(G)$.
+    It suffices to prove that $\pi_\Delta(\alpha) \beta = 0$ since then \[
+        0 = \pi_\Delta\left( \pi_\Delta(\alpha) \beta \right) = \pi_\Delta(\alpha) \pi_\Delta(\beta)
+    \] (as $\pi_\Delta$ is a homomorphism of $K[\Delta]$-bimodules, \cref{lem:KH_bimodule_hom}).
+
+    Write $\alpha = \alpha_0 + \alpha_1$ where $\alpha_0 = \pi_\Delta(\alpha)$.
+    Suppose for the sake of contradiction that $\alpha_0 \beta \neq 0$ and fix some $g_0 \in \supp(\alpha_0 \beta)$.
+    The assumption on $\alpha$ and $\beta$ is equivalent to saying \[
+        x^{-1} (\alpha_0 + \alpha_1) x \beta = 0
+    \] for all $x \in G$.
+    If $x \in C_G(\supp(\alpha_0))$ then this simplifies to \[
+        x^{-1} \alpha_1 x \beta = - \alpha_0 \beta
+    \] so that $g_0 \in \supp(x^{-1} \alpha_1 x \beta)$.
+    Let
+    \begin{align*}
+        \supp(\alpha_1) &= \{ v_1, \dots, v_m \} \\
+        \supp(\beta) &= \{ w_1, \dots, w_n \}
+    \end{align*}
+    So if $x \in C_G(\supp(\alpha_0))$ there exist $1 \leq i \leq m, 1 \leq j \leq n$ such that \[
+        x^{-1} v_i x w_j = g_0.
+    \]
+    If $g_{ij}$ is some solution in $x$ to $v_i^x = g_0 w_j^{-1}$, then the set of solutions is precisely the coset $C_G(v_i) g_{ij}$.
+
+    Now the definition of $\Delta$ guarantees that \[
+        C := C_G(\supp(\alpha_0)) = \bigcap_{g \in \supp(\alpha_0)} C_G(g)
+    \] is finite index in $G$ whereas for $v_i \in \supp(\alpha_1)$ we have $[G : C_G(v_i)] = \infty$ which implies $[C : C \cap C_G(v_i)] = \infty$ too.
+    If every $x \in C$ lies in some $C_G(v_i) g_{ij}$, then $C$ can be written as a finite union of cosets of infinite index subgroups, contradicting Neumann's \cref{lemma:neumann_cosets}.
+
+\end{proof}
