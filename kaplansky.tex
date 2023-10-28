@@ -379,6 +379,8 @@ We now meet the weakest property known to imply UP.
     A group is called \emph{diffuse} if every non-empty finite subset contains an extremal element.
 \end{definition}
 
+% TODO add figure showing extremal points on boundary of a disc
+
 \begin{remark}
     \label{remark:diffuse_intersection}
     $a \in A$ is extremal if and only if $a^{-1} A \cap A^{-1} a = \{1\}$.
@@ -431,15 +433,237 @@ We now meet the weakest property known to imply UP.
 
 \section{Hyperbolic groups}
 
-Crash course on hyperbolic groups and $\delta$-hyperbolic spaces, Delzant's theorem
+Geodesics in the hyperbolic plane resemble tripods.
+% Note to self: probably should have given a proper definition of tripod.
 
-We note one consequence of general interest (beyond studying group rings).
+% TODO add figure of slim triangle and comparison tripod
+
+Given 3 points $a, b, c$ in a metric space, they map isometrically to the vertices $\overline{a}, \overline{b}, \overline{c}$ of a unique tripod with central vertex $\overline{o}$.
+
+The length $d(\overline{o}, \overline{a})$ must be \[
+    \frac{1}{2}(d(a, b) + d(a, c) - d(b, c)) =: (b \cdot c)_a
+\] which we call the \emph{Gromov product}.
+Morally, it measures ``distance to the incircle''.
+
+Let $X$ be a geodesic metric space, i.e. a metric space such that for all $x, y \in X$ there is an isometric embedding $p \colon [0, d(x, y)] \to X$ of an interval (standard metric on $\R$) such that $p(0) = x$ and $p(d(x, y)) = y$.
+We denote the image of such a geodesic $p$ from $x$ to $y$ by $[x, y]$.
+For a geodesic triangle $\Delta = \Delta(a, b, c)$, define \[
+    \chi_\Delta \colon \Delta \to T_\Delta
+\] by mapping the three geodesics isometrically to the comparison tripod $T_\Delta$.
+For $\delta \geq 0$, $\Delta$ is called \emph{$\delta$-thin} if $p, q \in \chi_\Delta^{-1}(t)$ implies $d(p, q) \leq \delta$ for all $t \in T_\Delta$.
+
+\begin{definition}
+    Let $\delta \geq 0$.
+    A geodesic metric space $X$ is called \emph{$\delta$-hyperbolic} if every geodesic triangle is $\delta$-thin.
+    $X$ is called \emph{(Gromov) hyperbolic} if it is $\delta$-hyperbolic for some $\delta \geq 0$.
+\end{definition}
+
+\begin{example}
+    A tree is $0$-hyperbolic.
+\end{example}
+
+\begin{warning}
+    There are multiple equivalent definitions of hyperbolicity, but the constant $\delta$ will need to change in general.
+\end{warning}
+
+\begin{definition}
+    A group $G$ is called \emph{hyperbolic} if it acts properly cocompactly by isometries on a proper geodesic hyperbolic space.
+\end{definition}
+
+\begin{example}
+    \begin{itemize}
+        \item A free group acting a tree (deck transformations on universal cover of rose graph).
+        % TODO add figure of Cayley graph of F_2?
+        \item The fundamental group of a closed hyperbolic surface acting on the hyperbolic plane.
+    \end{itemize}
+\end{example}
+
+\begin{definition}
+    An action $G \acts X$ by homeomorphisms of a topological space is called \emph{proper} if for all compact $K \subseteq X$, the set $\set{g \in G}{gK \cap K \neq \emptyset}$ is finite.
+    It is called \emph{cocompact} if there exists compact $K \subseteq X$ such that $X = G \cdot K$.
+\end{definition}
+
+\begin{definition}
+    A metric space $X$ is called \emph{proper} if for all $x \in X$ and for all $r \geq 0$, the closed ball $\overline{B}(x, r) := \set{y \in X}{d(x, y) \leq r}$ is compact.
+\end{definition}
+
+\begin{remark}
+    \label{remark:geometric_actions}
+    For a proper metric space $X$, an action $G \acts X$ is proper if and only if for all $x \in X$ and $r \geq 0$, the set $\set{g \in G}{d(g \cdot x, x) \leq r}$ is finite and it is cocompact if and only if for all $x \in X$ there exists $r \geq 0$ such that $X = G \cdot \overline{B}(x, r)$.
+\end{remark}
+
+\begin{lemma}
+    \label{lemma:geometric_action_conjugacy_classes}
+    Let $G \acts X$ be a proper cocompact action by isometries on a proper metric space.
+    Let $R \geq 0$.
+    Then \[
+        S_R = \set{g \in G}{\Exists x \in X \text{ s.t. } d(g \cdot x, x) \leq R}
+    \] consists of finitely many conjugacy classes.
+    % Note to self: next time teaching this, just introduce translation length!
+    % In particular, it's much nicer to say "translation length is a conjugacy invariant".
+\end{lemma}
+
+\begin{proof}
+    Pick some basepoint $x_0 \in X$.
+    By cocompactness, there exists $r_0 \geq 0$ such that $X = G \cdot \overline{B}(x_0, r_0)$.
+    Suppose $g \in G$ and $x \in X$ with $d(g \cdot x, x) \leq R$.
+    Since $X = G \cdot \overline{B}(x_0, r_0)$, there exists $h \in G$ such that $x_1 := h^{-1} \cdot x \in \overline{B}(x_0, r_0)$.
+    Then \[
+        d(g^h \cdot x_1, x_1) = d(h^{-1} g h \cdot (h^{-1} \cdot x), h^{-1} \cdot x) = d(h^{-1} g x, h^{-1} x) = d(g \cdot x, x) \leq R
+    \] and thus \[
+        d(g^h \cdot x_0, x_0) \leq d(g^h \cdot x_0, g^h \cdot x_1) + d(g^h \cdot x_1, x_1) + d(x_1, x_0) \leq 2r_0 + R
+    \] so by properness there are only finitely many possibilities for $g^h$.
+    Thus the elements of $S_R$ are contained in finitely many conjugacy classes.
+    Since $d(g^h \cdot (h^{-1} \cdot x), h^{-1} \cdot x) = d(g \cdot x, x)$ for all $g, h \in G$ and $x \in X$, we note that $S_R$ will be a union of conjugacy classes.
+
+
+\end{proof}
+
+\begin{definition}[4-point condition]
+    Let $\delta \geq 0$.
+    A metric space $X$ is $(\delta)$-hyperbolic if
+    \begin{equation}\label{equation:fourpoint}
+        (x \cdot y)_w \geq \min\{ (x \cdot z)_w, (y \cdot z)_w \} - \delta \tag{$\ast$}
+    \end{equation}
+    for all $w, x, y, z \in X$.
+\end{definition}
+
+\begin{remark}
+    This definition is arguably less intuitive, but it also works for non-geodesic metric spaces e.g.\ discrete metric spaces.
+\end{remark}
+
+\begin{proposition}
+    \label{proposition:comparing_deltas}
+    Let $X$ be a geodesic metric space.
+    Then
+    \begin{enumerate}
+        \item[(i)] $X$ is $(\delta)$-hyperbolic $\implies$ $X$ is $4\delta$-hyperbolic.
+        \item[(ii)] $X$ is $\delta$-hyperbolic $\implies$ $X$ is $(\delta)$-hyperbolic.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (i) is left as an exercise. % TODO add hint
+
+    (ii) Pick $x'$ on a geodesic $[w, x]$, $y'$ on $[w, y]$ and $z'$ on $[w, z]$ such that \[
+        d(w, x') = d(w, y') = d(w, z') = \min\{ (x \cdot z)_w, (y \cdot z)_w \}.
+    \]
+    % TODO add figure
+    By $\delta$-thinness of $\Delta(w, x, z)$ we have $d(x', z') \leq \delta$ and similarly $d(z', y') \leq \delta$ so that $d(x', y') \leq 2\delta$.
+    Thus \[
+        d(x, y) \leq d(x, x') + 2\delta + d(y, y')
+    \] but by construction
+    \begin{align*}
+        d(x, x') &= d(w, x) - \min\{ (x \cdot z)_w, (y \cdot z)_w \} \\
+        d(y, y') &= d(w, y) - \min\{ (x \cdot z)_w, (y \cdot z)_w \}
+    \end{align*}
+    so that \[
+        d(x, y) \leq d(w, x) + d(w, y) - 2\min\{ (x \cdot z)_w, (y \cdot z)_w \} + 2 \delta
+    \] which says precisely that \[
+        (x \cdot y)_w \geq \min\{ (x \cdot z)_w, (y \cdot z)_w \} - \delta.
+    \]
+\end{proof}
+
+Let's repackage the 4-point condition to be symmetric: we have that
+\begin{align}
+    \label{equation:unpackaged_fourpoint1}
+    (x \cdot y)_w
+        &\geq (x \cdot z)_w - \delta \\
+    \label{equation:unpackaged_fourpoint2}
+    \text{or} \qquad (x \cdot y)_w
+        &\geq (y \cdot z)_w - \delta
+\end{align}
+(or both).
+Inequality~\eqref{equation:unpackaged_fourpoint1} says
+\begin{align*}
+    d(w, x) + d(w, y) - d(x, y)
+        &\geq d(w, x) + d(w, z) - d(x, z) - 2\delta \\
+    \Leftrightarrow \qquad \qquad d(w, z) + d(x, y)
+        &\leq d(w, y) + d(x, z) + 2\delta.
+\end{align*}
+So similarly rewriting \eqref{equation:unpackaged_fourpoint2} and combining the two possibilities, we see that the 4-point condition \eqref{equation:fourpoint} is equivalent to \begin{equation}
+    \label{equation:symmetric_fourpoint}
+    d(w, z) + d(x, y) \leq \max \{ d(w, y) + d(x, z), d(w, x) + d(y, z) \} + 2\delta. \tag{$\diamond$}
+\end{equation}
+There are $3$ ways to partition $\{w, x, y, z\}$ into pairs, all of which occur in the previous equation.
+Suppose $S \leq M \leq L$ are the corresponding sums of opposite edge lengths.
+Then \eqref{equation:fourpoint} is equivalent (considering permutations of the $4$ points) to the assertion $L \leq M + 2\delta$.
+
+\begin{theorem}[Delzant]
+    \label{theorem:delzant}
+    Let $X$ be a $\delta$-hyperbolic geodesic metric space (in the sense of thin triangles) and suppose that $G \acts X$ by isometries such that for all $1 \neq g \in G$ and for all $x \in X$, we have \[
+        d(x, g \cdot x) > 3 \delta.
+    \]
+    Then $G$ is diffuse.
+\end{theorem}
+
+\begin{proof}
+    We claim that for all $g \in G$, $1 \neq h \in G$ and $p \in X$ we have either \begin{align*}
+        d(gh \cdot p, p)
+            &> d(g \cdot p, p) \\
+        \text{or} \qquad
+        d(gh^{-1} \cdot p, p)
+            &> d(g \cdot p, p). \\
+    \end{align*}
+    Then we are done because for finite $A \subseteq G$ and any $p \in X$, an element $a \in A$ achieving $\max_{a \in A} d(g \cdot p, p)$ will be extremal.
+
+    Suppose for the sake of contradiction that
+    \begin{equation}
+        \label{equation:delzant_absurdum}
+        d(g \cdot p, p) \geq d(gh \cdot p, p), d(gh^{-1} \cdot p, p).
+    \end{equation}
+    Consider the symmetric 4-point condition \eqref{equation:symmetric_fourpoint} on $p, g \cdot p, gh \cdot p, gh^{-1} \cdot p$.
+    (Note that $X$ is assumed $\delta$-hyperbolic and is thus $(\delta)$-hyperbolic by \Cref{proposition:comparing_deltas}.)
+    The three possible sums are (since $G \acts X$ by isometries):
+    \begin{align*}
+        d(g \cdot p, p) + d(dg^{-1} \cdot p, gh \cdot p)
+        &= d(g \cdot p, p) + d(h^2 \cdot p, p) \\
+        d(gh \cdot p, p) + d(g \cdot p, gh^{-1} \cdot p)
+        &= d(gh \cdot p, p) + d(h \cdot p, p) \\
+        d(gh^{-1} \cdot p, p) + d(g \cdot p, gh \cdot p)
+        &= d(gh^{-1} \cdot p, p) + d(h \cdot p, p).
+    \end{align*}
+    If we assume $d(h^2 \cdot p, p) \geq d(h \cdot p, p)$, then together with \eqref{equation:delzant_absurdum} this implies that the first term is the largest and thus the 4-point condition says
+    \begin{align*}
+        d(g \cdot p, p) + d(h^2 \cdot p, p)
+        & \leq d(g h^{\pm 1} p, p) + d(h \cdot p, p) + 2\delta \\
+        & \leq d(g \cdot p, p) + d(h \cdot p, p) + 2\delta.
+    \end{align*}
+    So in either case, we have $d(h^2 \cdot p, p) \leq d(h \cdot p, p) + 2\delta$.
+    Thus \[
+        (h \cdot p, h^{-1} \cdot p)_p \geq \frac{1}{2} d(h \cdot p, p) - \delta.
+    \]
+    Take any geodesic $[p, h^{-1} \cdot p]$ and translate it by $h$ to get a preferred geodesic $[h \cdot p, p]$.
+    If we let $q$ be the midpoint of $[p, h^{-1} \cdot p]$ and then let $q', q''$ lie on $[q, p]$ respectively $[h \cdot q, p] \subset [h \cdot p, p]$ at distance $\delta$ from $q$ respectively $h \cdot q$, we have $d(q', q'') \leq \delta$ by $\delta$-thinness of $\Delta(h^{-1} \cdot p, p, h \cdot p)$.
+    But now \[
+        d(h \cdot q, q) \leq d(h \cdot q, q'') + d(q'', q') + d(q', q) \leq 3\delta,
+    \] a contradiction.
+
+\end{proof}
+
+\begin{corollary}
+    Let $G$ be a residually finite hyperbolic group.
+    Then $G$ is virtually diffuse.
+\end{corollary}
+
+\begin{remark}
+    It is a famous open problem whether all hyperbolic groups are residually finite.
+\end{remark}
+
+\begin{proof}
+    Let $G \acts X$ properly cocompactly by isometries, where $X$ is a proper geodesic $\delta$-hyperbolic metric space.
+    By \Cref{lemma:geometric_action_conjugacy_classes} there exist $1 = g_0, g_1, \dots, g_n \in G$ such that for all $g \in G$, if there exists $x \in X$ with $d(g \cdot x, x) \leq 3\delta$ then $g \sim g_i$ for some $i$.
+    By residual finiteness we can find $\phi \colon G \epi Q$, $Q$ finite, such that $\phi(g_1), \dots, \phi(g_n) \neq 1$.
+    Then $G_0 = \ker(\phi)$ satisfies the assumptions of Delzant's \cref{theorem:delzant}.
+\end{proof}
+
+We note one consequence of this corollary of general interest (i.e.\ beyond studying group rings).
 \begin{corollary}
     A residually finite hyperbolic group is virtually torsion-free.
 \end{corollary}
 
 \begin{exercise}
-    Show that a $(\delta)$-hyperbolic space (4-point condition) is $4\delta$-hyperbolic (thin triangles).
+    Verify \Cref{remark:geometric_actions} (translating between topological and metric conditions).
 \end{exercise}
 
 \section{Primality of group rings}
