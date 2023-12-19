@@ -218,7 +218,7 @@ For the unit conjecture we need something that \emph{a priori} is stronger.
 Most examples of groups with UP are orderable groups.
 
 \begin{definition}
-    A group $G$ is left-orderable if it admits a total order $<$ that is left-invariant, that is, $g < h$ implies $kg < kh$ for all $g, h, k \in G$.
+    A group $G$ is \emph{left-orderable} if it admits a total order $<$ that is left-invariant, that is, $g < h$ implies $kg < kh$ for all $g, h, k \in G$.
 \end{definition}
 
 \begin{remark}
@@ -1012,4 +1012,197 @@ The final ingredient is:
     %   1 1
     %   0 0
     % under the representation sending r to diag(w, w^-1) and s to a permutation matrix.
+\end{exercise}
+
+\section{Bi-orderable groups}
+
+\begin{definition}
+    A group $G$ is \emph{bi-orderable} if it admits a total order $<$ that is bi-invariant, that is, $g < h$ implies $kg < kh$ and $gk < hk$ for all $g, h, k \in G$.
+\end{definition}
+
+We will prove that if $G$ is bi-orderable, then $K[G]$ embeds into a skew field.
+This is much stronger than satisfying the zero divisor conjecture.
+
+\begin{lemma}
+    $\cP \subset G$ is the positive cone of a bi-ordering if and only if
+    \begin{enumerate}
+        \item $\cP^2 \subseteq \cP$ (that is, it is a subsemigroup)
+        \item $G = \cP \sqcup \{1\} \sqcup \cP^{-1}$.
+        \item $\cP^g = \cP$ for all $g \in G$ (that is, it is a normal subset)
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{example}
+    Torsion-free abelian groups are left-orderable (assuming the axiom of choice) and thus bi-orderable.
+\end{example}
+
+\begin{example}
+    Free groups are bi-orderable.
+\end{example}
+
+We will not prove this but it follows from $F_n$ being residually torsion-free nilpotent.
+
+\begin{lemma}
+    A bi-orderable group has unique roots.
+    That is, if $n \in \Z^+$ and $g, h \in G$ such that $g^n = h^n$, then $g = h$.
+\end{lemma}
+
+\begin{proof}
+    If $g \neq h$ then without loss of generality $g < h$ and thus \[
+        g^n = g^{n-1} g < g^{n-1} h < g^{n-2} h^2 < \dots < h^n.
+    \]
+\end{proof}
+
+\begin{example}
+    We can present the fundamental group $\Z \rtimes \Z$ of the Klein bottle as $\gp{a, b}{a^2 = b^2}$ which clearly fails to have unique roots.
+\end{example}
+
+\begin{proposition}
+    \label{proposition:nilpotent_biorderable}
+    Torsion-free nilpotent groups are bi-orderable.
+\end{proposition}
+
+\begin{example}
+    \[
+        \set{
+            \begin{pmatrix}
+                1 & x & z \\
+                  & 1 & y \\
+                  &   & 1
+            \end{pmatrix}
+        }{
+            x, y, z \in \Z
+        }
+    \] is the (integral) Heisenberg group.
+    It is the free $2$-generated class-$2$ nilpotent group.
+\end{example}
+
+\begin{lemma}
+    \label{lemma:biorderable_extensions}
+    Suppose $N \normal G$ such that $N$ and $G/N$ are bi-orderable, where $N$ admits a bi-ordering whose positive cone is a normal subset of $G$.
+    Then $G$ is bi-orderable.
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\Cref{lemma:biorderable_extensions} lets us prove inductively that torsion-free nilpotent groups are bi-orderable:
+if $G$ is class-$c$ nilpotent then $G / Z(G)$ is class-$(c-1)$ nilpotent.
+We just need to ensure $G / Z(G)$ is also torsion-free, that is, that for $n \in \Z^+$ and $g \in G$ we have \[
+    ( [g^n, h] = 1 \quad \forall h \in G ) \implies ( [g, h] = 1 \quad \forall h \in G ).
+\]
+It suffices to show for all $n \in \Z^+$ and $g, h \in G$ that \[
+    g^n = (h^{-1} g h)^n \implies g = h^{-1} g h.
+\]
+In other words, the whole question of bi-orderability for torsion-free nilpotent groups boils down to uniqueness of roots!
+
+\begin{lemma}
+    \label{lemma:quotient_by_tf_centre}
+    Suppose $Z(G)$ is torsion-free.
+    Then $Z(G / Z(G))$ is torsion-free.
+\end{lemma}
+
+\begin{proof}
+    Suppose $\overline{g} \in Z(G / Z(G))$ satisfies $\overline{g}^n = 1$ for some $n \in \Z^+$.
+    That is, for $g \in G$ with $\overline{g} = g Z(G)$ we have $g^n \in Z(G)$ and $[g, h] \in Z(G)$ for all $h \in G$.
+    The identity $[xy, z] = [x, z]^y [y, z]$ implies the identity \[
+        [x^n, y] = [x, y]^{x^{n-1}} [x, y]^{x^{n-2}} \dots [x, y]^x [x, y].
+    \]
+    In our case, for arbitrary $h \in G$ we have $[g, h] \in Z(G)$ and thus $[g^n, h] = [g, h]^n$.
+    But $g^n \in Z(G)$ so $[g^n, h] = 1$ and $[g, h] \in Z(G)$ which is torsion-free.
+    Thus $[g, h] = 1$.
+    As $h$ was arbitrary, this means $g \in Z(G)$, that is, $\overline{g} = 1$.
+\end{proof}
+
+\begin{corollary}
+    \label{corollary:nilpotent_quotient_torsion_free}
+    Let $G$ be torsion-free nilpotent.
+    Then $G / Z(G)$ is also torsion-free.
+\end{corollary}
+
+\begin{remark}
+    We see that for nilpotent $G$, if $Z(G)$ is torsion-free then $G$ is torsion-free.
+\end{remark}
+
+\begin{proof}[Proof of \Cref{corollary:nilpotent_quotient_torsion_free}]
+    The upper central series is \[
+        1 = Z_0 \normal Z_1 \normal \dots \normal Z_c = G
+    \] (where $G$ is class-$c$ nilpotent) defined by $Z_{i+1} / Z_i = Z(G / Z_i)$.
+    Repeated application of \Cref{lemma:quotient_by_tf_centre} (to $G$, $G / Z_1$, $G / Z_2$, \dots) shows that all quotients $Z_{i+1} / Z_i$ are torsion-free.
+    As extensions of torsion-free groups are torsion-free, the result follows.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{proposition:nilpotent_biorderable}]
+    Induct on nilpotency class, noting that a central subset is normal (so that \Cref{lemma:biorderable_extensions} applies) and torsion-free abelian groups are bi-orderable.
+\end{proof}
+
+Bi-orderability is the strongest property we've seen that implies the Kaplansky conjectures:
+
+\begin{proposition}
+    \label{proposition:biorderable_LI}
+    Bi-orderable groups are locally indicable.
+\end{proposition}
+
+We will prove \Cref{proposition:biorderable_LI} mostly in exercises.
+As bi-orderability passes to subgroups, it is equivalent to showing that a finitely generated bi-orderable group has infinite abelianization.
+
+\begin{definition}
+    Let $G$ be an ordered group.
+    A subgroup $H < G$ is called \emph{convex} if for $a, b \in H$ and $g \in G$ we have $a < g < h$ implies $g \in H$.
+\end{definition}
+
+\begin{definition}
+    Let $G$ be an ordered group.
+    Then $G$ is called \emph{Archimedean} if for all $g, h > 1$ there exists $n \in \Z^+$ such that $g^n > h$.
+\end{definition}
+
+\begin{proposition}
+    Let $G$ be an Archimedean bi-ordered group.
+    Then $G$ is abelian.
+\end{proposition}
+
+\begin{remark}
+    In fact, an Archimedean left-ordered group is automatically bi-ordered and moreover isomorphic to a subgroup of $\R$ (a theorem of Hölder).
+\end{remark}
+
+\begin{proof}
+    Note that if $g, t > 1$ then there exists $n \in \N$ such that $t^n \leq g < t^{n+1}$.
+    Suppose $G$ has a least positive element $t$.
+    Then $t^n \leq g < t^{n+1}$ implies $1 \leq t^{-n} g < t$ so that $t^{-n} g = 1$, that is, any positive element is a power of $t$, so $G = \gen{t} \cong \Z$ is abelian.
+    So we now assume there is no least positive element.
+
+    Let $x, y \in G$.
+    We will show $[x, y] = 1$.
+    We can assume without loss of generality that $x > 1$ and $y > 1$ and since $[y, x] = [x, y]^{-1}$ we can also assume $[x, y] \geq 1$.
+    Given any $t > 1$ we find integers $m, n$ such that $t^m \leq x < t^{m+1}$ and $t^n \leq y < t^{n+1}$ and thus $x^{-1} \leq t^{-m}$ and $y^{-1} \leq t^{-n}$ so that $[x, y] < t^{-m} t^{-n} t^{m+1} t^{n+1} = t^2$.
+    We now just need to show that if $g > 1$ then there exists $t > 1$ such that $t^2 \leq g$ as this will force $[x, y] = 1$.
+
+    Let $g > 1$ and take some $1 < s < g$.
+    If $s^2 \leq g$ then we take $t = s$.
+    Otherwise $s < g < s^2$ and $g < s^2$ implies $(s^{-1} g)^2 = s^{-1} \cdot g \cdot (s^{-1} g) < s^{-1} \cdot s^2 \cdot (s^{-1} g) = g$ whereas $s < g$ implies $1 < s^{-1} g$ so that $t = s^{-1} g$ works.
+\end{proof}
+
+\begin{exercise}
+    In this exercise we prove \Cref{proposition:biorderable_LI}.
+    Let $G$ be a bi-ordered group.
+    \begin{enumerate}
+        \item Let $g_0 > 1$.
+            Show that \[
+                N_{g_0} := \set{g \in G}{g^n < g_0 \quad \forall n \in \Z}
+            \] is a subgroup of $G$.
+        \item Suppose $G = \gen{S}$ and $g_0 = \max(S^{\pm 1})$.
+            (Note that if $S$ is infinite, the maximum may not exist.)
+            Show that $N_{g_0} \normal G$.
+            (Hint: let $g \in N_{g_0}$ and write arbitrary $h \in G$ as a product of $|h|$ elements of $S^{\pm 1}$.
+            Then show $g_0 < (h g_0 h^{-1})^{2|h| + 1}$ so that $g^{n(2|h| + 1)} < g_0$ implies $(h^{-1} g h)^n < g_0$.)
+        \item Show that $N_{g_0}$ is convex.
+        \item Show that there is a natural bi-ordering on the quotient of a bi-ordered group by a convex normal subgroup.
+        \item Show that the bi-ordering on $G / N_{g_0}$ thus constructed is Archimedean.
+        \item Conclude that a finitely generated bi-orderable group has infinite abelianization.
+    \end{enumerate}
 \end{exercise}
