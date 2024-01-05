@@ -1,0 +1,47 @@
+\chapter{Overview of results in the course}
+
+\newcommand{\myblock}[1]{\parbox{2.5cm}{\centering {#1}}}
+
+\tikzcdset{arrows=Rightarrow}
+\tikzcdset{arrows={shorten >=0.5ex,shorten <=0.5ex}}
+
+\begin{figure}
+\label{figure:overview}
+\begin{tikzcd}[cells={nodes={draw=black}}]
+    \myblock{$G$ bi-orderable} \arrow[rr, "\ref{theorem:malcev_neumann}", "\text{Malcev--Neumann}"'] \arrow[d, " \ref{proposition:biorderable_LI}"]
+        &
+            & \myblock{$K[G]$ embeds in a skew field} \arrow[d] \arrow[lddddd, start anchor={south west}, end anchor={north east}] % https://tex.stackexchange.com/a/369264
+                &
+    \\
+    \myblock{$G$ locally indicable} \arrow[d, "\ref{theorem:burns_hale}"]
+        &
+            & \myblock{exists $H <_{\text{f.i.}} G$ s.t. $K[H]$ embeds in a skew field} \arrow[rddd, start anchor={south east}, end anchor={north west}]
+                &
+    \\
+    \myblock{$G$ left-orderable} \arrow[d, "\ref{proposition:LO_diffuse_UP}"]
+        &
+            &
+                & \myblock{$G$ sofic} \arrow[d, "\text{Gromov}"]
+    \\
+    \myblock{$G$ diffuse} \arrow[d, "\ref{proposition:LO_diffuse_UP}"]
+        & \myblock{$G$ acts suitably on a hyperbolic space} \arrow[l, "\ref{theorem:delzant}"', "\text{Delzant}"]
+            & \myblock{$G$ hyperbolic or linear} \arrow[d]
+                & \myblock{$G$ surjunctive} \arrow[d]
+    \\
+    \myblock{$G$ has unique products} \arrow[d, "\ref{corollary:UP_implies_unit_conjecture}"]
+        &
+            & \myblock{$\{\text{primes}\} \setminus N_G$ infinite} \arrow[d, "\text{Formanek}"']
+                & \myblock{$K[G]$ stably finite} \arrow[d]
+    \\
+    \myblock{$K[G]$ satisfies unit conjecture} \arrow[r, "\ref{proposition:kaplansky_relations}"]
+        & \myblock{$K[G]$ satisfies zero-divisor conjecture} \arrow[r, "\ref{proposition:kaplansky_relations}"]
+            & \myblock{$K[G]$ satisfies idempotent conjecture} \arrow[r, "\ref{proposition:kaplansky_relations}"]
+                & \myblock{$K[G]$ is directly finite}
+    \\
+    \myblock{$e^2 = e \in K[G]$} \arrow[r, "\text{Zalesskii}"']
+        & \myblock{$\tr(e) \in \F_p$ or $\Q$}
+            & \myblock{$K = \C$} \arrow[ur, "\text{Kaplansky}"]
+                & \myblock{$G$ is residually finite} \arrow[u, "\ref{proposition:rf_implies_df}"']
+    \\
+\end{tikzcd}
+\end{figure}

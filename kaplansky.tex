@@ -70,6 +70,7 @@ These are the unit conjecture, zero divisor conjecture, idempotent conjecture an
 \end{remark}
 
 \begin{proposition}
+    \label{proposition:kaplansky_relations}
     For a given torsion-free group $G$ and field $K$, we have \[
         \text{unit conj.} \implies
         \text{zero divisor conj.} \implies
@@ -106,6 +107,7 @@ We will see later that the direct finiteness conjecture is true for $K = \C$.
 Here we prove:
 
 \begin{proposition}
+    \label{proposition:rf_implies_df}
     Let $G$ be residually finite.
     Then $K[G]$ is directly finite.
 \end{proposition}
@@ -208,6 +210,7 @@ For the unit conjecture we need something that \emph{a priori} is stronger.
 \end{proof}
 
 \begin{corollary}
+    \label{corollary:UP_implies_unit_conjecture}
     A group with UP satisfies the unit conjecture.
 \end{corollary}
 
@@ -281,6 +284,7 @@ The positive cone satisfies
 
 We will apply the lemma to prove the following:
 \begin{theorem}[Burns--Hale]
+    \label{theorem:burns_hale}
     If every finitely generated non-trivial subgroup of $G$ has a non-trivial left-orderable quotient, then $G$ is left-orderable.
 \end{theorem}
 
@@ -391,6 +395,7 @@ We now meet the weakest property known to imply UP.
 \end{remark}
 
 \begin{proposition}
+    \label{proposition:LO_diffuse_UP}
     For any group we have the implications \[
         \text{left-orderable} \implies \text{diffuse} \implies \text{UP}.
     \]
@@ -1013,6 +1018,66 @@ The final ingredient is:
     %   0 0
     % under the representation sending r to diag(w, w^-1) and s to a permutation matrix.
 \end{exercise}
+
+\section{The unit conjecture counterexample}
+
+Rips and Segev (1987) gave the first example of a torsion-free group without unique products, using small cancellation theory ($\abs{A} = 4$ and $B$ is huge).
+Promislow showed shortly thereafter (1988) that the crystallographic group \[
+    P = \gp{a, b}{b^{-1} a^2 b = a^{-2}, a^{-1} b^2 a = b^{-2}}
+\]
+does not have unique products, with $A = B$, $\abs{A} = 14$.
+In 2021, it was shown that $K[P]$ is a counterexample to the unit conjecture whenever $\chr\ K > 0$ (Gardam, Murray).
+
+Let $D_\infty = \gp{r, t}{r^2 = 1, t^r = t^{-1}}$ denote the infinite dihedral group.
+It naturally acts on $\R$ (isometrically) via $t \cdot x = x+1$ and $r \cdot x = -x$ (``translate'' and ``rotate'').
+
+\begin{lemma}
+    \label{lemma:promislow_embedding}
+    \begin{align*}
+        \phi \colon P &\to D_\infty \times D_\infty \times D_\infty \\
+        a &\mapsto (t, tr, r) \\
+        b &\mapsto (r, t, tr)
+    \end{align*}
+    is an injective group homomorphism.
+\end{lemma}
+
+\begin{remark}
+    The stabilizer of $K^n \times \{1\}$ in $GL(K^n \oplus K)$ is $\Aff(K^n)$.
+    This lets us rephrase the above embedding as the faithful representation \[
+        a \mapsto \begin{pmatrix}
+            1 &    &    & 1 \\
+              & -1 &    & 1 \\
+              &    & -1 & 0 \\
+              &    &    & 1
+        \end{pmatrix},
+        \quad
+        b \mapsto \begin{pmatrix}
+            -1 &   &    & 0 \\
+               & 1 &    & 1 \\
+               &   & -1 & 1 \\
+               &   &    & 1
+        \end{pmatrix}.
+     \]
+\end{remark}
+
+\begin{proof}[Proof of \Cref{lemma:promislow_embedding}]
+    Note that $\phi(a^2) = (t^2, 1, 1)$ so that $\phi(b^{-1} a^2 b) = (r^{-1} t^2 r, 1, 1) = (t^{-2}, 1, 1) = \phi(a^{-2})$.
+    Similarly $\phi(a^{-1} b^2 a) = \phi(b^{-2})$, so this is a well-defined group homomorphism.
+
+    Since $(a^2)^b = a^{-2}$, we have $b \in N_P(\gen{a^2})$, thus $\gen{a^2} \normal P$ and likewise $\gen{b^2} \normal P$.
+    As $(a^2)^{b^2} = (a^{-2})^b = a^2$, we see that $\Z^2 \cong \gen{a^2, b^2} \normal P$.
+    The relations of $P$ are a consequence (in general) of $a^2 = 1$ and $b^2 = 1$ respectively, so $P / \gen{a^2, b^2} \cong \gp{a, b}{a^2, b^2} \cong D_\infty$.
+    The abelianization of $D_\infty$ is $\Z/2 \oplus \Z/2$ with $[D_\infty, D_\infty] = \gen{abab} \cong \Z$ (exercise!).
+    Let $x = a^2, y = b^2, z = (ab)^2$.
+    Now $x^z = (a^2)^{abab} = (a^2)^{bab} = (a^{-2})^{ab} = (a^{-2})^b = a^2 = x$ and similarly $y^z = y$.
+    Thus $\gen{x, y, z} \cong \Z^3$ is a normal subgroup of $P$ with quotient $\Z/2 \oplus \Z/2$.
+
+    Since $\phi(x) = (t^2, 1, 1)$, $\phi(y) = (1, t^2, 1)$ and $\phi(ab) = (tr, trt, rtr) = (tr, r, t^{-1})$ which implies $\phi(z) = (1, 1, t^{-2})$, we see that $\phi$ is injective on $\gen{x, y, z}$.
+    We project $D_\infty \times D_\infty \times D_\infty$ onto the first two factors and then maps to $\Z/2 \oplus \Z/2$ by quotienting out the corresponding $\gen{t}$.
+    This gives a map $q \circ \phi \colon P \epi \Z/2 \oplus \Z/2$ which has $\gen{x, y, z}$ in the kernel.
+    Since $P / \gen{x, y, z} \cong \Z/2 \oplus \Z/2$, we see $\ker (q \circ phi) = \gen{x, y, z}$ and thus $g \notin \gen{x, y, z}$ implies $\phi(g) \neq 1$.
+    So $\phi$ is injective.
+\end{proof}
 
 \section{Bi-orderable groups}
 

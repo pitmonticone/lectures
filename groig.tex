@@ -8,6 +8,7 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{microtype}
+\usepackage{tikz-cd}
 
 \usepackage{hyperref}
 \usepackage{cleveref}
@@ -39,6 +40,7 @@
 \newcommand{\mono}{\hookrightarrow}
 \newcommand{\normal}{\vartriangleleft}
 
+\newcommand{\abs}[1]{\lvert #1 \rvert}
 \newcommand{\gen}[1]{\langle #1 \rangle}
 \newcommand{\gp}[2]{\langle \, #1 \, | \, #2 \, \rangle}
 \newcommand{\ncls}[1]{\left\langle\!\left\langle #1 \right\rangle\!\right\rangle}
@@ -53,6 +55,8 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
 
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\chr}{\mathrm{char}}
 \newcommand{\End}{\mathrm{End}}
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\Homeo}{\mathrm{Homeo}}
@@ -84,6 +88,7 @@
 
 \appendix
 
+\include{overview}
 \include{appendix_ws2324}
 
 \backmatter
