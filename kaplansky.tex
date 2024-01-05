@@ -767,6 +767,7 @@ Recall that $M_n(R)$ denotes the ring of $n \times n$ matrices over a ring $R$.
 The first bit of group theory is:
 
 \begin{lemma}[Schur]
+    \label{lemma:schur}
     If $[G : Z(G)] < \infty$ then $|G'|$ is finite.
 \end{lemma}
 
@@ -1077,6 +1078,64 @@ It naturally acts on $\R$ (isometrically) via $t \cdot x = x+1$ and $r \cdot x =
     This gives a map $q \circ \phi \colon P \epi \Z/2 \oplus \Z/2$ which has $\gen{x, y, z}$ in the kernel.
     Since $P / \gen{x, y, z} \cong \Z/2 \oplus \Z/2$, we see $\ker (q \circ phi) = \gen{x, y, z}$ and thus $g \notin \gen{x, y, z}$ implies $\phi(g) \neq 1$.
     So $\phi$ is injective.
+\end{proof}
+
+\section{The unit conjecture is not a ring theoretic statement}
+
+We now make precise (in a way) the observation that the unit conjecture is a ``group ring theoretic'' statement and not simply a ring theoretic statement about a group ring, as the other $3$ Kaplansky conjectures are.
+
+If the trivial units were a definable subset of the ring $K[G]$ (in the sense of model theory) then they would necessarily be invariant under all ring automorphisms, including conjugation by non-trivial units (if any exist).
+This cannot be the case for non-exotic groups, at least.
+Let's introduce the exotic groups in question.
+
+\begin{definition}
+    A group $V$ is called an \emph{Adian extension} if it is finitely generated and torsion-free and $V / Z(V)$ is an infinite group of finite exponent.
+\end{definition}
+
+This means there exists a positive integer $n$ such that $g^n = 1$ for all $g \in V / Z(V)$.
+
+\begin{remark}
+    The famous Burnside problem (1902) asks whether a finitely generated group of finite exponent must be finite.
+    Novikov--Adian (1968) gave the first counterexample.
+    Adian (1971) went one step further and constructed the first Adian extension.
+    A group containing an Adian extension can certainly be considered ``exotic''.
+\end{remark}
+
+\begin{example}
+    There are no solvable infinite ``Burnside groups'': we can prove by induction on the derived length that a finitely generated solvable group $G$ of finite exponent is finite.
+    Indeed, the base case of derived length $0$ is the trivial group.
+    For the inductive step, note that the abelianization of $G$ is finite (e.g.\ by the classification of finitely generated abelian groups, or argue directly) and the derived subgroup, being finite index in a finitely generated group, is itself finitely generated.
+    Since solvability passes to quotients, this immediately implies that there are no solvable Adian extensions.
+    In particular, the following proposition applies whenever $G$ is solvable.
+\end{example}
+
+\begin{proposition}
+    \label{proposition:selfnormalizing_trivial_units}
+    Let $G$ be torsion-free.
+    Suppose that no subgroup of $G$ is an Adian extension.
+    Let $T \leq (K[G])^\times$ denote the subgroup of trivial units.
+    Then $T$ is self-normalizing i.e. $N_{(K[G])^\times}(T) = T$.
+\end{proposition}
+
+In other words, if $u$ is \emph{any} non-trivial unit then $T^u \neq T$.
+(To show $T$ is not a definable subset of $K[G]$ we only need one such $u$.)
+
+\begin{proof}[Proof of \Cref{proposition:selfnormalizing_trivial_units}]
+    Suppose for the sake of contradiction that $u$ is a non-trivial unit of $K[G]$ with $T^u = T$.
+    Let $S = \supp(u)$.
+    Since $t u$ will also normalize $T$ for any $t \in T$, we can assume without loss of generality that $1 \in S$.
+    Let $n = \abs{S}!$.
+
+    Let $g \in G$ be a trivial unit.
+    Let $h := u^{-1} g u \in T$.
+    Considering the augmentation map, we see that $h \in G$.
+    We change perspective and write the previous equation as $g^{-1} u h = u$.
+    The map $G \to G \colon x \mapsto g^{-1} x h$ permutes the elements of $S$ and thus $x \mapsto g^{-n} x h^n$ fixes $S$ pointwise.
+    As $1 \in S$, this means that $g^n = h^n$ and the aforementioned map is actually the inner automorphism $x \mapsto g^{-n} x g^n$, so $g^n \in C_G(V)$ where $V = \gen{S}$.
+    This holds in particular for $g \in V$ so that the finitely generated group $V$ has the property that $V / Z(V)$ has exponent (dividing) $n$.
+    By assumption $V$ cannot be an Adian extension, so $V / Z(V)$ is finite.
+    By Schur's \Cref{lemma:schur}, this implies $V'$ is finite and hence trivial by torsion-freeness.
+    Thus $V$ is a torsion-free abelian group supporting the non-trivial unit $u$, a contradiction.
 \end{proof}
 
 \section{Bi-orderable groups}
