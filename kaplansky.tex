@@ -1309,6 +1309,103 @@ Moreover, as $H_f = \gen{g_i g_k^{-1}}$ and $\sigma$ simply permutes the element
 %     a \mapsto a^{-1}, b \mapsto b
 %     a \mapsto b, b \mapsto b^{-1} a^{-1} = c
 
+We now turn to:
+\begin{theorem}[Promislow]
+    $P$ is not a UP group.
+\end{theorem}
+The duplex is of the form $(S, S)$ where $\abs{S} = 14$.
+
+The combinatorial data of a duplex with $\abs{A} = m$, $\abs{B} = n$ is a partition of (or equivalent relation on) $\{1, \dots, m\} \times \{1, \dots, n\}$ into sets of size at least $2$.
+Similarly to with ravels, this also defines a finitely presented group: if $(i, j)$ and $(k, l)$ are in the same set of the partition then we have a relation $a_i b_j  = a_k b_l$.
+
+This group similarly has an obvious free factor, this time a free factor of $F_2 = \Z * \Z$ (corresponding to left translation on $A$ and right translation on $B$).
+The data for Promislow's duplex has no non-trivial symmetry in $\Sym(14) \times \Sym(14)$ -- but it does in $(\Sym(14) \times \Sym(14)) \rtimes \Z/2$ where we allow swapping the sets $A$ and $B$.
+Such a twist is \emph{not} an automorphism of the corresponding universal group as $a_i b_j = a_k b_l$ is \emph{not} equivalent to $b_j a_i = b_j a_k$.
+We only get an automorphism after inversion.
+In other words: there exists $\phi \in \Aut(P)$ such that $S = \phi(S)^{-1}$.
+
+\begin{remark}
+    Our presentation of Promislow's example differs from his.
+    He uses a different embedding $P \mono D_\infty^3$ and exploits symmetry on a ``piecewise'' basis i.e.\ coset by coset.
+    Both expositions really boil down to $P$ being virtually abelian.
+    % We also swap E_1 and E_2...
+\end{remark}
+
+For notational brevity, we follow Promislow's example and write $n$ for $t^n \in D_\infty$ and $n*$ for $t^n r \in D_\infty$.
+
+Let
+\begin{align*}
+    E_0 &= \{ (0, 0, -2), (0, 0, 2) \} \\
+    E_1 &= \{ (-1, 1*, 2*), (-1, -1*, 0*), (-1, 1*, 0*) \\
+        & \phantom{= \{} (1, 1*, -2*), (1, -1*, 0*), (1, 1*, 0*) \} \\
+    E_2 &= \{ (2*, -1, 1*), (0*, -1, 1*), (0*, -1, -1*) \\
+        & \phantom{= \{} (2*, 1, -1*), (0*, 1, -1*), (0*, 1, 1*) \}
+\end{align*}
+
+\begin{theorem}[Promislow]
+    \label{theorem:S_duplex}
+    Let $S = E_0 \cup E_1 \cup E_2$.
+    Then $S \cdot S$ has no unique product.
+\end{theorem}
+
+The automorphism $\phi$ is conjugation by $(1, 1, r) \in D_\infty^3$ i.e.\ by $(0, 0, 0*)$ in Promislow's shorthand.
+
+\begin{lemma}
+    \label{lemma:S_symmetry}
+    Let $\phi$ be conjugation by $(0, 0, 0*)$ and let $S$ be as \Cref{theorem:S_duplex}.
+    Then $\phi(S) = S^{-1}$.
+    \qed
+\end{lemma}
+
+\begin{remark}
+    Let $A = \gen{x, y, z} \normal P$.
+    Then $E_0 \subset A$, $E_1 \subset aA$, $E_2 \subset bA$.
+\end{remark}
+
+Note that $\phi(c) = (tr, r, t)^{(1, 1, r)} = (tr, r, t^{-1}) = c^{-1}$ and that $\phi \colon x \mapsto x, y \mapsto y, z \mapsto z^{-1}$.
+
+Why is \Cref{lemma:S_symmetry} helpful?
+We'll see in \Cref{corollary:promislow_freebie}.
+Let's keep in mind:
+\begin{lemma}
+    The map $G \to G \colon g \mapsto g^{-1}$ is an automorphism if and only if $G$ is abelian.
+\end{lemma}
+
+\begin{proof}
+    Since it is a bijection, it is an automorphism if and only if for all $g, h \in G$ we have $(gh)^{-1} = g^{-1} h^{-1}$ which is equivalent to $gh = hg$.
+\end{proof}
+
+\begin{lemma}
+    \label{lemma:virtually_abelian_trick}
+    If $A \normal G$ is an abelian normal subgroup and $\phi \in \Aut(G)$, $g \in G$ are such that $\phi(g) = g^{-1}$ and $\phi(a)^g = a^{-1}$ for all $a \in A$, then $\phi(h) = h^{-1}$ for all $h \in gA$.
+\end{lemma}
+
+\begin{proof}
+    There exists $a \in A$ such that $h = ga$ and so \[
+        \phi(h) = \phi(ga) = \phi(g) \phi(a) = g^{-1} \phi(a) g g^{-1} = a^{-1} g^{-1} = h^{-1}.
+    \]
+\end{proof}
+
+\begin{corollary}[to \Cref{lemma:S_symmetry}]
+    \label{corollary:promislow_freebie}
+    $E_1 \cdot E_2 = E_2 \cdot E_1$.
+\end{corollary}
+
+\begin{proof}
+    We note that \Cref{lemma:virtually_abelian_trick} is satisfies for $G = P$, $A = \gen{x, y, z}$, $g = c$ and the aforementioned $\phi$.
+    So if $u \in E_1$, $v \in E_2$, then $uv \in cA$ and $\phi(uv) = v^{-1} u^{-1}$ so that $uv = \phi(v)^{-1} \phi(u)^{-1} \in E_2 \cdot E_1$ as $E_2 = \phi(E_2)^{-1}$ and $E_1 = \phi(E_1)^{-1}$.
+\end{proof}
+
+We also have $E_0 \cdot E_1 = E_1 \cdot E_0$ and $E_0 \cdot E_2 = E_2 \cdot E_0$ (for similar but not identical reasons), so the tedious part is verifying that every element of $A$ in $S \cdot S$ occurs at least twice, which we skip.
+
+The known non-trivial units of torsion-free groups exhibit symmetry.
+\begin{definition}
+    Let $\theta \in \Aut(K[G])$.
+    We call a unit $\alpha \in K[G]$ \emph{$\theta$-unitary} if $\alpha^{-1} = \theta(\alpha)^*$.
+\end{definition}
+If $K[G]$ has non-trivial units, then $\Aut(K[G])$ is big and mysterious -- including conjugation by all units.
+We'll consider the subgroup of automorphisms that preserve the subgroup $K^\times \times G$ of trivial units.
+
 \section{The unit conjecture is not a ring theoretic statement}
 
 We now make precise (in a way) the observation that the unit conjecture is a ``group ring theoretic'' statement and not simply a ring theoretic statement about a group ring, as the other $3$ Kaplansky conjectures are.
