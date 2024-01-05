@@ -1080,6 +1080,97 @@ It naturally acts on $\R$ (isometrically) via $t \cdot x = x+1$ and $r \cdot x =
     So $\phi$ is injective.
 \end{proof}
 
+\begin{exercise}
+    Show that $\gp{r,t}{r^2, t^r = t^{-1}} \cong \gp{a, b}{a^2, b^2}$ and that the latter has derived subgroup $\gen{abab} \cong \Z$.
+\end{exercise}
+
+\begin{exercise}
+    Show that if $G$ does not have the unique product property then there is a finite subset $A \subset G$ such that $A \cdot A$ does not have a unique product.
+    Deduce that if $G$ does not have the unique product property, then there are arbitrarily large sets $A$ that witness this.
+\end{exercise}
+
+Having identified the abstract finitely presented group $P$ with a subgroup of $D_\infty \times D_\infty \times D_\infty$ in \Cref{lemma:promislow_embedding}, we can prove:
+
+\begin{corollary}
+    \label{corollary:P_is_tf}
+    $P$ is torsion-free.
+\end{corollary}
+
+\begin{proof}
+    The abelianization of $D_\infty$ is $\Z/2 \oplus \Z/2$ and an element is non-trivial torsion if and only if it has image $(0, \bar{r})$ or $(\bar{t}, \bar{r})$.
+    Thus the abelianization of $D_\infty^3$ is an elementary abelian $2$-group (isomorphic to $(\Z/2)^6$) and the image of $P$ is an order $4$ subgroup of $(D_\infty^3)^\text{ab}$, comprising
+    \begin{align*}
+        \overline{\phi(1)} &= ((0, 0), (0, 0), (0, 0)) \\
+        \overline{\phi(a)} &= ((\bar{t}, 0), (\bar{t}, \bar{r}), (0, \bar{r})) \\
+        \overline{\phi(b)} &= ((0, \bar{r}), (\bar{t}, 0), (\bar{t}, \bar{r})) \\
+        \overline{\phi(ab)} &= ((\bar{t}, \bar{r}), (0, \bar{r}), (\bar{t}, 0)).
+    \end{align*}
+    Thus every element of $P$ is either in the torsion-free subgroup $\gen{x, y, z} \cong \Z^3$ or has infinite order in precisely one of the three $D_\infty$ factors.
+    Thus $P$ is torsion-free.
+\end{proof}
+
+\begin{proof}[Alternative proof of \Cref{corollary:P_is_tf}]
+    (This abstract proof, that does not require identifying $P$ with a subgroup of $D_\infty \times D_\infty \times D_\infty$, is not examinable.)
+    We rewrite
+    \begin{align*}
+        P
+        &= \gp{x, b, y, a}{x^b = x^{-1}, y^a = y^{-1}, x=a^2, b^2 = y} \\
+        &= \gp{x, b}{x^b = x^{-1}} \underset{\substack{x = a^2 \\ b^2 = y}}{*} \gp{y, a}{y^a = y^{-1}}
+    \end{align*}
+    and since $\gen{x, b^2} \cong \gen{a^2, y} \cong \Z^2$ this exhibits $P$ as the free product with amalgamation over $\Z^2$ of two Klein bottle groups.
+    A standard fact of Bass--Serre theory is that free product with amalgamation preserves torsion-freeness.
+\end{proof}
+
+Recall that bi-orderable $\implies$ locally indicable $\implies$ left-orderable $\implies$ diffuse $\implies$ unique products $\implies$ unit conjecture.
+Each successive property is weaker and indeed more difficult to falsify for $P$.
+
+% TODO move this to where it is first used?
+\begin{definition}
+    A group $G$ is \emph{bi-orderable} if it admits a total order $<$ that is bi-invariant, that is, $g < h$ implies $kg < kh$ and $gk < hk$ for all $g, h, k \in G$.
+\end{definition}
+
+$P$ is not bi-orderable: $a^2$ is non-trivial and conjugate to $a^{-2}$
+
+$P$ is not locally indicable: we compute $P^{\text{ab}} \cong \Z^2 / \gen{(4, 0), (0, 4)} \cong \Z/4 \oplus \Z/4$ so $P$ itself does not surject onto $\Z$.
+
+$P$ is not left-orderable: note that $\sigma_a \colon P \to P \colon a \mapsto a^{-1}, b \mapsto b$ is an automorphism, as \[
+    \sigma_a(b^{-1} a^2 b a^2) = b^{-1} a^{-2} b a^{-2} \sim a^{-2} b^{-1} a^{-2} b = (b^{-1} a^2 b a^2)^{-1}
+\] and \[
+    \sigma_a(a^{-1} b^2 a b^2) = a b^2 a^{-1} b^2 \sim a^{-1} b^2 a b^2
+\] so it is a well-defined group homomorphism $P \to P$, which is an involution so in particular an automorphism.
+(Similarly $\sigma_b \colon P \to P \colon a \mapsto a, b \mapsto b^{-1}$ is an automorphism.)
+Suppose $<$ is a left-order on $P$.
+We can now suppose without loss of generality that $a > 1$ and $b > 1$.
+But $a^{-1} b \neq 1$ and if $a^{-1} b > 1$ we have \[
+    1 = a^{-1} b^2 a b^2 = (a^{-1} b) \cdot b \cdot a \cdot b^2 > 1
+\] and if $a^{-1} b < 1$ we have $b^{-1} a > 1$ and thus \[
+    1 = b^{-1} a^2 b a^2 = (b^{-1} a) \cdot a \cdot b \cdot a^2 > 1
+\] giving a contradiction in either case.
+
+Bowditch gave an elegant proof that $P$ is not diffuse (after this was already known via failure of unique products).
+We exploit some $3$-fold symmetry that is not immediately clear from the $2$-generator presentation. Recall \[
+    \phi(ab) = (tr, r, t^{-1})
+\] and thus \[
+    \phi(b^{-1} a^{-1}) = (tr, r, t)
+\] and hence cycling the factors of $D_\infty^3$ cycles through $a$, $b$, $c := b^{-1} a^{-1}$.
+(In a sense, this is ``all'' the $3$-fold symmetry of $P$, as $\abs{\Out(P)} = 2^5 \cdot 3$.)
+
+As we are acting on the left, it is more convenient to phrase diffuseness in terms of extremal points $a \in A$ such that $sa \notin A$ or $s^{-1} a \notin A$ for all $s \in G \setminus \{1\}$.
+It is also convenient to replace the finite set $A \subset G$ with a finite set $A \subset X$, where $G \acts X$ simply transitively.
+In this case, $X = \set{(x, y, z) \in \Z^3}{x + y + z = 1 \mod 2}$.
+
+For the set $A$ we take $6$ elements:\[
+    A = \{ (\pm 1, 0, 0), (0, \pm 1, 0), (0, 0, \pm 1) \}.
+\]
+The isometry $\phi(a)$ is a glide reflection about $y = \frac{1}{2}, z = 0$.
+Since for example \[
+    a \colon (-1, 0, 0) \mapsto (0, 1, 0) \mapsto (1, 0, 0)
+\] we see that $(0, 1, 0)$ is \emph{not} extremal.
+As $b^{-2} \cdot (0, 1, 0) = (0, -1, 0)$ and $(b^{-2} a)^2 = a^2$ we also have \[
+    b^{-2} a \colon (-1, 0, 0) \mapsto (0, -1, 0) \mapsto (1, 0, 0)
+\] so that also $(0, -1, 0)$ is \emph{not} extremal.
+By symmetry the same is true for the other $4$ points, completing the proof that $P$ is not diffuse.
+
 \section{The unit conjecture is not a ring theoretic statement}
 
 We now make precise (in a way) the observation that the unit conjecture is a ``group ring theoretic'' statement and not simply a ring theoretic statement about a group ring, as the other $3$ Kaplansky conjectures are.
@@ -1139,10 +1230,6 @@ In other words, if $u$ is \emph{any} non-trivial unit then $T^u \neq T$.
 \end{proof}
 
 \section{Bi-orderable groups}
-
-\begin{definition}
-    A group $G$ is \emph{bi-orderable} if it admits a total order $<$ that is bi-invariant, that is, $g < h$ implies $kg < kh$ and $gk < hk$ for all $g, h, k \in G$.
-\end{definition}
 
 We will prove that if $G$ is bi-orderable, then $K[G]$ embeds into a skew field.
 This is much stronger than satisfying the zero divisor conjecture.
