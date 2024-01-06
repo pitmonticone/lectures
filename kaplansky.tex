@@ -1406,6 +1406,126 @@ The known non-trivial units of torsion-free groups exhibit symmetry.
 If $K[G]$ has non-trivial units, then $\Aut(K[G])$ is big and mysterious -- including conjugation by all units.
 We'll consider the subgroup of automorphisms that preserve the subgroup $K^\times \times G$ of trivial units.
 
+Let $G$ and $H$ be arbitrary groups.
+We have $\Aut(G) \times \Aut(H) \mono \Aut(G \times H)$ in the obvious way, but $\Aut(G \times H)$ can be much bigger.
+Consider for example $G = H = \Z$: we're comparing $\left\{\left(\begin{smallmatrix} \pm 1 & \\ & \pm 1 \end{smallmatrix}\right)\right\}$ with $\GL_2(\Z)$.
+
+In our case, the full automorphism group fairly manageable.
+\begin{proposition}
+    \label{proposition:aut_of_centreless_times_abelian}
+    Suppose $G$ is centreless and $H$ is abelian.
+    Then \[
+        \Aut(G \times H) \cong (\Aut(G) \times \Aut(H)) \ltimes \Hom(G, H).
+    \]
+\end{proposition}
+
+\begin{remark}
+    We need $H$ abelian to have a \emph{group} $\Hom(G, H)$.
+    For arbitrary $G$ and $H$, there is a subgroup of $\Aut(G \times H)$ consisting of automorphisms \[
+        \set{
+            \begin{pmatrix}
+                \theta_G & \chi_H \\
+                \chi_G & \theta_H
+            \end{pmatrix}
+        }{
+            \substack{
+                \theta_G \in \Aut(G), \; \theta_H \in \Aut(H), \\
+                \chi_G \in \Hom(G, Z(H)), \; \chi_H \in \Hom(H, Z(G))
+            }
+        }.
+    \]
+\end{remark}
+% TODO add exercise on generic condition for such a map to be an automorphism
+
+\begin{proof}
+    Let $\theta \in \Aut(G \times H)$ and let $i_G, i_H, \phi_G, \phi_H$ be the natural inclusions and projections
+    \begin{align*}
+        G \overset{i_G}{\mono} G \times H \overset{\phi_G}{\epi} G \\
+        H \overset{i_H}{\mono} G \times H \overset{\phi_H}{\epi} H.
+    \end{align*}
+    Since $1 \times H$ is central in $G \times H$, so is $\theta(1 \times H)$ and thus $(\pi_G \circ \theta)(1 \times H) = 1$ as $G$ is centreless.
+    Thus \[
+        (\pi_G \circ \theta)(g, h) = (\pi_G \circ \theta)(g, 1) \cdot (\pi_G \circ \theta)(1, h) = (\pi_G \circ \theta)(g, 1)
+    \] is independent of $h$ so we have a well-defined homomorphism \[
+        \Aut(G \times H) \to \Aut(G) \colon \psi \mapsto \pi_G \circ \psi \circ i_G.
+    \]
+    Since $\theta(1 \times H) \leq 1 \times H$ we similarly get a homomorphism \[
+        \Aut(G \times H) \to \Aut(H) \colon \psi \mapsto \pi_H \circ \psi \circ i_H.
+    \]
+
+    Let $\theta_G = \pi_G \, \theta \, i_G \in \Aut(G)$, $\theta_H = \pi_H \, \theta \, i_H \in \Aut(H)$, and let $\chi = \theta_H^{-1} \, \pi_H \, \theta \, i_G \in \Hom(G, H)$ (where the final $\theta_H^{-1}$ is introduced for convenience, as will become apparent soon).
+    Since $\pi_G \, \theta \, i_H = 1$, we have for all $g \in G, h \in H$ that
+     \begin{align*}
+         \theta(g, h)
+             &= \theta(g, 1) \cdot \theta(1, h) \\
+             &= (\theta_G(g), \theta_H \chi(g)) \cdot (1, \theta_H (h)) \\
+             &= (\theta_G(g), \theta_H (\chi(g) h)).
+     \end{align*}
+     Now if $\theta' \in \Aut(G \times H)$ with $\theta_G', \theta_H', \chi'$ defined similarly, we compute
+     \begin{align*}
+         (\theta' \theta)(g, h)
+            &= (\theta_G'(\theta_G(g)), \theta'_H\left(\chi'(\theta_G(g)) \theta_H(\chi(g) h) \right)) \\
+            &= (\theta_G'\theta_G(g), \theta'_H \theta_H \left(\theta_H^{-1} \chi'\theta_G(g) \chi(g) h \right)) \\
+            &= (\theta_G'\theta_G(g), \theta'_H \theta_H \left((\chi'^{(\theta_G, \theta_H)} \chi)(g) h \right)) \\
+     \end{align*}
+     where we define the action \[
+         \chi'^{(\theta_G, \theta_H)} = \theta_H^{-1} \chi' \theta_G.
+     \]
+     Thus we have an isomorphism \[
+        \Aut(G \times H) \overset{\cong}{\to} (\Aut(G) \times \Aut(H)) \ltimes \Hom(G, H).
+     \]
+\end{proof}
+
+\begin{corollary}
+    The trivial-unit-preserving ring automorphisms of $K[P]$ are the maps of the form \[
+        \sum a_g \cdot g \mapsto \sum \tau(\chi(g) a_g) \cdot \phi(g)
+    \] for $\phi \in \Aut(P)$, $\tau \in \Aut(K)$, $\chi \in \Hom(P, K^\times)$.
+\end{corollary}
+
+\begin{proof}
+    First note that these are automorphisms of the group of trivial units that extend to automorphisms of $K[P]$.
+    $P$ is centreless as every $g \in P$ has $g^2 \in A = \gen{x, y, z}$, a normal $\Z^3$ subgroup on which the generators $a, b$ acts as $\left(\begin{smallmatrix} 1 & & \\ & -1 & \\ & & -1 \end{smallmatrix}\right)$ and $\left(\begin{smallmatrix} -1 & & \\ & 1 & \\ & & -1 \end{smallmatrix}\right)$ respectively.
+    The group of trivial units is isomorphic to $P \times K^\times$, with $K^\times$ abelian, so \Cref{proposition:aut_of_centreless_times_abelian} applies.
+    Note that $K^\times$ has many more automorphisms as a group than we get by restricting field automorphisms, but a ring automorphism of $K[P]$ that preserves $K^\times$ thus preserves $K$, on which it acts as a ring (equivalently, field) automorphism.
+\end{proof}
+
+\begin{remark}
+    A character $\chi \in \Hom(P, K^\times)$ is the same thing as a 1-dimensional representation $P \to \GL_1(K)$.
+    A representation of $P$ is a $K[P]$-module.
+    If we twist this module by precomposing with the automorphism of $K[P]$ associated to $\chi$, this has the effect of tensoring with the 1-dimensional representation.
+    One could call such $\chi$ a ``gauge automorphism''.
+\end{remark}
+
+\begin{theorem}[\cite{Gardam21}]
+    There exists $\alpha \in (\F_2[P])^\times$ with $\abs{\supp(\alpha)} = 21$.
+\end{theorem}
+
+That is, the Kaplansky unit conjecture is false.
+
+\begin{corollary}[\cite{Gardam21}]
+    $(\F_2[P])^\times$ contains free subgroups and is not finitely generated.
+\end{corollary}
+
+The construction of a non-trivial unit over $\F_2$ was generalized by Murray \cite{Murray21} to a unit $\alpha_d \in \F_d[P]$ for arbitrary prime $d$, with $\abs{\supp{\alpha_d}} \to \infty$ as $d \to \infty$.
+
+The unit $\alpha$ exhibits symmetry that was expressed in \cite{Gardam21} in terms of cosets of $N = \gen{x, y, z}$.
+This was explained coherently by Bartholdi, who observed
+\begin{theorem}[\cite{Bartholdi23}]
+    There exist non-trivial automorphisms $\theta_0, \theta_1 \in \Aut(K[P])$ such that $\theta_0(\alpha_d) = \alpha_d$ and $\theta_1(\alpha_d)^* = \alpha_d^{-1}$.
+\end{theorem}
+That is, the units are $\theta_1$-unitary.
+
+\begin{remark}
+    It is unclear whether allowing the field automorphism is helpful.
+\end{remark}
+
+\begin{remark}
+    If $\alpha \in K[G]$ is $\theta$-unitary, then $\alpha \theta(\alpha)^* = 1$ gives $\theta(\alpha) \theta^2(\alpha)^* = 1$ and thus $(\theta^2(\alpha)^*)^* \theta(\alpha)^* = 1^* = 1$ so that $\theta^2(\alpha) \theta(\alpha)^* = 1$ and by uniqueness of inverses $\theta^2(\alpha) = \alpha$.
+    % TODO be careful about swapping * and \theta if character takes values outside \pm 1...
+    Thus $\theta$ acts as a permutation on $\supp(\alpha)$ and will induce a finite order automorphism of $\gen{\supp(\alpha)}$ (which is typically all of $G$).
+    In Bartholdi's theorem, $\theta_1^2 = 1$ but in general $\theta^2$ can be non-trivial!
+\end{remark}
+
 \section{The unit conjecture is not a ring theoretic statement}
 
 We now make precise (in a way) the observation that the unit conjecture is a ``group ring theoretic'' statement and not simply a ring theoretic statement about a group ring, as the other $3$ Kaplansky conjectures are.
