@@ -736,7 +736,7 @@ Recall that $M_n(R)$ denotes the ring of $n \times n$ matrices over a ring $R$.
 \begin{lemma}
     \label{lemma:KG_in_MnKH}
     Let $[G : H] = n < \infty$.
-    Then $K[G] \hookrightarrow M_n(K[H])$.
+    Then $K[G] \mono M_n(K[H])$.
 \end{lemma}
 
 \begin{proof}
@@ -1497,12 +1497,14 @@ In our case, the full automorphism group fairly manageable.
 \end{remark}
 
 \begin{theorem}[\cite{Gardam21}]
+    \label{theorem:promislow_unit}
     There exists $\alpha \in (\F_2[P])^\times$ with $\abs{\supp(\alpha)} = 21$.
 \end{theorem}
 
 That is, the Kaplansky unit conjecture is false.
 
 \begin{corollary}[\cite{Gardam21}]
+    \label{corollary:huge_group_of_units}
     $(\F_2[P])^\times$ contains free subgroups and is not finitely generated.
 \end{corollary}
 
@@ -1511,6 +1513,7 @@ The construction of a non-trivial unit over $\F_2$ was generalized by Murray \ci
 The unit $\alpha$ exhibits symmetry that was expressed in \cite{Gardam21} in terms of cosets of $N = \gen{x, y, z}$.
 This was explained coherently by Bartholdi, who observed
 \begin{theorem}[\cite{Bartholdi23}]
+    \label{theorem:bartholdi_unit_symmetry}
     There exist non-trivial automorphisms $\theta_0, \theta_1 \in \Aut(K[P])$ such that $\theta_0(\alpha_d) = \alpha_d$ and $\theta_1(\alpha_d)^* = \alpha_d^{-1}$.
 \end{theorem}
 That is, the units are $\theta_1$-unitary.
@@ -1525,6 +1528,297 @@ That is, the units are $\theta_1$-unitary.
     Thus $\theta$ acts as a permutation on $\supp(\alpha)$ and will induce a finite order automorphism of $\gen{\supp(\alpha)}$ (which is typically all of $G$).
     In Bartholdi's theorem, $\theta_1^2 = 1$ but in general $\theta^2$ can be non-trivial!
 \end{remark}
+
+Bartholdi's explanation of the units first requires translation, i.e.\ multiplication of units by group elements (specifically $\alpha \mapsto \alpha b^{-1} a^{-1}$).
+We can simplify his explanation further if we apply a further gruop automoprphism (namely $a \mapsto a, b \mapsto a^{-2} b$) which has the effect of conjugating $\theta_0, \theta_1$ in $\Aut(K[P])$.
+Then we arrive at:
+
+\begin{proposition}
+    Let $\chi \colon P \to K^\times \colon a \mapsto -1, b \mapsto -1$.
+    Then we can take \[
+        \theta_0 = (\phi_0, 1), \theta_1 = (\phi_1, \chi) \in \Aut(P) \ltimes \Hom(P, K^\times)
+    \] where
+    \begin{align*}
+        \phi_0 &\colon a \mapsto a^{-1}, b \mapsto b^{-1} \\
+        \phi_1 &\colon a \mapsto a, b \mapsto b^{-1}
+    \end{align*}
+    in \Cref{theorem:bartholdi_unit_symmetry}.
+\end{proposition}
+
+As observed in \cite[Lemma 1]{Gardam21} in very different terms, this gives ``2 out of 4 cosets'' for free.
+
+\begin{lemma}[``2 out of 4 cosets'']
+    If $\alpha \in K[P]$ satisfies $\phi_0(\alpha) = \alpha$, then \[
+        \left( \alpha \cdot \theta_1(\alpha)^* \right)_g = 0
+    \] for all $g \in Na, Nb$, where $\Z^3 \cong N = \gen{x, y, z} \normal P$.
+\end{lemma}
+
+\begin{proof}
+    Let $\alpha = \sum a_g \cdot g$, so $\theta_1(\alpha)^* = \sum \chi(g) a_g \cdot \phi_1(g)^{-1}$.
+    Let $k \in Nb$.
+    Then \[
+        \left( \alpha \cdot \theta_1(\alpha)^* \right)k = \sum_{\substack{g, h \text{ s.t.} \\ g \phi_1(h)^{-1} = k}} a_g \chi(h) a_h.
+    \]
+    But $\phi_1(k) = k^{-1}$, so $g \phi_1(h)^{-1} = k$ implies $\phi_1(g) \phi_1^2(h)^{-1} = \phi_1(k) = k^{-1}$ and so $h \phi_1(g) = k$ too.
+    Since $g \phi_1(h) \in Nb$ and $\phi_1$ acts trivially on $P / N$, $gh \in Nb$ and in particular $g \neq h$.
+    As $P / N \cong \Z/2 \oplus \Z/2$, we also have $gh^{-1} \in Nb$, so now
+    \begin{align*}
+        \left( \alpha \cdot \theta_1(\alpha)^* \right)_k
+            &= \sum_{\substack{\{g, h\} \text{ s.t.} \\ g \phi_1(h)^{-1} = k}} a_g a_h (\chi(g) + \chi(h)) \\
+            &= \sum a_g a_h \chi(h^{-1}) (\chi(g h^{-1}) + 1) \\
+            &= 0
+    \end{align*}
+    as $g h^{-1} \in Nb$ implies $\chi(gh^{-1}) = \chi(b) = -1$.
+
+    Since $\theta_0(\alpha) = \alpha$, we have for $k \in Na$ that \[
+        \left( \alpha \cdot \theta_1(\alpha)^* \right)_k = \left( \alpha \cdot (\theta_1 \theta_0(\alpha))^* \right)_k = 0
+    \] similarly as $\phi_1 \phi_0 \colon a \mapsto a^{-1}, b \mapsto b$.
+\end{proof}
+
+\begin{remark}
+    The first non-trivial unit in $\F_2[P]$ was found by reformulating the quadratic system of equations one has for given finite candidate support sets (on $147$ elements) as a problem in boolean satisfiability (a.k.a.\ SAT).
+    Note that $2^{147} \sim 10^{44}$!
+    SAT is the original NP-complete problem.
+    It is the problem of deciding, given a propositional (so quantifier-free) Boolean formula, whether it can be made true (\emph{satisfied}) for some assignment of its variables to \texttt{false} and \texttt{true}.
+    Generally, the input is assumed to be in conjunctive normal form, something like \[
+        (\neg x \vee \neg y \vee \neg z) \wedge (\neg x \vee y \vee z) \wedge (x \vee \neg y \vee z) \wedge (x \vee y \vee \neg z)
+    \]
+    which asserts that $x + y + z = 0$ in $\F_2$ (making the natural identification of \texttt{false} with $0$ and \texttt{true} with $1$).
+\end{remark}
+
+\section{Units of the infinite dihedral group}
+
+We won't prove \Cref{corollary:huge_group_of_units} as it is mostly a computation using (variants on) the unit from \Cref{theorem:promislow_unit}.
+It does however have one essential ingredient that is of independent interest: the computation of the entire group of units of $\F_2[D_\infty]$, due to Mirowicz \cite{Mirowicz91}.
+A map $P \to D_\infty$ induces a map $(\F_2[P])^\times \to (\F_2[D_\infty])^\times$ and understanding $(\F_2[D_\infty])^\times$ completely (in particular, knowing its abelianization) allows us to deduce that $(\F_2[P])^\times$ is not finitely generated without even knowing all the units of $\F_2[P]$ (or whether they surject onto the units of $\F_2[D_\infty]$, for that matter).
+
+\subsection*{Characterizing units in $\F_2[D_\infty]$}
+
+Recall that $D_\infty = \gp{t, r}{r^2 = 1, t^r = t^{-1}}$ and $\langle t \rangle \cong \Z$ is an index 2 subgroup.
+By the standard trick \ref{lemma:KG_in_MnKH}, we can embed $\F_2[D_\infty] \mono M_2(\F_2[\Z])$.
+Every $\alpha \in \F_2[D_\infty]$ is uniquely expressible as $a + br$ for $a, b \in \F_2[\Z]$.
+Let $* \colon \F_2[\Z] \to \F_2[\Z]$ denote the involution induced by the action of $r$: $t^* = t^{-1}$.
+Then the embedding is \[
+    a + br \mapsto \begin{pmatrix} a & b \\ b^* & a^* \end{pmatrix}.
+\]
+
+Since we now are working with matrices over a commutative ring, we can check invertibility by whether or not the determinant is a unit.
+Since $\F_2[\Z]$ has no non-trivial units, this means the determinant must be some $t^k \in \Z$.
+However, the inverse matrix \[
+    t^{-k} \begin{pmatrix} a^* & b \\ b^* & a \end{pmatrix}
+    \] will be in the image of $\F_2[D_\infty]$ if and only if $k = 0$.
+Thus:
+
+\begin{lemma}
+    The element $\alpha = a + br \in \F_2[D_\infty]$ is a unit if and only if $\det \alpha = a a^* - b b^* = 1$. \qed
+\end{lemma}
+
+\begin{example}
+    The embedding sends \[
+        t^{-1} + t + (1 + t + t^2)r \mapsto \begin{pmatrix}
+            t^{-1} + t & 1 + t + t^2 \\
+            1 + t^{-1} + t^{-2} & t + t^{-1}
+        \end{pmatrix}
+    \] which has determinant \[
+        (t^{-1} + t)^2  - (1 + t + t^2)(t^{-2} + t^{-1} + 1) = t^{-2} + 2 + t^2 + t^{-2} + 2t^{-1} + 3 + 2t + t^2 = 1
+    \] so it is a unit.
+    For general invertible $2 \times 2$ matrices over commutative rings, \[
+        \begin{pmatrix}
+            a & b \\
+            c & d
+        \end{pmatrix}^{-1}
+        =
+        \frac{1}{ad - bc}
+        \begin{pmatrix}
+            d & -b \\
+            -c & a
+        \end{pmatrix}
+    \] so since we're in characteristic $2$ with $a = d$ and $\det = 1$, we see that this units is its own inverse.
+\end{example}
+
+For $a \in \F_2[\Z]$ define
+\begin{align*}
+    \max a &:= \max \supp{a} \\
+    \min a &:= \min \supp{a} \\
+    \deg a &:= \max a - \min a = \max aa^*
+\end{align*}
+
+(with $\max (0) = -\infty, \min(0) = \infty, \deg(0) = -\infty$).
+The trivial units are precisely those $a + br$ for which one of $a$ and $b$ is $0$ and the other has degree $0$ (that is, is some $t^k$).
+If one of $a$ and $b$ is $0$, this is moreover the only way to satisfy $\det \alpha = 1$.
+So every non-trivial unit has $a \neq 0$ and $b \neq 0$.
+Suppose $a + br$ is a non-trivial unit.
+If $\deg a = 0$, then $a a^* = t^0 = 1$ so we get $b b^* = 0$ which forces $b = 0$, contradicting non-triviality.
+Thus our non-trivial unit $a + br$ has \[
+    \deg(\alpha) := \deg a = \max a a^* = \max b b^* = \deg b \geq 1.
+\]
+We define the degree of a trivial unit (where $\{\deg(a), \deg(b)\} = \{-\infty, 0\}$) to be $0$.
+
+\subsection*{Generators for a group of non-trivial units}
+
+We now introduce our generators for $(\F_2[D_\infty])^\times$.
+For $i \in \N^+$ and $j \in \Z$ define
+\begin{align*}
+    n_{ij} &:= t^{-i} + t^i + t^j (t^{-i} + t^i) r \\
+    e_{ij} &:= t^{-i} + 1 + t^i + t^j (t^{-i} + t^i) r = 1 + n_{ij}.
+\end{align*}
+
+In general $(a + br)^2 = a^2 + bb^* + (ab + ba^*)r$, so when $a^* = a$ this cancels to $a^2 + bb^*$.
+So $(1 + t^j r)^2 = 1 + t^j t^{-j} = 0$.
+Note that $(t^{-i} + t^i)^* = t^{-i} + t^i$, so that $[1 + t^j r, t^{-i} + t^i] = 0$.
+Thus
+\begin{align*}
+    n_{ij} n_{i'j}
+    &= (t^{-i} + t^i) (1 + t^j r) (t^{-i'} + t^{i'}) (1 + t^j r) \\
+    &= (t^{-i} + t^i) (t^{-i'} + t^{i'}) (1 + t^j r)^2 \\
+    &= 0.
+\end{align*}
+
+In particular, $n_{ij}^2 = 0$ so that $e_{ij}^2 = 1$.
+
+\subsection*{Infinite elementary abelian 2-groups}
+
+Let us define subgroups (for $j \in \Z$)
+\begin{align*}
+    U_j &:= \gen{ e_{ij} \colon i \in \N^+} \\
+    U &:= \gen{U_j \colon j \in \Z}.
+\end{align*}
+
+As $n_{ij} n_{i'j} = 0$, we have that
+\begin{align*}
+    \bigoplus_{i \in \N^+} \Z/2 &\to U_j \\
+    \sum_{i \in I} 1_i &\mapsto 1 + \sum_{i \in I} n_{ij}
+\end{align*}
+is an isomorphism, as \[
+    (1 + \sum_{i \in I} n_{ij}) (1 + \sum_{i' \in I'}n_{i'j}) = 1 + \sum_{i \in I} n_{ij} + \sum_{i' \in I'}n_{i'j} + 0.
+\]
+
+\subsection*{The free product}
+
+Our next claim is that the natural map \[
+    \bigstar_{j \in \Z} U_j \to U
+\] is an isomorphism.
+% TODO get a better big asterisk
+
+We reformulate Mirowicz's argument as ping pong.
+The ping pong lemma is the standard way to prove that a group is a free product.
+We recall a statement of it here but will not prove it.
+
+\begin{lemma}[Ping pong lemma]
+    Let $G$ act on a set $X$ and let $G_i \leq G$ be subgroups, $i \in I$, at least one of which contains more than $2$ elements, and let $X_i \subset X$ be disjoint subsets.
+    Suppose that for all distinct $i, j \in I$ and all $g \in G \setminus \{1\}$ we have $g \cdot X_j \subseteq X_i$.
+    Then $G = *_{i \in I} G_i$.
+\end{lemma}
+
+\begin{remark}
+    The condition that some $G_i$ has more than $2$ elements is necessary: consider $G = G_1 \times G_2$ where both $G_1$ and $G_2$ are order $2$ and act non-trivially (in the only way possible) on $X = \{1, 2\}$ with $X_1 = \{1\}, X_2 = \{2\}$.
+\end{remark}
+
+\begin{example}
+    The standard example of an application of the ping pong lemma is to show that \[
+        \begin{pmatrix}
+            1 & x \\
+            0 & 1
+        \end{pmatrix},
+        \quad
+        \begin{pmatrix}
+            1 & 0 \\
+            x & 1
+        \end{pmatrix}
+    \] generate a free subgroup of $\SL_2(\R)$ whenever $x \geq 2$.
+    Here $G \acts \R^2$ in the natural way, $G_1, G_2$ are the respective cyclic subgroups and \[
+        X_1 = \set{\begin{pmatrix} x \\ y \end{pmatrix} \in \R^2}{\abs{x} > \abs{y}},
+        \quad
+        X_2 = \set{\begin{pmatrix} x \\ y \end{pmatrix} \in \R^2}{\abs{y} > \abs{x}}.
+    \]
+\end{example}
+
+\begin{lemma}
+    \label{lemma:mirowicz_pingpong}
+    Let $X = U$ and define disjoint $X_j$, $j \in \Z$, by \[
+        X_j = \{ ar + b \in X : \min(a) + j = \min(b) \}.
+    \]
+    Then the action of $U$ (with subgroups $U_j$, $j \in \Z$) on $X$ by right multiplication satisfies the assumptions of the ping pong lemma, so $U = *_{j \in \Z} U_j$.
+    Moreover $U = \{1\} \sqcup \bigsqcup_{j \in \Z} X_j$ so that all $g \in U \setminus \{1\}$ are non-trivial units.
+\end{lemma}
+
+\begin{proof}
+    Let $a + br \in X_i$, $i \neq j$, so that $\min(b) - \min(a) \neq j$ (and both $\min(a), \min(b)$ are finite).
+    Consider $g \in U_j \setminus \{1 \}$.
+    We are required to prove that \[
+        (c + dr) := (a + br) g
+    \] lies in $X_j$.
+
+    From the proof that $U_j \cong \oplus_{\N^+} \Z/2$ and the definition of $n_{ij}$ we see that $g = 1 + p(1 + t^j r)$ for some non-zero $p \in \F_2[\Z]$ with $p = p^* = \sum_{i \in I} (t^{-i} + t^i)$.
+    Set $n = \max p > 0$ (so we can write $p = t^{-n} + \dots + t^n$).
+    Thus \[
+        c = a(1 + p) + b(p t^{-j})
+    \] and since $\min( a (1 + p)) = \min(a) - n$ and $\min (b(p t^{-j})) = \min(b) - n - j$, which are distinct by assumption (that $a + br \notin X_j$), we have \[
+        \min(c) = \min(\min(a), \min(b) - j) - n.
+    \]
+    Likewise \[
+        d = apt^j + b(1 + p)
+    \] so that \[
+        \min(d) = \min(\min(a) - n + j, \min(b) - n)
+    \] and hence $\min(c) + j = \min(d)$ so that $c + dr \in X_j$.
+
+    Finally, note that if $g_j \in U_j \setminus \{1\}$ then $1 \cdot g_j \in X_j$ so by writing any non-trivial element of $U$ in normal form $g_{j_1} g_{j_2} \dots g_{j_k}$ we see it lies in $X_{j_k}$ and thus is of the form $a + br$ where both $a \neq 0$ and $b \neq 0$.
+\end{proof}
+
+\subsection*{The semidirect product decomposition}
+
+We abuse notation slightly and write $D_\infty$ for the subgroup of trivial units.
+We claim that $\gen{U, D_\infty}$ is naturally a semidirect product $U \rtimes D_\infty$.
+Since we proved above that $U \cap D_\infty = 1$, it only remains to show that the generators $t$ and $r$ of $D_\infty$ normalize $U$.
+
+\begin{align*}
+    t^{-1} e_{i,j} t
+    &= t^{-i} + 1 + t^i + t^{j-1} (t^{-i} + t^i) r t \\
+    &= t^{-i} + 1 + t^i + t^{j-2} (t^{-i} + t^i) r \\
+    &= e_{i,j-2} \\
+    r^{-1} e_{i,j} r
+    &= t^i + 1 + t^{-i} + t^{-j}(t^i + t^{-i}) r \\
+    &= e_{i,-j}
+\end{align*}
+
+So $D_\infty$ simply permutes the free factors $U_j$ ($j \in \Z)$ of $U$ according to a natural action of $D_\infty$ on $\Z$ with two orbits, namely evens and odds.
+(This action is generated by reflection in $0$ and $1$.
+Another natural choice of action of $D_\infty$ on $\Z$ would be generated by reflection in $0$ and $\frac{1}{2}$ and thus have only one orbit.)
+In other words, we have what has been referred to in the literature as a graph wreath product \[
+    (\oplus_{\N^+} \Z/2) \wr D_\infty
+\] where $\Z$ is a discrete graph, hence the ``graph product'' is just a free product.
+
+\subsection*{Proving all units are accounted for}
+
+\begin{lemma}
+    Let $\alpha \in (\F_2[D_\infty])^\times$ be non-trivial.
+    Then there exist $i \in \N^+, j \in \Z$ such that \[
+        \deg(\alpha e_{ij}) < \deg(\alpha).
+    \]
+\end{lemma}
+
+This immediately implies that $(\F_2[D_\infty])^\times = \gen{U, D_\infty} = U \rtimes D_\infty$.
+
+\begin{proof}
+    Let $\alpha = a + br$.
+    As one might guess after studying the proof of Lemma~\ref{lemma:mirowicz_pingpong}, we set $j := \min(b) - \min(a)$.
+
+    For $c + dr := (a + br) e_{ij}$ we have \[
+        c = a + (t^{-i} + t^{i})(a + t^{-j} b).
+    \]
+    Our choice of $j$ ensures cancellation at both ends ($\min$ and $\max$) in computing $a + t^{-j} b$.
+    We now choose our $i$ to be the minimal amount we move inside after such cancellation, so that when we extend by $i$ in both directions (by multiplying by $t^{-i} + t^i$) we get something that will again cancel with $a$.
+    That is, we set \[
+        i := \min\left(\min(a + t^{-j}b) - \min(a), \max(a) - \max(a + t^{-j}b)\right).
+    \]
+    Then
+    \begin{align*}
+        \min \left( (t^{-i} + t^{i})(a + t^{-j}b) \right) &\geq \min(a) \\
+        \max \left( (t^{-i} + t^{i})(a + t^{-j}b) \right) &\leq \max(a)
+    \end{align*}
+    with at least one being an equality, and thus $\min(c) \geq \min(a)$ and $\max(c) \leq \max(a)$ with at least one inequality being strict, so $\deg(c) < \deg (a)$ as claimed.
+    (NB: it is possible that $\deg(c) = 0$ or $c = 0$, in which case we know that $(a + br)e_{ij}$ is a trivial unit.)
+\end{proof}
 
 \section{The unit conjecture is not a ring theoretic statement}
 
