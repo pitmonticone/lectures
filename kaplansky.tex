@@ -990,8 +990,225 @@ The final ingredient is:
     \end{enumerate}
 \end{exercise}
 
-
 \section{Traces}
+
+(This section of the lectures follows \cite[Chapter 2]{Passman} very closely.)
+
+Suppose $\abs{G} = n < \infty$.
+Then $V = K[G]$ gives a finite dimensional representation of $G$, namely the regular representation.
+Fix as a basis $G$ which gives $\rho \colon K[G] \to M_n(K)$.
+As $G \acts G$ freely, we know that each $\rho(g)$ for $g \neq 1$ is a permutation matrix with zeroes on the diagonal, and of course $\rho(1) = I_n$.
+Thus \[
+    \tr(\rho(\sum_{g \in G} a_g \cdot g)) = \sum_{g \in G} a_g \cdot \tr(\rho(g)) = |G| \cdot a_1
+\] i.e.\ the trace of $\rho(\alpha)$, $\alpha \in K[G]$, is just a fixed multiple of the coefficient $a_1 = (\alpha)_1$ of the identity.
+This motivates defining
+\begin{definition}
+    The \emph{trace} on $K[G]$ is
+    \begin{align*}
+        \tr \colon K[G] &\to K \\
+                 \alpha &\mapsto (\alpha)_1.
+    \end{align*}
+\end{definition}
+
+\begin{lemma}
+    $\tr \colon K[G] \to K$ is $K$-linear and $\tr(\alpha \beta) = \tr(\beta \alpha)$ for all $\alpha, \beta \in K[G]$.
+\end{lemma}
+
+Note that $\tr(\alpha \beta) = \tr(\beta \alpha)$ is called the \emph{trace identity}.
+
+\begin{proof}
+    Linearity is clear.
+    If
+    \begin{align*}
+        \alpha &= \sum_{g} a_g \cdot g \\
+        \beta &= \sum_{g} b_g \cdot g \\
+    \end{align*}
+    then \[
+        \tr(\alpha \beta) = \sum_{gh = 1} a_g \cdot b_h = \sum_{hg = 1} b_h \cdot a_g = \tr(\beta \alpha).
+    \]
+\end{proof}
+
+\begin{definition}
+    An element $\alpha \in K[G]$ is called \emph{algebraic} if there is some non-zero polynomial $p(x) \in K[x]$ such that $p(\alpha) = 0$.
+\end{definition}
+
+\begin{example}
+    \begin{itemize}
+        \item $\alpha$ is called \emph{nilpotent} if $\alpha^m = 0$ for some $m \in \Z^+$
+        \item idempotent elements are algebraic (with $p(x) = x^2 - x$)
+    \end{itemize}
+\end{example}
+For these algebraic elements, trace is worth studying.
+
+\begin{lemma}
+    \label{lemma:alg_traces_of_finite_groups}
+    Let $\abs{G} = n < \infty$ and suppose that $\chr(K) \nmid n$.
+    \begin{enumerate}
+        \item[(i)] If $\alpha$ is nilpotent, then $\tr(\alpha) = 0$.
+        \item[(ii)] If $e$ is an idempotent, then $\tr(e) = \dim(e \cdot K[G]) / n \in \{0, \frac{1}{n}, \frac{2}{n}, \dots, 1\}$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Consider $V = K[G]$.
+    We will use $\tr(\alpha) = \frac{1}{\abs{G}} \tr(\rho(\alpha))$.
+
+    (i) Pick a basis of $V$ that is compatible with the chain of subspaces $V \supseteq \alpha V \supseteq \alpha^2 V \dots \supseteq \alpha^m V = \{0\}$.
+    (We want $v_1, \dots, v_k$ to be a basis of $\alpha^i V$ for all $i$, where $k = k(i) = \dim(\alpha^i V)$.)
+    Then the matrix for $\alpha$ with respect to this basis is strict upper triangular.
+    Thus $\tr(\rho(\alpha)) = 0$ and hence $\tr(\alpha) = 0$.
+
+    (ii) Suppose $e^2 = e$.
+    Then $V = eV \oplus (1-e)V$ (for $v \in V$, we have $v = ev + (1-e)v$ so that $eV$ and $(1-e)V$ together span, whereas if $ev = (1-e)v'$ then $ev = e^2 v = e(1-e)v' = (e - e^2)v' = 0$.)
+    Then $e$ acts as the identity on $eV$ and is zero on $(1-e)V$ and hence $\tr(\rho(e)) = \dim(eV)$.
+\end{proof}
+
+\begin{remark}
+    If $e$ is an idempotent, then so is $1-e$.
+    If $\abs{G} = n < \infty$ then $\frac{1}{n} \sum_g g$ is an idempotent.
+\end{remark}
+
+We will work towards proving the following general result on traces:
+\begin{theorem}[Kaplansky]
+    \label{theorem:kaplansky}
+    If $e \in \C[G]$ is a non-trivial idempotent, then $\tr(e) \in (0, 1)$.
+\end{theorem}
+
+\begin{corollary}
+    $\C[G]$ is directly finite.
+\end{corollary}
+
+\begin{proof}
+    If $\alpha \beta = 1$ then $(\beta \alpha)^2 = \beta (\alpha \beta) \alpha = \beta \alpha$ is an idempotent, but $\tr(\beta \alpha) = \tr(\alpha \beta) = 1$ so $\beta \alpha$ must be the trivial idempotent $1$.
+\end{proof}
+
+\begin{definition}
+    The \emph{prime subfield} of a field $K$ is the smallest subfield of $K$.
+\end{definition}
+If $\chr(K) = p > 0$, the prime subfield is $\F_p$.
+If $\chr(K) = 0$, it is $\Q$.
+
+In particular, \Cref{lemma:alg_traces_of_finite_groups} (ii) shows that if $e$ is an idempotent then $\tr(e)$ is in the prime subfield.
+This algebraic property is also true for infinite $G$, as we'll see later. % TODO add forward reference \ref{theorem:zalesskii}
+Also if $\chr(K) = 0$ then $0 \leq \tr(e) \leq 1$ and this analytic property is true in general by \Cref{theorem:kaplansky}.
+
+For infinite $G$ we no longer have a finite dimensional representation at hand, so we need to be able to get at $\tr(e)$ internally to $\C[G]$.
+
+\begin{definition}
+    For $\alpha = \sum_g a_g \cdot g, \beta = \sum_g b_g \cdot g \in \C[G]$, we define the inner product \[
+        \inner{\alpha}{\beta} = \sum_g a_g \overline{b_g}
+    \] which induces the norm \[
+        \norm{\alpha} = \sqrt{\inner{\alpha}{\alpha}}.
+    \] We also define an absolute value \[
+        \abs{\alpha} = \sum_g \abs{a_g}.
+    \] Finally, we define conjugation via \[
+        \overline{\alpha} = \sum_g \overline{a_g} g^{-1}.
+    \]
+\end{definition}
+
+\begin{lemma}
+    $(\C[G], \inner{\cdot}{\cdot})$ is an inner product space and $\inner{\alpha}{\beta} = \tr(\alpha \overline{\beta})$.
+    Furthermore $\alpha \mapsto \overline{\alpha}$ is a ring anti-automorphism of $\C[G]$ and for all $\alpha, \beta, \gamma \in \C[G]$ we have \[
+        \inner{\alpha}{\beta \gamma} = \inner{\alpha \overline{\gamma}}{\beta} = \inner{\overline{\beta}\alpha}{\gamma}.
+    \]
+\end{lemma}
+
+Thus conjugation is the adjoint with respect to left and right multiplication.
+
+\begin{proof}
+    This is the standard inner product on $V = \C[G]$ with respect to the basis $G$.
+    Note that \[
+        \tr(\alpha \overline{\beta}) = (\alpha \overline{\beta})_1 = \sum_{gh = 1}(\alpha)_g (\overline{\beta})_h = \sum_g a_g \overline{b_g} = \inner{\alpha}{\beta}.
+    \]
+    Since $(g \cdot h)^{-1} = h^{-1} \cdot g^{-1}$, it is clear that $\overline{\alpha \beta} = \overline{\beta} \overline{\alpha}$.
+    Likewise it is clear that $\overline{\alpha + \beta} = \overline{\alpha} + \overline{\beta}$ and $\overline{\overline{\alpha}} = \alpha$.
+    For all $\alpha, \beta, \gamma \in \C[G]$ we have \[
+        \inner{\alpha}{\beta \gamma} = \tr(\alpha \cdot \overline{\beta \gamma}) = \tr(\alpha \overline{\gamma} \overline{\beta}) = \inner{\alpha \overline{\gamma}}{\beta}
+    \] and \[
+        \inner{\alpha}{\beta \gamma} = \tr(\alpha \overline{\gamma} \overline{\beta}) = \tr(\overline{\beta} \alpha \overline{\gamma}) = \inner{\overline{\beta} \alpha}{\gamma}.
+    \]
+\end{proof}
+
+Now, as a warm up to the general result, we can give a different proof of:
+\begin{lemma}
+    Let $G$ be finite.
+    If $e \in \C[G]$ is an idempotent, then $\tr(e) \geq 0$.
+\end{lemma}
+
+\begin{proof}
+    Let $I = e \C[G] = \set{ e \alpha }{\alpha \in \C[G]}$ be the right ideal of $\C[G]$ generated by $e$.
+    Let $I^\perp$ be its orthogonal complement.
+    Since $\C[G]$ is finite dimensional, $\C[G] = I \oplus I^\perp$ is a direct sum decomposition.
+    We note that $I^\perp$ is also a right ideal: if $\alpha \in I$, $\beta \in I^\perp$ and $\gamma \in \C[G]$, then \[
+        \inner{\alpha}{\beta \gamma} = \inner{\alpha \overline{\gamma}}{\beta} = 0
+    \] as $\alpha \overline{\gamma} \in I$.
+
+    Now let $1 = f + f^\perp$ with $f \in I, f^\perp \in I^\perp$.
+    As $f^\perp = 1 - f$ we see that $f^\perp f = f f^\perp$, but $f^\perp f \in I^\perp$ and $f f^\perp \in I$, so in fact $f f^\perp = 0$, so that $f^2 = f(1 - f^\perp) = f$ and similarly $(f^\perp)^2 = f^\perp$.
+
+    For any $\alpha \in \C[G]$ we have $\alpha = f \alpha + f^\perp \alpha$ with $f \alpha \in I$ and $f^\perp \alpha \in I^\perp$.
+    Thus if $\alpha \in I$, then $f \alpha = \alpha$, so we have $f \C[G] \supseteq I$.
+    But $f \C[G] \subseteq I$ since $f \in I$ and $I$ is a right ideal, thus $f \C[G] = I$ and similarly $f^\perp \C[G] = I^\perp$.
+
+    As $f$ is orthogonal to $f^\perp \C[G] = I^\perp$, for all $\alpha \in \C[G]$ we have \[
+        0 = \inner{f}{f^\perp \alpha} = \inner{f}{(1-f)\alpha} = \inner{\overline{(1-f)} f}{\alpha}.
+    \]
+    Letting $\alpha = \overline{(1-f)} f$ we see that $(1 - \overline{f}) f = 0$, that is $\overline{f} f = f$.
+    Hence $\overline{f} = \overline{\overline{f} f} = \overline{f} f = f$ so $f$ is a self-adjoint idempotent, i.e.\ what we call a \emph{projection}.
+    Since $e, f \in I$ and both act as the identity on $I$, we have $e = fe$ and $f = ef$.
+    Thus \[
+        \tr(e) = \tr(fe) = \tr(ef) = \tr(f).
+    \]
+    But \[
+        \tr(f) = \tr(f \overline{f}) = \inner{f}{f} = \norm{f}^2 \geq 0.
+    \]
+\end{proof}
+
+For infinite $G$, $\C[G]$ will not have such direct sum decompositions, or in other words, such an $f$ need not exist.
+One approach is to embed $\C[G]$ in either the reduced group $C^*$-algebra of $G$ or the von Neumann algebra of $G$.
+An alternative approach introduced by Passman, which we follow, is to take better and better approximations $f_n$ of such an element $f$ without ever leaving $\C[G]$.
+
+We can characterize $f$ as follows.
+For $\alpha \in I$ we consider the distance from $\alpha$ to $1$.
+By definition \[
+    d(\alpha, 1)^2 = \norm{\alpha - 1} = \inner{\alpha - 1}{\alpha - 1} = \inner{\alpha - f - f^\perp}{\alpha - f - f^\perp} = \norm{\alpha - f}^2 + \norm{f^\perp}^2
+\] as $\alpha - f \in I$ implies that $\inner{\alpha - f}{f^\perp} = 0$.
+Thus $d(\alpha, 1) \geq \norm{f^\perp}$ with equality if and only if $\alpha = f$, so $f$ is the unique element of $I$ that is closest to $1$.
+
+Let $G$ be arbitrary.
+If $L$ is a $\C$-subspace of $\C[G]$, we define \[
+    d(L, \gamma) = \inf_{\alpha \in L} \norm{\alpha - \gamma}.
+\]
+For $I = e \C[G]$, since $\C[G]$ is not complete we cannot expect that this infimum is achieved.
+But we can approach it.
+Recall that $\inner{\beta}{f - 1} = 0$ for all $\beta \in I$.
+We will take $f_n$ such that $\norm{f_n - 1} \to d(I, 1)$ as $n \to \infty$.
+The following generalization of the Cauchy--Schwarz inequality lets us see that then also $\inner{\beta}{f_n - 1} \to 0$ as $n \to \infty$.
+
+\begin{lemma}
+    Let $(V, \inner{\cdot}{\cdot})$ be an inner product space, $L \subseteq V$ a subspace and $\alpha, \beta \in L$.
+    Then \[
+        \abs{\inner{\beta}{\alpha - \gamma}}^2 \leq \norm{\beta}^2 ( \norm{\alpha - \gamma}^2 - d(L, \gamma)^2).
+    \]
+\end{lemma}
+
+So if $\alpha \in L$ is close to realizing $d(L, \gamma)$, then $\alpha - \gamma$ is almost orthogonal to $L$.
+
+\begin{proof}
+    The lemma is trivial for $\beta = 0$ so suppose $\beta \neq 0$ and set $k = \inner{\alpha - \gamma}{\beta} / \norm{\beta}^2$.
+    Then $\alpha - k \beta \in L$ so that \[
+        \norm{\alpha - k \beta - \gamma}^2 \geq d(L, \gamma)^2.
+    \]
+    Then
+    \begin{align*}
+        \norm{\alpha - \gamma}^2 - d(L, \gamma)^2
+        &\geq \norm{\alpha - \gamma}^2 - \norm{\alpha - k \beta - \gamma}^2 \\
+        &= \inner{\alpha - \gamma}{\alpha - \gamma} - \inner{\alpha - k \beta - \gamma}{\alpha - k \beta - \gamma} \\
+        &= k \inner{\beta}{\alpha - \gamma} + \overline{k} \inner{\alpha - \gamma}{\beta} - k \overline{k} \inner{\beta}{\beta} \\
+        &= \inner{\beta}{\alpha - \gamma} \overline{\inner{\beta}{\alpha - \gamma}} / \norm{\beta}^2 \\
+        &= \abs{\inner{\beta}{\alpha - \gamma}}^2 / \norm{\beta}^2.
+    \end{align*}
+\end{proof}
 
 \begin{exercise}
     Let $G = S_3 = D_6$ generated by $r = (1 2 3)$ and $s = (1 2)$.
@@ -1019,6 +1236,163 @@ The final ingredient is:
     %   0 0
     % under the representation sending r to diag(w, w^-1) and s to a permutation matrix.
 \end{exercise}
+
+We will use a few basic identities.
+\begin{lemma}
+    \begin{enumerate}
+        \item[(i)] $\norm{\alpha + \beta} \leq \norm{\alpha} + \norm{\beta}$, $\abs{\alpha + \beta} \leq \abs{\alpha} + \abs{\beta}$.
+        \item[(ii)] $\abs{\tr \alpha} \leq \norm{\alpha}$, $\inner{\alpha}{1} = \tr \alpha$.
+        \item[(iii)] $\norm{\alpha \beta} \leq \norm{\alpha} \cdot \abs{\beta}$, $\abs{\alpha \beta} \leq \abs{\alpha} \cdot \abs{\beta}$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (i) is standard (or an exercise using Cauchy--Schwarz) and (ii) is immediate.
+    For (iii), let $g \in G$.
+    Then clearly $\norm{\alpha g} = \norm{\alpha}$ as both are $\sum_h \abs{(\alpha)_h}^2$.
+    Seen differently, $g$ is an isometry since $\overline{g} = g^{-1}$: \[
+        \norm{\alpha g} = \inner{\alpha g}{\alpha g} = \inner{\alpha g \overline{g}}{\alpha} = \norm{\alpha}.
+    \]
+    Thus \[
+        \norm{\alpha \beta} = \norm{ \sum_g \alpha \cdot (\beta)_g g } \leq \sum_g \norm{ \alpha \cdot (\beta)_g g} = \sum_g \norm{\alpha} \cdot \abs{\beta_g} = \norm{\alpha} \abs{\beta}.
+    \] and similarly $\abs{\alpha g} = \abs{\alpha}$ so that $\abs{\alpha \beta} \leq \abs{\alpha} \abs{\beta}$.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{theorem:kaplansky}]
+    Let $e \neq 0$ be an idempotent in $\C[G]$ and let $I = e \C[G]$.
+    We will prove that $\tr(e) > 0$ and in fact $\tr e \geq \norm{e}^2 / \abs{e}^2$.
+    Then we are done since if $e$ is a non-trivial idempotent, then so is $1-e$, and $\tr(1-e) = 1 - \tr(e) >  0$ so that $\tr(e) < 1$.
+
+    Let $d = d(I, 1)$ and choose $f_n \in I$ with \[
+        \norm{f_n - 1}^2 < d^2 + \frac{1}{n^4}.
+    \]
+    Then the lemma ensures \[
+        \abs{\inner{\beta}{f_n - 1}} < \norm{\beta} \frac{1}{n^2}
+    \] for all $\beta \in I$.
+    Since $f_n \in I$ we have $e f_n = f_n$ and thus \[
+        \tr(f_n e) = \tr(e f_n) = \tr(f_n).
+    \]
+    Now \[
+        \abs{ \tr f_n e - \tr e} = \abs{\tr(f_n e - e)} \leq \norm{f_n e - e}
+    \] and
+    \begin{align*}
+        \norm{f_n e - e}^2
+            &= \inner{(f_n - 1)e}{(f_n - 1)e} \\
+            &= \inner{(f_n - 1)e \overline{e}}{f_n - 1} \\
+            &\leq \norm{(f_n - 1) e \overline{e}} \frac{1}{n^2} \\
+            &\leq \norm{f_n - 1} \abs{e \overline{e}} \frac{1}{n^2} \\
+            &\leq \frac{(d+1) \abs{e \overline{e}}}{n^2}
+    \end{align*}
+    (where we used that $(f_n - 1)e \in I$ as $f_n, e \in I$.)
+    Thus $\abs{\tr f_n - \tr e} \to 0$ as $n \to \infty$.
+
+    But \[
+        \norm{f_n}^2 - \tr f_n = \inner{f_n}{f_n} - \inner{f_n}{1} = \inner{f_n}{f_n - 1}
+    \] so that \[
+        \abs{ \norm{f_n}^2 - \tr f_n } \leq \norm{f_n} \frac{1}{n^2} \leq \frac{d+2}{n^2} \to 0
+    \] as $n \to \infty$.
+    Thus $\abs{\norm{f_n}^2 - \tr e} \to 0$ as $n \to \infty$ so \[
+        \tr e = \lim_{n \to \infty} \norm{f_n}^2 \geq 0.
+    \]
+
+    Finally, we have \[
+        \norm{e} \leq \norm{e - f_n e} + \norm{f_n e} \leq \norm{e - f_n e} + \norm{f_n} \abs{e}
+    \] where $\norm{e - f_n e} = O(\frac{1}{n})$, so taking limits we have $\norm{e} \leq \sqrt{\tr e} \abs{e}$ and thus \[
+        \tr e \geq \norm{e}^2 / \abs{e}^2 > 0
+    \]
+\end{proof}
+
+We show later that in fact $\tr e \in \Q \cap [0, 1]$ but we already have:
+\begin{corollary}
+    If $\chr(K) = 0$ and $e \in K[G]$ is a non-trivial idempotent, then $\tr(e)$ is a totally real algebraic number all of whose algebraic conjugates lie in $(0, 1)$.
+\end{corollary}
+
+\begin{proof}
+    Let $F = \Q((e)_g : g \in \supp(e))$.
+    Then $e \in F[G]$ and $F$ is embeddable in $\C$, so viewing $e$ as an element of $\C[G]$ we have $\tr(e) \in (0, 1)$.
+    Any field automorphism of $\C$ induces an automorphism of $\C[G]$ and thus $\sigma(\tr(e)) \in (0, 1)$.
+    If $\tr(e)$ transcendental, there would exist $\sigma$ violating this.
+\end{proof}
+
+\subsection*{Places}
+
+We shifted from an arbitrary characteristic $0$ field to $\C$ via a common subfield.
+Another way to shift fields is homomorphisms -- of rings, not fields!
+
+Recall: an ideal $M$ of a (unital) commutative ring $R$ is called maximal if and only if $R / M$ is a field.
+We frequently use the homomorphism $R[G] \to (R / M)[G]$.
+
+\begin{definition}
+    A subring $R$ of a field is called a \emph{valuation ring} if for all $x \in K$, either $x \in R$ or $x^{-1} \in R$ (or both).
+\end{definition}
+
+\begin{example}
+    \begin{itemize}
+        \item $R = K$
+        \item $\Z_p \subset \Q_p$
+        \item $K[[X]] \subset K((X))$
+    \end{itemize}
+\end{example}
+
+\begin{lemma}
+    Let $R \subset K$ be a valuation ring.
+    If $M$ denotes the set of non-units of $R$, then $M$ is the unique maximal ideal of $R$.
+\end{lemma}
+
+\begin{proof}
+    Let $x, y \in R$.
+    If $xy$ is a unit, so are $x$ and $y$ (as $R$ is commutative!).
+    Thus $M$ is closed under multiplication by $R$.
+    Let $x, y \in M$ and consider $x - y \in M$.
+    Then since $R$ is a valuation ring, either $x^{-1} y \in R$ or $y^{-1} x \in R$.
+    Since $x - y = x(1 - x^{-1}y) = y(y^{-1} x - 1)$, we see in either case that $x - y \in M$.
+    Thus $M$ is an ideal.
+    Any proper ideal of $R$ consists of non-units, so $M$ is indeed maximal.
+\end{proof}
+
+A valuation ring $R$ has a homomorphism onto the field $F = R/M$.
+We extend this to $K$ by defining
+\begin{align*}
+    \phi_R \colon K &\to F \cup \{\infty\} \\
+                  x &\mapsto \begin{cases}
+                      x + M  & \text{if } x \in R \\
+                      \infty & \text{if } x \notin R
+                  \end{cases}
+\end{align*}
+
+\begin{definition}
+    Let $K$ and $F$ be fields.
+    A map $\phi \colon K \to F \cup \{\infty\}$ is called a \emph{place} if $R := \phi^{-1}(F)$ is a subring of $K$ with $\phi_R$ a homomorphism $R \to F$ and $\phi(x) = \infty$ if and only if $\phi(x^{-1}) = 0$.
+\end{definition}
+
+\begin{lemma}
+    Let $K$ be a field.
+    \begin{enumerate}
+        \item[(i)] If $R$ is a valuation ring in $K$, then $\phi_R$ is a place.
+        \item[(ii)] If $\phi \colon K \to F \cup \{\infty\}$ is a place, then $R = \phi^{-1}(F)$ is a valuation ring in $K$ with maximal ideal $M = \phi^{-1}(0)$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (i) If $x \notin R$ then $x^{-1} \in R$ and moreover $x^{-1} \in M$ (since $(x^{-1})^{-1} \notin R$).
+    Also $x^{-1} \in M$ implies $x \notin R$.
+    That is, $\phi_R$ satisfies $\phi(x) = \infty \Leftrightarrow \phi(x^{-1}) = 0$.
+
+    (ii) $R$ is by definition a subring.
+    If $x \notin R$ then $\phi(x) = \infty$ so $\phi(x^{-1}) = 0$ and $x^{-1} \in R$, so $R$ is a valuation ring.
+    Since $\phi(x) = 0 \Leftrightarrow x^{-1} \notin R$, we see that $M$ is the set of non-units of $R$.
+\end{proof}
+
+So there is essentially a one-to-one correspondence between places and valuation rings (up to picking $F \cong R / M$).
+
+\begin{theorem}[Extension theorem for places]
+    Let $K$ be a field, $S$ a subring of $K$ and $\sigma \colon S \to F$ a homomorphism to the algebraically closed field $R$.
+    Then there exists a place $\phi_R \colon K \to F \cup \{\infty\}$ such that $R \supseteq S$ and $\phi_R|_S = \sigma$.
+\end{theorem}
+
+\begin{example}
+    $K = \C$, $S = \Z$ and $F = \overline{\F}_p$.
+\end{example}
 
 \section{The unit conjecture counterexample}
 
