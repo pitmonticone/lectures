@@ -1394,6 +1394,436 @@ So there is essentially a one-to-one correspondence between places and valuation
     $K = \C$, $S = \Z$ and $F = \overline{\F}_p$.
 \end{example}
 
+\begin{proof}
+    Consider the set of all pairs $(R, \phi)$ such that $S \subseteq R \subseteq K$ and $\phi \colon R \to F$ is a homomorphism that extends $\sigma$.
+    This is a poset under \[
+        (R_1, \phi_1) \leq (R_2, \phi_2) :\Leftrightarrow R_1 \subseteq R_2, \phi_2 \text{ extends } \phi_1.
+    \]
+    This poset is non-empty, as it contains $(S, \sigma)$, and chains are bounded, so by Zorn's lemma there is a maximal pair $(R, \phi)$.
+    We will show that $R$ is a valuation ring.
+    Let $M = \ker (\phi)$.
+    \begin{claim}
+        $M$ is the unique maximal ideal of $R$.
+    \end{claim}
+    We show that $s \in R \setminus M$ implies $s^{-1} \in R$, so $M$ contains all the non-units.
+    Let \[
+        R' = \set{r / s}{ r \in R, s \in R \setminus M } \subseteq K
+    \] and define
+    \begin{align*}
+        \phi' \colon R' &\to F \\
+                    r/s &\mapsto \phi(r) / \phi(s).
+    \end{align*}
+    We can check that $\phi'$ is a homomorphism extending $\phi$, so by maximality we have $R' = R$, so $s^{-1} \in R$ for all $s \in R \setminus M$ in particular.
+    Thus $M$ is the unique maximal ideal of $R$ and $\phi(R) \cong R / M$ is a field.
+
+    \begin{claim}
+        If $x \in K \setminus R$ then $1 \in M[x]$.
+    \end{claim}
+    Consider the polynomial ring $R[t]$ and let \[
+        I = \set{f \in R[t]}{f(x) = 0},
+    \] the kernel of the evaluation homomorphism $R[t] \to R[x]$, so $R[x] = R[t] / I$.
+    Now $\phi$ extends to $\tilde{\phi} \colon R[t] \to \phi(R)[t]$ and so $\tilde{\phi}(I)$ is an ideal of $\phi(R)[t]$, which we will show is the whole ring.
+    If that were not the case, then since $\phi(R)$ is a field, $\phi(R)[t]$ is a PID and there would exist a non-constant polynomial $h \in \phi(R)[t]$ such that $\tilde{\phi}(I) = (h)$.
+    Since $\phi(R) \subseteq F$ and $F$ is algebraically closed, we then have $y \in F$ such that $h(y) = 0$.
+    Then the composition \[
+        R[t] \overset{\tilde{\phi}}{\to} \phi(R)[t] \overset{\text{ev}}{\to} F
+    \] has $I$ in its kernel.
+    This factors through $R[t] / I = R[x] \supsetneq R$, contradicting maximality of $(R, \phi)$.
+    Thus $\tilde{\phi}(I) = \phi(R)[t]$ so $1 \in \tilde{\phi}(I)$ so picking some $f \in F$ such that $\tilde{\phi}(f) = 1$ we have $1 = f(t) + g(t)$, $g \in \ker(\tilde{\phi})$.
+    But $\ker(\tilde{\phi}) = M[t]$ and $f(x) = 0$ so setting $t = x$ gives $1 = g(x) \in M[x]$.
+
+    We can now show $R$ is a valuation ring.
+    Suppose for the sake of contradiction that $x, x^{-1} \in K \setminus R$.
+    Then we can find polynomials $g, h \in M[t]$ such that $1 = g(x) = h(x^{-1})$.
+    Choose them to have minimal possible degree and suppose without loss of generality that $n = \deg(h) \leq \deg(g)$.
+
+    Now $1 = \sum_{i=0}^n a_i x^{-i}$ with $a_i \in M$.
+    Then \[
+        (1 - a_0) x^n = \sum_{i=1}^n a_i x^{n-i} = \sum_{i=0}^{n-1} a_{n-i} x^i
+    \] and since $1 - a_0 \notin M$ it is invertible in $R$ so we write \[
+        x^n = \sum_{i=0}^{n-1} \frac{a_{n-1}}{1 - a_0} x^i.
+    \] But we can substitute this into $g$ to eliminate all terms of degree $\geq n$, a contradiction.
+
+    Thus $R$ is a valuation ring, whose unique maximal ideal is $M = \ker(\phi)$.
+    Thus $\phi_R \colon K \to F \cup \{\infty\}$ is a place.
+\end{proof}
+
+What is the ``valuation''?
+
+\begin{definition}
+    A \emph{valuation} on a field $K$ is a surjection $v \colon K \to vK \cup \{\infty\}$, where $vK$ is an ordered abelian group (the \emph{value group}) such that for all $x, y \in K$
+    \begin{itemize}
+        \item $v(x) = \infty \iff x = 0$,
+        \item $v(xy) = v(x) + v(y)$, and
+        \item $v(x+y) \geq \min \{ v(x), v(y) \}$.
+    \end{itemize}
+    (Here we define $a + \infty = \infty$ for $a \in vK \cup \{\infty\}$ and $a < \infty$ for $a \in vK$.)
+\end{definition}
+
+\begin{example}
+    \begin{itemize}
+        \item $p$-adic valuation $\Q_p \to \Z$ ($\sum_{i=k}^\infty a_i p^i$ with $a_k \neq 0$ is mapped to $k$)
+        \item $K((t)) \to \Z \colon \sum_{i = k}^\infty a_i t^i \mapsto k$.
+    \end{itemize}
+\end{example}
+
+Valuations $v$ and $w$ are equivalent if there is an order-preserving $\phi \colon vK \overset{\cong}{\to} wK$ such that $w = \phi \circ v$.
+
+\begin{proposition}
+    Equivalence classes of valuations on $K$ are in one-to-one correspondence with valuation rings in $K$.
+\end{proposition}
+
+\begin{proof}
+    Given $v \colon K \to vK \cup \{\infty\}$, $R_v = \set{x \in K}{ v(x) \geq 0 }$ is a valuation ring: closure under addition and multiplication is immediate and $x \notin R_v$ implies $v(x) < 0$ which implies $v(x^{-1}) > 0$ so that $x^{-1} \in R_v$.
+    Note that its group of units is $R_v^\times = \set{x \in K}{v(x) = 0}$ and the maximal ideal is $M_v = \set{x \in K}{v(x) > 0}$.
+
+    If $R \subseteq K$ is a valuation ring, then $\Gamma = K^\times / R^\times$ is an abelian group and it is ordered with positive cone $\set{x R^\times}{x \in M}$.
+    Since $M$ is an ideal of $R$, $x \in M$ implies $x R^\times \subseteq M$ so there is no dependence on the choice of coset representative.
+    If $x, y \in M \setminus \{0\}$ then $xy \in M \setminus \{0\}$ so we have a subsemigroup and $x \notin R \Leftrightarrow x^{-1} \in M$ so we indeed partition.
+\end{proof}
+
+\begin{corollary}
+    \label{corollary:zdc_char_0_from_char_p}
+    Let $p$ be a prime.
+    Suppose $\C[G]$ contains non-zero zero divisors.
+    Then $\F_{p^n}[G]$ contains zero divsiors for some $n$.
+\end{corollary}
+
+\begin{proof}
+    There is a homomorphism $\Z \to \overline{\F}_p$ so by the extension theorem for places there is a place $\phi \colon \C \to \overline{\F}_p \cup \{\infty\}$.
+    Suppose $0 \neq \alpha, \beta \in \C[G]$ with $\alpha \beta = 0$.
+    Consider $\set{ (\alpha)_g }{ g \in \supp(\alpha) }$.
+    This finite set contains some minimal $\lambda = (\alpha)_{g_0}$ under the corresponding valuation $v$ so that $v((\alpha)_g) \geq v(\lambda)$ for $g \in \supp(\alpha)$ and hence $v(\lambda^{-1}(\alpha)_g) \geq 0$.
+    That is, $\lambda^{-1} \alpha \in R[G]$ where $R \subset \C$ is the corresponding valuation ring $R = \phi^{-1}(\overline{\F}_p)$.
+    Similarly some $\mu^{-1} \beta \in R[G]$ where $\mu = (\beta)_{h_0}$.
+    Now $\overline{\alpha} = \phi(\lambda^{-1} \alpha)$, $\overline{\beta} = \phi(\mu^{-1} \beta) \in \overline{\F}_p[G]$ satisfy \[
+        \overline{\alpha} \overline{\beta} = \phi(\lambda^{-1} \mu^{-1} \alpha \beta) = \phi(0) = 0
+    \]
+    but have support containing $g_0, h_0$ respectively.
+    Since $\overline{\F}_p = \lim_{n \to \infty} \F_{p^n}$, the result follows.
+\end{proof}
+
+\begin{lemma}
+    \label{lemma:test_element_for_place}
+    Let $S \subseteq K$ be a subring of a field and let $x_1, \dots x_n$ be finitely many elements of $K$.
+    Then there exists an element $s_0 \in S \setminus \{0\}$ such that if $\sigma \colon S \to F$ is a homomorphism to an algebraically closed field $R$ with $\sigma(s_0) \neq 0$, then $\sigma$ extends to a place $\phi_R \colon K \to F \cup \{\infty\}$ with $R \supseteq S[x_1, \dots, x_n]$.
+\end{lemma}
+
+\begin{proof}
+    TODO break up into exercises.
+\end{proof}
+
+\begin{corollary}
+    \label{corollary:place_finite_almost_all_primes}
+    Let $\chr(K) = 0$ and let $x_1, \dots, x_n \in K^\times$.
+    Then for infinitely many primes $p$ there exists a place $\phi_R \colon K \to \overline{\F}_p \cup \{\infty\}$ with $\phi_R(x_i) \neq 0$ or $\infty$ for all $i$.
+\end{corollary}
+
+\begin{proof}
+    Take $S = \Z$ in \Cref{lemma:test_element_for_place} and take the finite set \[
+        \{x_1, \dots, x_n, x_1^{-1}, \dots, x_n^{-1}\}.
+    \]
+    Then $s_0 \in \Z$ has only finitely many prime factors.
+    For all other primes $p$, $\sigma \colon \Z \to \overline{\F}_p$ satisfies $\sigma(s_0) \neq 0$ and so extends to a place $\phi_R$ with $x_i, x_i^{-1} \in R$ which gives $\phi_R(x_i) \neq 0$ or $\infty$.
+\end{proof}
+
+\begin{corollary}
+    If $\C[G]$ has a non-trivial unit, then for all but finitely many primes $p$ there exists $n$ such that $\F_{p^n}[G]$ has a non-trivial unit.
+\end{corollary}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+The augmentation map \[
+    \epsilon \colon R[G] \to R
+\] restricts to a map $(R[G])^\times \to R^\times$.
+The kernel is $V(R[G])$, the group of \emph{normalized} units.
+Since \[
+    1 \to V(R[G]) \to (R[G])^\times \to R^\times \to 1
+\] is split such that $R^\times$ is central (assuming $R$ to be commutative), then in fact $R[G] \cong R^\times \times V(R[G])$.
+The unit conjecture states that for torsion-free $G$, the natural injection $G \mono V(K[G])$ is surjective.
+
+We can strengthen the link between the unit conjecture and the zero divisor conjecture as follows.
+
+\begin{proposition}
+    \label{proposition:zd_and_torsion_units}
+    Let $\chr(K) > 0$ and let $G$ be torsion-free.
+    Then $V(K[G])$ is torsion-free if and only if $K[G]$ has no zero divisors.
+\end{proposition}
+
+\begin{proof}
+    Let $\chr(K) = p$.
+    Suppose $0 \neq \alpha, \beta \in K[G]$ with $\alpha \beta = 0$.
+    By primality of $K[G]$, we can assume without loss of generality that $\alpha = \beta$, that is, that $\alpha^2 = 0$ (by replacing $\alpha$ with some non-zero product $\beta \gamma \alpha$).
+    Now \[
+        (1 + \alpha)^p = 1 + p \alpha + \binom{p}{2} \alpha^2 + \dots + \alpha^p = 1 + \alpha^p = 1.
+    \]
+    Note that $\alpha^2 = 0$ implies $\epsilon(\alpha)^2 = 0 \in K$ so that $\epsilon(\alpha) = 0$.
+    As $\alpha \neq 0$, we have that $1 + \alpha \in V(K[G])$ is non-trivial torsion.
+
+    Now suppose $1 \neq \alpha \in V(K[G])$ with $\alpha^n = 1$, for some $n \geq 2$.
+    Then $(1 - \alpha)(1 + \alpha + \dots + \alpha^{n-1}) = 0$.
+    The first factor is non-zero by assumption on $\alpha$.
+    The second factor has augmentation $n$, which is non-zero provided that $p \nmid n$.
+    If $p \mid n$ then supposing (without loss of generality) that $\ord(\alpha) = n$, we have $\alpha^{n / p} \neq 1$ and thus \[
+        0 = 1 - \alpha^n = (1 - \alpha^{n/p})^p
+    \] so $K[G]$ has zero divisors.
+\end{proof}
+
+\begin{corollary}
+    \label{corollary:zd_units_all_K}
+    $G$ satisfies the zero divisor conjecture for all fields $K$ if and only if $V(K[G])$ is torsion-free for all fields $K$.
+\end{corollary}
+
+\begin{proof}
+    We've already seen in \Cref{corollary:zdc_char_0_from_char_p} that $G$ satisfies the zero divisor conjecture in characteristic $0$ if it does in characteristic $p > 0$.
+    If $V(K[G])$ has torsion for $\chr(K) = 0$, the proof of \Cref{proposition:zd_and_torsion_units} gives zero divisors in $K[G]$.
+    % TODO this really could be phrased better
+\end{proof}
+
+\begin{remark}
+    The ``detour'' via positive characteristic is necessary -- we cannot strengthen \Cref{corollary:zd_units_all_K} to say for all $K$ that $K[G]$ is a domain precisely when $V(K[G])$ is torsion-free (at least, not with our current knowledge).
+    In particular, we don't know if $\Z[G]$ can have zero divisors for torsion-free $G$, but it is a theorem of Sehgal that $V(\Z[G])$ is torsion-free (in fact, $V(\cO[G])$, where $\cO$ is the ring of algebraic integers).
+\end{remark}
+
+\subsection{The power map}
+
+Let $\chr(K) = p > 0$.
+In a non-commutative $K$-algebra, we do not necessarily have $(\alpha + \beta)^p = \alpha^p + \beta^p$, but we will establish what one might call ``Frobenius under the trace''.
+
+\begin{definition}
+    Let $A$ be a $K$-algebra.
+    The \emph{commutator subspace} $[A, A]$ is the subspace spanned by $[\alpha, \beta] := \alpha \beta - \beta \alpha$ for $\alpha, \beta \in A$.
+\end{definition}
+
+\begin{lemma}
+    \label{lemma:frobenius_mod_commutators}
+    Let $A$ be an algebra over a field $K$, with $\chr(K) = p > 0$.
+    If $\alpha_1, \dots, \alpha_m \in A$ and $q = p^n$, then \[
+        (\alpha_1 + \alpha_2 + \dots + \alpha_m)^q = \alpha_1^q + \dots + \alpha_m^q \mod [A, A].
+    \]
+\end{lemma}
+
+\begin{proof}
+    The difference $\beta := (\alpha_1 + \dots + \alpha_m)^q - (\alpha_1^q + \dots + \alpha_m^q)$ is a sum of expressions $\alpha_{i_1} \alpha_{i_2} \dots \alpha_{i_q}$ where not all indices are the same.
+    Modulo $[A, A]$, cyclic permutation does not change such expressions.
+    Note that $\Z / q\Z$ acts on the $m^q - m$ summands of $\beta$ by cyclic permutation and all orbits have size greater than $1$ and hence divisible by $p$.
+    Thus $\beta \in [A, A]$.
+\end{proof}
+
+For $g \in G$ we write $[g]$ for its conjugacy class \[
+    [g] = [g]_\sim = g^G \in G / {\sim}.
+\]
+
+\begin{definition}
+    For $g \in G$, let
+    \begin{align*}
+        \tau_{[g]} \colon K[G] &\to K \\
+                        \alpha &\mapsto \sum_{h \in [g]} (\alpha)_h
+    \end{align*}
+    denote the sum of coefficients over the conjugacy class of $g$.
+\end{definition}
+
+This is a $K$-linear map. ``The'' trace is $\tr = \tau_{[1]}$.
+
+\begin{lemma}
+    \label{lemma:commutators_and_traces}
+    Let $\alpha \in K[G]$.
+    Then $\alpha \in [K[G], K[G]]$ if and only if $\tau_{[g]}(\alpha) = 0$ for all $g \in G$.
+    Moreover, a $K$-linear map $\tau \colon K[G] \to K$ annihilates $[K[G], K[G]]$ if and only if it is constant on conjugacy classes.
+\end{lemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+In particular, the trace identity \[
+    \tau_{[g]}(\alpha \beta) = \tau_{[g]}(\beta \alpha)
+\] holds for all $g \in G$ and $\alpha, \beta \in K[G]$.
+
+\begin{definition}
+    We call $g \in G$ a $p$-element if its order is $p^n$, $n \geq 1$.
+    For $\alpha \in K[G]$, define \[
+        \psupp(\alpha) = \set{g \in \supp(\alpha)}{\text{$g$ is a $p$-element}}.
+    \]
+\end{definition}
+
+\begin{lemma}
+    Let $\alpha = \sum_g a_g \cdot g \in K[G]$ be nilpotent.
+    \begin{enumerate}
+        \item[(i)] If $\chr(K) = p > 0$ then \[
+            \tr(\alpha) + \sum_{g \in \psupp(\alpha)} a_g = 0.
+        \] In particular, either $\tr(\alpha) = 0$ or $\psupp(\alpha) \neq \emptyset$.
+        \item[(ii)] If $\chr(K) = 0$ then $\tr(\alpha) = 0$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (i) We choose $q = p^n$ large enough so that $\alpha^q = 0$ and $g^q = 1$ for all $g \in \psupp(\alpha)$.
+    Thus \[
+        0 = \alpha^q = \sum_{g \in G} a_g^q g^q \mod [K[G], K[G]]
+    \] and taking traces gives \[
+        0 = \sum_{g^q = 1} a_g^q = (\sum_{g^q = 1} a_g)^q
+    \] and since $\set{g \in \supp(\alpha)}{g^q = 1} = \{1\} \sqcup \psupp(\alpha)$, we have \[
+        \tr(\alpha) + \sum_{g \in \psupp(\alpha)} a_g = \sum_{g^q = 1}a_g = 0.
+    \]
+
+    (ii) By \Cref{corollary:place_finite_almost_all_primes}, for infinitely many primes $p$ there exists a place $\phi_R \colon K \to \overline{\F}_p \cup \{\infty\}$ with $\phi_R(a_g) \neq 0, \infty$ for all $g \in \supp(\alpha)$.
+    Thus $\alpha \in R[G]$ and its image $\tilde{\alpha}$ in $(R / M)[G] \subseteq \overline{\F}_p[G]$ is nilpotent.
+    If $\tr(\alpha) \neq 0$, then $\tr(\tilde{\alpha}) = \phi_R(a_1) \neq 0$ and by (i) $\psupp(\alpha) \neq \emptyset$.
+    But this cannot be true for infinitely many primes.
+\end{proof}
+
+Using this we can show some more trace functions vanish on nilpotents.
+% TODO define terminology "trace-like function" as constant on cc <==> vanish on commutators ?
+We define a preorder on $G$ by setting \[
+    x < y :\Leftrightarrow \ncls{x}_G \subseteq \ncls{y}_G.
+\] That is, $<$ is reflexive and transitive, but not antisymmetric.
+It induces a partial order on $\approx$-equivalence classes, where we say \[
+    x \approx y :\Leftrightarrow (x < y \text{ and } y < x) \Leftrightarrow \ncls{x}_G = \ncls{y}_G.
+\]
+
+\begin{remark}
+    This is a coarser equivalence relation than conjugacy.
+    We always have $x \approx x^{-1}$.
+    Magnus proved that if $x, y \in F_n$ with $x \approx y$, then $x \sim y$ or $x \sim y^{-1}$.
+    In general this is far from true, e.g.\ a simple group $G$ has two $\approx$-classes: $\{1\}$ and $G \setminus \{1\}$.
+\end{remark}
+
+If $S = [g]_\approx \in G / {\approx}$, we define \[
+    \tau_S \colon K[G] \to K \colon \alpha \mapsto \sum_{g \in S} (\alpha)_g.
+\]
+
+\begin{remark}
+    If we pick a transversal $X$ for $[g]_\approx / {\sim}$, then $\tau_S = \sum_{x \in X} \tau_{[x]}$.
+\end{remark}
+
+\begin{proposition}
+    If $\chr(K) = 0$ and $\alpha \in K[G]$ is nilpotent, then $\tau_S(\alpha) = 0$ for each $S \in G / {\approx}$.
+\end{proposition}
+
+\begin{proof}
+    We ``induct'' over the finite poset of $\approx$-classes $S$ that intersect $\supp(\alpha)$.
+    Pick a maximal such $S$ for which we haven't proved $\tau_S(\alpha) = 0$.
+    Let $x \in S$.
+    Then $y \in \ncls{x}_G$ if and only if $[y]_\approx = T \leq S$.
+    The image of $\alpha$ in $K[G / \ncls{x}_G]$ is nilpotent and has trace \[
+        0 = \sum_{y \in \ncls{x}_G} (\alpha)_y = \sum_{T \leq S} \tau_T(\alpha).
+    \] As $\tau_T(\alpha) = 0$ for $T \lneq S$, we are done.
+\end{proof}
+
+We will need the following black box from number theory and a corollary of it.
+(The black box is a consequence of the Frobenius density theorem.)
+
+\begin{proposition}
+    Let $f \in \Z[t]$ be a monic irreducible polynomial with $\deg f > 1$.
+    Then there exist infinitely many primes $p$ such that $f \operatorname{mod} p \in (\Z / p \Z) [t]$ does not have all its roots in $\Z / p\Z$.
+\end{proposition}
+
+\begin{corollary}
+    \label{corollary:to_frobenius_density_theorem}
+    Let $\chr(K) = 0$ and $x_0, x_1, \dots, x_n \in K$ with $x_0 \notin \Q$.
+    Then for infinitely many primes $p$, there exists a place $\phi_R \colon K \to \overline{\F}_p \cup \{\infty\}$ with $\phi_R(x_i) \neq 0$ for all $i$ and $\phi_R(x_0) \notin \F_p$.
+\end{corollary}
+
+\begin{theorem}[Zalesskii]
+    Let $e \in K[G]$ be an idempotent.
+    Then $\tr(e)$ is in the prime subfield of $K$.
+\end{theorem}
+
+\begin{proof}
+    Let $e = \sum_{g} a_g g$ and suppose first that $\chr(K) = p > 0$.
+    Let $S = \{1\} \cup \psupp(e)$.
+    We can find $n_0$ such that $g^{p^n} = 1$ for all $g \in S$ and $n \geq n_0$.
+    Moreover, $S = \set{g \in \supp(e)}{g^{p^n} = 1}$ for all $n \geq n_0$.
+    By ``Frobenius under the trace'' (i.e.\ \Cref{lemma:frobenius_mod_commutators} plus \Cref{lemma:commutators_and_traces}) we have for $q = p^n, n \geq n_0$ \[
+        \tr(e^q) = \sum_{g \in S} a_g^q = (\sum_{g \in S} a_g)^q
+    \] so now $e = e^2$ implies $e = e^{p^{n_0}} = e^{p^{n_0+1}}$ and thus \[
+        \tr(e) = \left( \sum_{g \in S} a_g \right)^{p^{n_0}} = \left( \sum_{g \in S} a_g \right)^{p^{n_0+1}}
+    \] so that $\tr(e)$ is a root of the polynomial $x^p - x$, which has all its roots in $\F_p$.
+
+    Now suppose $\chr(K) = 0 $ and suppose for the sake of contradiction that $\tr(e) \notin \Q$.
+    By \Cref{corollary:to_frobenius_density_theorem} there exists a prime $p$ (in fact, infinitely many) and a place $\phi_R \colon K \to \overline{\F}_p \cup \{\infty\}$ such that $\phi_R(a_g) \neq \infty$ for all $g \in \supp(e)$ and $\phi_R(a_1) = \phi_R(\tr(e)) \notin \F_p$.
+    But then $e \in R[G]$ and its image $\tilde{e} \in (R/M)[G] \subseteq \overline{\F}_p[G]$ is an idempotent and has trace $\tr(\tilde{e}) = \phi_R(\tr(e)) \notin \F_p$, contradicting the characteristic $p$ case.
+\end{proof}
+
+Our results on traces of nilpotents and idempotents admit a nice generalization, which we state but will not prove.
+
+\begin{theorem}
+    Let $\alpha$ be an algebraic element of $K[G]$ with minimal polynomial $f(t) \in K[t]$.
+    Let $\lambda_1, \dots, \lambda_n$ be the distinct roots of $f$ in some algebraic closure of $K$.
+    \begin{enumerate}
+        \item[(i)] If $\chr(K) = 0$ then there exist rational numbers $r_1, \dots, r_n$ satisfying $0 < r_i$ and $\sum_{i=1}^n r_i = 1$ such that \[
+            \tr(\alpha) = \sum_{i=1}^n r_i \lambda_i.
+        \]
+        \item[(ii)] If $\chr(K) = p > 0$ and either $G$ has no $p$-elements or $f(t)$ has no repeated roots, then there exist $r_1, \dots, r_n \in \F_p$ with $\sum_{i=1}^n r_i = 1$ such that \[
+            \tr(\alpha) = \sum_{i=1}^n r_i \lambda_i.
+        \]
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Formanek]
+    \label{theorem:formanek}
+    Let $G$ be a torsion-free group.
+    Let \[
+        N_G = \set{p}{p \text{ is prime and there exist } g \in G \setminus \{1\}, n \in \Z^+ \text{ s.t. } g \sim g^{p^n}}
+    \] (this is the set of primes that are in a sense ``bad'' for $G$).
+    Suppose $e \in K[G]$ is an idempotent.
+    \begin{enumerate}
+        \item[(i)] If $\chr(K) = p > 0$ and $p \notin N_G$, then $\tr(e) = 0$ or $1$.
+        \item[(ii)] If $\chr(K) = 0$ and $p \notin N_G$ for infinitely many primes $p$, then $e = 0$ or $1$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    When Formanek proved this theorem in 1973, the condition $\abs{N_G} < \infty$ may have appeared somewhat esoteric.
+    Since then, geometric group theory has brought many groups into focus where this holds (often $N_G = \emptyset$).
+\end{remark}
+
+\begin{example}
+    $\abs{N_G} < \infty$ for torsion-free $G$ if $G$ is
+    \begin{itemize}
+        \item a finitely generated subgroup of $\GL_n F$, $F$ any field (Bass)
+        \item hyperbolic
+        \item CAT(0)
+        \item a subgroup of $\Out(F_n)$ or the mapping class group $\Mod(\Sigma)$ of a surface
+    \end{itemize}
+\end{example}
+
+\begin{corollary}
+    All those groups satisfy the idempotent conjecture in characteristic $0$.
+\end{corollary}
+
+\begin{remark}
+    Osin proved that every countable torsion-free group embeds into a torsion-free group $G$ with exactly $2$ conjugacy classes.
+    Then $N_G$ contains all primes!
+\end{remark}
+
+\begin{proof}[Proof of Formanek's \Cref{theorem:formanek}]
+    (i) Let $e = \sum_g a_g g \in K[G]$, $\chr(K) = p > 0$, $p \notin N_G$.
+    Let $h \in G \setminus \{1\}$.
+    We wish to compute \[
+        \tau_{[h]}(e) = \sum_{g \sim h} a_g.
+    \] For any $g \in G \setminus \{1\}$, there is at most one $n \in \Z^+$ such that $g^{p^n} \sim h$, as otherwise $g^{p^{n+i}} \sim g^{p^n}$ with $i \geq 1$ and then $(g^{p^n})^{p^i} \sim g^{p^n}$, contradicting $p \notin N_G$.
+    Since $\supp(e)$ is finite, there exists $q = p^n$ such that $g^q \not \sim h$ for all $g \in \supp(e)$.
+    Now Frobenius under the trace gives us, since $e = e^q$, that \[
+        \tau_{[h]}(e) = \tau_{[h]}(e^q) = \sum_{\substack{g \in \supp(e) \\ g^q \sim h}} a_g^q = \sum_{g \in \emptyset} a_g^q = 0
+    \] for all $h \neq 1$.
+    Now the augmentation $\epsilon(e) = 0$ or $1$ in $K$, since it is an idempotent.
+    But \[
+        \epsilon(e) = \sum_{[g] \in \supp(e) / {\sim}} \tau_{[g]}(e) = \tau_{[1]}(e) = \tr(e)
+    \] so that $\tr(e) = 0$ or $1$.
+
+    (ii) Now $\chr(K) = 0$.
+    Suppose for the sake of contradiction that $e \neq 0$ or $1$, so that by Kaplansky's \Cref{theorem:kaplansky} we have $a_1 = \tr(e) \neq 0$ or $1$.
+    Then set $b = a_1 (1 - a_1) \neq 0$.
+    By \Cref{corollary:place_finite_almost_all_primes}, for all but finitely many primes $p$, there is a place $\phi_R \colon K \to \overline{\F}_p \cup \{\infty\}$ with all $\phi_R(a_g) \neq \infty$ and $\phi_R(b) \neq 0$ (or $\infty$).
+
+    Thus $e \in R[G]$ has image $\tilde{e} \in (R/M)[G] \subseteq \overline{\F}_p[G]$ with trace $\phi_R(a_1) \neq 0$ or $1$ (since $\phi_R(a_1) (1 - \phi_R(a_1)) = \phi_R(b) \neq 0$).
+    For infinitely many of these $p$ we will also have $p \notin N_G$, which contradicts the $\chr(K) = p$ case.
+\end{proof}
+
 \section{The unit conjecture counterexample}
 
 Rips and Segev (1987) gave the first example of a torsion-free group without unique products, using small cancellation theory ($\abs{A} = 4$ and $B$ is huge).
