@@ -626,7 +626,7 @@ Then \eqref{equation:fourpoint} is equivalent (considering permutations of the $
     (Note that $X$ is assumed $\delta$-hyperbolic and is thus $(\delta)$-hyperbolic by \Cref{proposition:comparing_deltas}.)
     The three possible sums are (since $G \acts X$ by isometries):
     \begin{align*}
-        d(g \cdot p, p) + d(dg^{-1} \cdot p, gh \cdot p)
+        d(g \cdot p, p) + d(gh^{-1} \cdot p, gh \cdot p)
         &= d(g \cdot p, p) + d(h^2 \cdot p, p) \\
         d(gh \cdot p, p) + d(g \cdot p, gh^{-1} \cdot p)
         &= d(gh \cdot p, p) + d(h \cdot p, p) \\
@@ -636,7 +636,7 @@ Then \eqref{equation:fourpoint} is equivalent (considering permutations of the $
     If we assume $d(h^2 \cdot p, p) \geq d(h \cdot p, p)$, then together with \eqref{equation:delzant_absurdum} this implies that the first term is the largest and thus the 4-point condition says
     \begin{align*}
         d(g \cdot p, p) + d(h^2 \cdot p, p)
-        & \leq d(g h^{\pm 1} p, p) + d(h \cdot p, p) + 2\delta \\
+        & \leq d(g h^{\pm 1} \cdot p, p) + d(h \cdot p, p) + 2\delta \\
         & \leq d(g \cdot p, p) + d(h \cdot p, p) + 2\delta.
     \end{align*}
     So in either case, we have $d(h^2 \cdot p, p) \leq d(h \cdot p, p) + 2\delta$.
@@ -1075,6 +1075,7 @@ We will work towards proving the following general result on traces:
 \end{theorem}
 
 \begin{corollary}
+    \label{corollary:CG_df}
     $\C[G]$ is directly finite.
 \end{corollary}
 
@@ -1089,7 +1090,7 @@ If $\chr(K) = p > 0$, the prime subfield is $\F_p$.
 If $\chr(K) = 0$, it is $\Q$.
 
 In particular, \Cref{lemma:alg_traces_of_finite_groups} (ii) shows that if $e$ is an idempotent then $\tr(e)$ is in the prime subfield.
-This algebraic property is also true for infinite $G$, as we'll see later. % TODO add forward reference \ref{theorem:zalesskii}
+This algebraic property is also true for infinite $G$, as we'll see later in \Cref{theorem:zalesskii}.
 Also if $\chr(K) = 0$ then $0 \leq \tr(e) \leq 1$ and this analytic property is true in general by \Cref{theorem:kaplansky}.
 
 For infinite $G$ we no longer have a finite dimensional representation at hand, so we need to be able to get at $\tr(e)$ internally to $\C[G]$.
@@ -1728,6 +1729,7 @@ We will need the following black box from number theory and a corollary of it.
 \end{corollary}
 
 \begin{theorem}[Zalesskii]
+    \label{theorem:zalesskii}
     Let $e \in K[G]$ be an idempotent.
     Then $\tr(e)$ is in the prime subfield of $K$.
 \end{theorem}
@@ -2225,19 +2227,21 @@ In our case, the full automorphism group fairly manageable.
 
 \begin{remark}
     We need $H$ abelian to have a \emph{group} $\Hom(G, H)$.
-    For arbitrary $G$ and $H$, there is a subgroup of $\Aut(G \times H)$ consisting of automorphisms \[
+    For arbitrary $G$ and $H$, there is a subgroup of $\Aut(G \times H)$ consisting of those automorphisms \[
         \set{
             \begin{pmatrix}
                 \theta_G & \chi_H \\
                 \chi_G & \theta_H
             \end{pmatrix}
+            \in
+            \Aut(G \times H)
         }{
             \substack{
                 \theta_G \in \Aut(G), \; \theta_H \in \Aut(H), \\
                 \chi_G \in \Hom(G, Z(H)), \; \chi_H \in \Hom(H, Z(G))
             }
         }.
-    \]
+    \] Note that for some choice of $\theta_G, \theta_H, \chi_G, \chi_H$ we get a homomorphism that is \emph{not} an automorphism (e.g. $\left(\begin{smallmatrix} 1 & 1 \\ 1 & 1 \end{smallmatrix}\right) \in \End(\Z \times \Z)$.)
 \end{remark}
 % TODO add exercise on generic condition for such a map to be an automorphism
 
