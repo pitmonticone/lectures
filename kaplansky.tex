@@ -595,7 +595,7 @@ So similarly rewriting \eqref{equation:unpackaged_fourpoint2} and combining the 
     \label{equation:symmetric_fourpoint}
     d(w, z) + d(x, y) \leq \max \{ d(w, y) + d(x, z), d(w, x) + d(y, z) \} + 2\delta. \tag{$\diamond$}
 \end{equation}
-There are $6$ ways to partition $\{w, x, y, z\}$ into pairs, all of which occur in the previous equation.
+There are $3$ ways to partition $\{w, x, y, z\}$ into $2$ pairs, all of which occur in the previous equation.
 Suppose $S \leq M \leq L$ are the corresponding sums of opposite edge lengths.
 Then \eqref{equation:fourpoint} is equivalent (considering permutations of the $4$ points) to the assertion $L \leq M + 2\delta$.
 
@@ -2984,7 +2984,7 @@ Every subset of a well-ordered set is well-ordered.
     Note that $W$ is also well-ordered.
     Equip $W \times \N^+$ with the lexicographic order, a well-ordering.
 
-    Define $f \colon \tilde{A} \to W \times \N^+$ by sending $x$ to $(w, r)$ where $x \in [w]$ (i.e. $x \sim w$) and $r$ is minimal such that $x \leq w^r$.
+    Define $f \colon \tilde{A} \to W \times \N^+$ by sending $x$ to $(w, r)$ where $x \sim w$ (which is possible, even though $W$ is a transversal for $A / {\sim}$ and not $\tilde{A} / {\sim}$, as $a_1 \dots a_k \sim \max \{a_i\}$ for a product of $a_i \in A$) and $r$ is minimal such that $x \leq w^r$.
 
     Then one checks that $f$ is order-preserving.
     It is convenient to extend $W \times \N^+$ by adding a smallest element $(1, 0)$.
