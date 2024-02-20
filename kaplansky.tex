@@ -131,7 +131,7 @@ Then $\alpha = \sum_{g \in G} (\alpha)_g \cdot g$ and $(\alpha)_g = 0$ for all b
 
     Let $A = \supp(\alpha)$, $B = \supp(\beta)$.
     Let $C = BA = \set{ ba }{ a \in A, b \in B}$.
-    By residual finiteness, there is a finite quotient $\phi \colon G \epi Q$ which is injective on $C$: take the product of homomorphisms $\phi_g$ given by the definition over all $g \in C^{-1} C$ (and let $Q$ be the image of this product homomorphism).
+    By residual finiteness, there is a finite quotient $\phi \colon G \epi Q$ which is injective on $C$: take the product of homomorphisms $\phi_g$ given by the definition over all $g \in C^{-1} C \setminus \{1\}$ (and let $Q$ be the image of this product homomorphism).
 
     Now the induced maps $\rho_\alpha, \rho_\beta \in \End(V)$ satisfy $\rho_\alpha \circ \rho_\beta = \id_V$ and thus -- since $V = K[Q]$ is finite dimensional -- we have $\rho_\beta \circ \rho_\alpha = \id_V$.
 
@@ -494,7 +494,7 @@ For $\delta \geq 0$, $\Delta$ is called \emph{$\delta$-thin} if $p, q \in \chi_\
 
 \begin{remark}
     \label{remark:geometric_actions}
-    For a proper metric space $X$, an action $G \acts X$ is proper if and only if for all $x \in X$ and $r \geq 0$, the set $\set{g \in G}{d(g \cdot x, x) \leq r}$ is finite and it is cocompact if and only if for all $x \in X$ there exists $r \geq 0$ such that $X = G \cdot \overline{B}(x, r)$.
+    For a proper metric space $X$, an action $G \acts X$ by isometries is proper if and only if for all $x \in X$ and $r \geq 0$, the set $\set{g \in G}{d(g \cdot x, x) \leq r}$ is finite and it is cocompact if and only if for all $x \in X$ there exists $r \geq 0$ such that $X = G \cdot \overline{B}(x, r)$.
 \end{remark}
 
 \begin{lemma}
@@ -896,7 +896,7 @@ We now have the tools to prove the following result on the torsion of $\Delta(G)
     We proceed by induction on $n$.
     The base case $n=1$ is clear.
     Suppose $n \geq 2$.
-    If all (right) cosets of $H_n$ occur, then $[G : H_n] < \infty$.
+    If all (left) cosets of $H_n$ occur, then $[G : H_n] < \infty$.
     If not, then let $g H_n$ be such that $g H_n \neq g_{nj} H_n$ for all $j$, which gives $g H_n \cap g_{nj} H_n = \emptyset$ for all $j$.
     Thus \[
         g H_n \subseteq \bigcup_{i \leq n-1, k} g_{ik} H_i.
@@ -1172,7 +1172,7 @@ An alternative approach introduced by Passman, which we follow, is to take bette
 We can characterize $f$ as follows.
 For $\alpha \in I$ we consider the distance from $\alpha$ to $1$.
 By definition \[
-    d(\alpha, 1)^2 = \norm{\alpha - 1} = \inner{\alpha - 1}{\alpha - 1} = \inner{\alpha - f - f^\perp}{\alpha - f - f^\perp} = \norm{\alpha - f}^2 + \norm{f^\perp}^2
+    d(\alpha, 1)^2 = \norm{\alpha - 1}^2 = \inner{\alpha - 1}{\alpha - 1} = \inner{\alpha - f - f^\perp}{\alpha - f - f^\perp} = \norm{\alpha - f}^2 + \norm{f^\perp}^2
 \] as $\alpha - f \in I$ implies that $\inner{\alpha - f}{f^\perp} = 0$.
 Thus $d(\alpha, 1) \geq \norm{f^\perp}$ with equality if and only if $\alpha = f$, so $f$ is the unique element of $I$ that is closest to $1$.
 
@@ -1252,7 +1252,7 @@ We will use a few basic identities.
     For (iii), let $g \in G$.
     Then clearly $\norm{\alpha g} = \norm{\alpha}$ as both are $\sum_h \abs{(\alpha)_h}^2$.
     Seen differently, $g$ is an isometry since $\overline{g} = g^{-1}$: \[
-        \norm{\alpha g} = \inner{\alpha g}{\alpha g} = \inner{\alpha g \overline{g}}{\alpha} = \norm{\alpha}.
+        \norm{\alpha g}^2 = \inner{\alpha g}{\alpha g} = \inner{\alpha g \overline{g}}{\alpha} = \norm{\alpha}^2.
     \]
     Thus \[
         \norm{\alpha \beta} = \norm{ \sum_g \alpha \cdot (\beta)_g g } \leq \sum_g \norm{ \alpha \cdot (\beta)_g g} = \sum_g \norm{\alpha} \cdot \abs{\beta_g} = \norm{\alpha} \abs{\beta}.
@@ -1363,7 +1363,7 @@ We extend this to $K$ by defining
 
 \begin{definition}
     Let $K$ and $F$ be fields.
-    A map $\phi \colon K \to F \cup \{\infty\}$ is called a \emph{place} if $R := \phi^{-1}(F)$ is a subring of $K$ with $\phi_R$ a homomorphism $R \to F$ and $\phi(x) = \infty$ if and only if $\phi(x^{-1}) = 0$.
+    A map $\phi \colon K \to F \cup \{\infty\}$ is called a \emph{place} if $R := \phi^{-1}(F)$ is a subring of $K$ with $\phi_R$ a homomorphism $R \to F$ and $\phi(x) = \infty$ if and only if $x$ is nonzero and $\phi(x^{-1}) = 0$.
 \end{definition}
 
 \begin{lemma}
@@ -1507,7 +1507,7 @@ Valuations $v$ and $w$ are equivalent if there is an order-preserving $\phi \col
 \begin{lemma}
     \label{lemma:test_element_for_place}
     Let $S \subseteq K$ be a subring of a field and let $x_1, \dots x_n$ be finitely many elements of $K$.
-    Then there exists an element $s_0 \in S \setminus \{0\}$ such that if $\sigma \colon S \to F$ is a homomorphism to an algebraically closed field $R$ with $\sigma(s_0) \neq 0$, then $\sigma$ extends to a place $\phi_R \colon K \to F \cup \{\infty\}$ with $R \supseteq S[x_1, \dots, x_n]$.
+    Then there exists an element $s_0 \in S \setminus \{0\}$ such that if $\sigma \colon S \to F$ is a homomorphism to an algebraically closed field $F$ with $\sigma(s_0) \neq 0$, then $\sigma$ extends to a place $\phi_R \colon K \to F \cup \{\infty\}$ with $R \supseteq S[x_1, \dots, x_n]$.
 \end{lemma}
 
 \begin{proof}
