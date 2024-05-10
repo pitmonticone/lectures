@@ -6,7 +6,7 @@
     Let $R$ be a ring and $G$ be a group. The \emph{group ring} $R[G]$ consists of finite formal $R$-linear sums \[
         R[G] = \set{ \sum_{i=1}^n r_{g_i} \cdot g_i }{ r_{g_i} \in R, g_i \in G }
     \] with multiplication \[
-        (\sum r_g \cdot g)(\sum s_h \cdot h) = \sum r_g s_h \cdot g h = \sum_k (\sum_{gh = k} r_g s_h) \cdot k.
+        \left(\sum r_g \cdot g\right)\left(\sum s_h \cdot h\right) = \sum r_g s_h \cdot g h = \sum_k \left(\sum_{gh = k} r_g s_h\right) \cdot k.
     \]
 \end{definition}
 
@@ -476,6 +476,7 @@ For $\delta \geq 0$, $\Delta$ is called \emph{$\delta$-thin} if $p, q \in \chi_\
 \end{definition}
 
 \begin{example}
+    \mbox{} % Ensures the itemize starts on a new line
     \begin{itemize}
         \item A free group acting a tree (deck transformations on universal cover of rose graph).
         % TODO add figure of Cayley graph of F_2?
@@ -691,7 +692,7 @@ To get there we need some group ring basics, a fair bit of group theory and an i
 \begin{definition}
     Let $H \leq G$.
     Then the projection $\pi_H \colon K[G] \to K[H]$ is defined by \[
-        \pi_H(\sum_{g \in G} a_g g) = \sum_{g \in H} a_g g.
+        \pi_H\left(\sum_{g \in G} a_g g\right) = \sum_{g \in H} a_g g.
     \]
 \end{definition}
 
@@ -999,7 +1000,7 @@ Then $V = K[G]$ gives a finite dimensional representation of $G$, namely the reg
 Fix as a basis $G$ which gives $\rho \colon K[G] \to M_n(K)$.
 As $G \acts G$ freely, we know that each $\rho(g)$ for $g \neq 1$ is a permutation matrix with zeroes on the diagonal, and of course $\rho(1) = I_n$.
 Thus \[
-    \tr(\rho(\sum_{g \in G} a_g \cdot g)) = \sum_{g \in G} a_g \cdot \tr(\rho(g)) = |G| \cdot a_1
+    \tr\left(\rho\left(\sum_{g \in G} a_g \cdot g\right)\right) = \sum_{g \in G} a_g \cdot \tr\left(\rho(g)\right) = |G| \cdot a_1
 \] i.e.\ the trace of $\rho(\alpha)$, $\alpha \in K[G]$, is just a fixed multiple of the coefficient $a_1 = (\alpha)_1$ of the identity.
 This motivates defining
 \begin{definition}
@@ -1033,6 +1034,7 @@ Note that $\tr(\alpha \beta) = \tr(\beta \alpha)$ is called the \emph{trace iden
 \end{definition}
 
 \begin{example}
+    \mbox{} % Ensures the itemize starts on a new lines
     \begin{itemize}
         \item $\alpha$ is called \emph{nilpotent} if $\alpha^m = 0$ for some $m \in \Z^+$
         \item idempotent elements are algebraic (with $p(x) = x^2 - x$)
@@ -1240,6 +1242,7 @@ So if $\alpha \in L$ is close to realizing $d(L, \gamma)$, then $\alpha - \gamma
 
 We will use a few basic identities.
 \begin{lemma}
+    \mbox{} % Ensures the itemize starts on a new lines
     \begin{enumerate}
         \item[(i)] $\norm{\alpha + \beta} \leq \norm{\alpha} + \norm{\beta}$, $\abs{\alpha + \beta} \leq \abs{\alpha} + \abs{\beta}$.
         \item[(ii)] $\abs{\tr \alpha} \leq \norm{\alpha}$, $\inner{\alpha}{1} = \tr \alpha$.
@@ -1328,6 +1331,7 @@ We frequently use the homomorphism $R[G] \to (R / M)[G]$.
 \end{definition}
 
 \begin{example}
+    \mbox{} % Ensures the itemize starts on a new lines
     \begin{itemize}
         \item $R = K$
         \item $\Z_p \subset \Q_p$
@@ -1462,6 +1466,7 @@ What is the ``valuation''?
 \end{definition}
 
 \begin{example}
+    \mbox{} % Ensures the itemize starts on a new lines
     \begin{itemize}
         \item $p$-adic valuation $\Q_p \to \Z$ ($\sum_{i=k}^\infty a_i p^i$ with $a_k \neq 0$ is mapped to $k$)
         \item $K((t)) \to \Z \colon \sum_{i = k}^\infty a_i t^i \mapsto k$.
@@ -2498,9 +2503,8 @@ As $n_{ij} n_{i'j} = 0$, we have that
     \sum_{i \in I} 1_i &\mapsto 1 + \sum_{i \in I} n_{ij}
 \end{align*}
 is an isomorphism, as \[
-    (1 + \sum_{i \in I} n_{ij}) (1 + \sum_{i' \in I'}n_{i'j}) = 1 + \sum_{i \in I} n_{ij} + \sum_{i' \in I'}n_{i'j} + 0.
+    \left(1 + \sum_{i \in I} n_{ij}\right) \left(1 + \sum_{i' \in I'}n_{i'j}\right) = 1 + \sum_{i \in I} n_{ij} + \sum_{i' \in I'}n_{i'j} + 0.
 \]
-
 \subsection*{The free product}
 
 Our next claim is that the natural map \[
